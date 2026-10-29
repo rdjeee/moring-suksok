@@ -129,12 +129,14 @@ Lihat detail di `specs/decisions/ADR-001-tech-stack.md`.
 
 ### 🛡️ Aturan Kepemilikan Anti-Konflik
 
+> 📋 **Detail lengkap lihat di [`OWNERSHIP.md`](./OWNERSHIP.md)** — file khusus yang berisi peta kepemilikan semua file, communication protocol, conflict resolution rules, dan pre-push checklist.
+
 | Zone | Owner | Aturan |
 |---|---|---|
-| `/specs/**` | **Agent A ONLY** | DILARANG diedit Agent B. Untuk request perubahan → tulis di `DECISIONS-DEV.md` |
+| `/specs/**`, `/OWNERSHIP.md` | **Agent A ONLY** | DILARANG diedit Agent B. Untuk request perubahan → tulis di `DECISIONS-DEV.md` |
 | `/src/`, `/public/`, `package.json`, `next.config.js` | **Agent B** (Frontend via Z.ai Full-Stack) | Default Z.ai Full-Stack. **HAPUS** `prisma/`, `db/`, NextAuth setup |
 | `/backend/**` | **Agent B** (Backend Python FastAPI) | Manual setup, ikuti `specs/05-data-model.md` & `specs/06-api-contracts.md` |
-| `/docs/`, `docker-compose.yml`, `Makefile`, `.env.example`, `README.md` | SHARED | Siapa pun boleh baca, Agent B yang write |
+| `/docs/`, `docker-compose.yml`, `Makefile`, `.env.example`, `README.md` | SHARED | Siapa pun boleh baca, edit butuh koordinasi via mailbox (lihat OWNERSHIP.md) |
 | `/PROGRESS.md`, `/DECISIONS-DEV.md`, dll | **Agent B ONLY** | Tracking development |
 
 ---

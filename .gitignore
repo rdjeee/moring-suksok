@@ -1,10 +1,17 @@
 # =============================================================================
-# Moring Suksok — .gitignore (merged: Z.ai default + Moring Suksok)
+# Moring Suksok — .gitignore (final, GitHub-ready)
+# =============================================================================
+# Rules:
+# - .env files EXCLUDED (contain credentials), .env.example INCLUDED
+# - Build artifacts EXCLUDED (node_modules, .next, __pycache__, dll)
+# - OS/IDE files EXCLUDED (.DS_Store, .vscode/, dll)
+# - download/ & scripts/ EXCLUDED (Agent A artifacts, not part of system)
 # =============================================================================
 
 # Z.ai Workspace Defaults
 skills/
 node_modules/
+upload/
 
 # Dependencies (frontend + backend)
 node_modules/
@@ -16,7 +23,7 @@ __pycache__/
 venv/
 env/
 .venv/
-.env
+backend/venv/
 
 # Build outputs
 .next/
@@ -48,10 +55,12 @@ yarn-error.log*
 .env
 .env.local
 .env.*.local
+backend/.env
 !.env.example
 !.env.local.example
+!backend/.env.example
 
-# Database
+# Database files (SQLite artifacts - we use MySQL)
 *.sqlite
 *.sqlite3
 *.db
@@ -63,7 +72,7 @@ coverage/
 htmlcov/
 .pytest_cache/
 
-# PWA build artifacts
+# PWA build artifacts (auto-generated)
 public/sw.js
 public/workbox-*.js
 
@@ -72,5 +81,15 @@ public/workbox-*.js
 temp/
 .tmp/
 
+# Agent A artifacts (not needed in repo)
+download/
+scripts/
+
 # Backup files
 *.backup-zai
+*.bak
+*.orig
+
+# OS-generated files
+ehthumbs.db
+*.lnk

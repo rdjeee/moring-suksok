@@ -1,0 +1,66 @@
+# =============================================================================
+# Moring Suksok — .gitattributes
+# Normalize line endings & binary file handling
+# =============================================================================
+
+# Default: auto-normalize line endings (LF on Unix, CRLF on Windows)
+* text=auto
+
+# Shell scripts: always LF (cross-platform)
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Windows batch files: always CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Python files: always LF
+*.py text eol=lf
+
+# JavaScript/TypeScript: always LF
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+*.mjs text eol=lf
+
+# CSS/SCSS: always LF
+*.css text eol=lf
+*.scss text eol=lf
+
+# HTML: always LF
+*.html text eol=lf
+
+# Markdown: always LF
+*.md text eol=lf
+
+# YAML/TOML config: always LF
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+
+# Environment templates: always LF
+.env.example text eol=lf
+.env.local.example text eol=lf
+
+# Binary files (never auto-convert)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.docx binary
+*.xlsx binary
+*.zip binary
+*.tar binary
+*.gz binary
+
+# Lock files: always LF
+package-lock.json text eol=lf
+yarn.lock text eol=lf
+pnpm-lock.yaml text eol=lf
