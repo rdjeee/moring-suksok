@@ -20,6 +20,71 @@ Semua perubahan signifikan pada files di `specs/` akan didokumentasikan di sini.
 
 ---
 
+## [1.0.1] — 2026-10-29
+
+### Infrastructure Update — Dev Experience Improvements
+
+#### Added
+- `specs/SPECS-UPDATE-NOTIFICATION.md` — Mailbox antar agent A ↔ B (krusial karena sandbox terpisah)
+- `docker-compose.yml` — Orchestration frontend + backend + MySQL + phpMyAdmin (1 command up)
+- `Makefile` — Shortcut commands (`make dev`, `make migrate`, `make seed`, `make test`, `make lint`, dll)
+- `.env.example` (root) — Template environment variables shared
+- `frontend/.env.example` — Frontend-specific env vars (Firebase, API URL, dll)
+- `backend/.env.example` — Backend-specific env vars (DB, JWT, Cloudinary, FCM, dll)
+- `backend/requirements.txt` — Complete Python dependencies (FastAPI, SQLAlchemy, Alembic, ReportLab, dll)
+- `backend/pyproject.toml` — Tooling config (ruff, black, mypy, pytest)
+- `backend/tests/` folder structure — Separated unit/integration/e2e tests
+- `backend/tests/README.md` — Test strategy & coverage targets
+- `docs/api-openapi.json` — Placeholder (akan di-auto-generate dari FastAPI via `make openapi`)
+
+#### Repository Structure (Updated)
+```
+MoringSuksok/
+├── specs/                              ← 🤖 ZONE AGENT A
+│   ├── ... (9 spec files + 3 ADR + CHANGELOG + VERSION)
+│   └── SPECS-UPDATE-NOTIFICATION.md   ← NEW: mailbox antar agent
+├── frontend/
+│   ├── .env.example                    ← NEW: frontend env template
+│   ├── src/, public/, tests/
+├── backend/
+│   ├── .env.example                    ← NEW: backend env template
+│   ├── requirements.txt                ← NEW: Python dependencies
+│   ├── pyproject.toml                  ← NEW: tooling config
+│   ├── tests/                          ← NEW: separated tests folder
+│   │   ├── README.md                   ← NEW: test strategy
+│   │   ├── unit/, integration/, e2e/
+│   └── alembic/, app/
+├── docs/
+│   ├── api-openapi.json                ← NEW: placeholder (auto-gen)
+│   └── screenshots/
+├── docker-compose.yml                  ← NEW: orchestration
+├── Makefile                            ← NEW: shortcut commands
+├── .env.example                        ← NEW: root env template
+├── .gitignore
+├── README.md
+├── PROGRESS.md, DECISIONS-DEV.md, MIGRATION-NOTES.md, KNOWN-ISSUES.md
+```
+
+#### Developer Experience Improvements
+- **1-command setup**: `make setup` (install deps frontend + backend + setup DB instructions)
+- **1-command dev**: `make dev` (frontend + backend paralel) atau `make dev-docker` (all via Docker)
+- **1-command migrate**: `make migrate` (run Alembic upgrade head)
+- **1-command seed**: `make seed` (insert admin + produk contoh + settings)
+- **1-command test**: `make test` (run pytest + jest)
+- **1-command lint**: `make lint` (ruff + eslint)
+
+### Migration Guide dari v1.0.0 → v1.0.1
+
+Agent B yang sudah baca v1.0.0:
+1. Tidak ada breaking change di specs (semua spec content tetap sama)
+2. Hanya tambah infrastructure files (`.env.example`, `Makefile`, `docker-compose.yml`, dll)
+3. WAJIB baca `Makefile` untuk lihat semua shortcut commands yang tersedia
+4. WAJIB copy `.env.example` → `.env` di root, frontend, dan backend, lalu isi credentials
+5. WAJIB install backend Python deps: `cd backend && pip install -r requirements.txt`
+6. Disarankan pakai `docker-compose up -d` untuk menjalankan semua services (frontend + backend + MySQL + phpMyAdmin)
+
+---
+
 ## [1.0.0] — 2026-10-29
 
 ### Initial Release — Baseline Specs untuk Development

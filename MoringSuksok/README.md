@@ -293,6 +293,114 @@ Buka browser dan verify:
 
 ---
 
+## 🛠️ Quick Commands (Makefile)
+
+Repository dilengkapi dengan `Makefile` untuk shortcut commands. Run `make help` untuk lihat semua.
+
+### Paling Sering Dipakai
+
+```bash
+# Setup pertama kali (install semua dependencies)
+make setup
+
+# Jalankan development mode (frontend + backend paralel)
+make dev
+
+# Atau jalankan via Docker (frontend + backend + MySQL + phpMyAdmin)
+make dev-docker
+
+# Setup database (migrate + seed)
+make migrate
+make seed
+
+# Run tests
+make test
+
+# Linting & formatting
+make lint
+make format
+
+# Cleanup
+make clean
+```
+
+### Database Operations
+
+```bash
+make migrate                  # Run Alembic upgrade head
+make migrate-create m="add table X"  # Create new migration
+make migrate-rollback         # Rollback 1 step
+make db-reset                 # Reset database (HATI-HATI: hapus semua data!)
+make db-shell                 # Buka MySQL shell interaktif
+```
+
+### Docker Operations
+
+```bash
+make dev-docker               # Start semua services via docker-compose
+make down                     # Stop docker-compose
+make restart                  # Restart services
+make logs                     # Tail logs (real-time)
+make ps                       # List running services
+make clean-docker             # Stop + hapus volumes
+```
+
+### Generate Documentation Artifacts
+
+```bash
+make openapi                  # Generate docs/api-openapi.json dari FastAPI
+make docs-serve                # Buka Swagger UI di browser (backend harus jalan)
+```
+
+---
+
+## 🐳 Docker Compose — All-in-One Setup
+
+Alternatif setup: gunakan `docker-compose.yml` untuk jalankan **semua services** dengan 1 command.
+
+```bash
+# Start semua services (frontend + backend + MySQL + phpMyAdmin)
+docker-compose up -d
+
+# Lihat status
+docker-compose ps
+
+# Tail logs
+docker-compose logs -f backend
+docker-compose logs -f frontend
+
+# Stop semua
+docker-compose down
+
+# Reset dengan hapus volumes (HATI-HATI: data MySQL hilang!)
+docker-compose down -v
+```
+
+### Service Ports (Docker)
+
+| Service | URL | Keterangan |
+|---|---|---|
+| Frontend (Next.js) | http://localhost:3000 | Aplikasi PWA |
+| Backend (FastAPI) | http://localhost:8000 | REST API |
+| Swagger UI | http://localhost:8000/docs | API documentation |
+| phpMyAdmin | http://localhost:8081 | DB GUI (DB: `db`, user: `root`) |
+| MySQL | localhost:3306 | Database |
+
+### Keunggulan Docker Compose
+
+- ✅ **1 command setup**: Tidak perlu install Node.js/Python/MySQL manual di host
+- ✅ **Isolated environment**: Tidak konflik dengan system packages
+- ✅ **Reproducible**: Sama di semua mesin (Windows/Mac/Linux)
+- ✅ **Easy teardown**: `docker-compose down -v` untuk reset total
+
+### Kerugian
+
+- ⚠️ Butuh Docker Desktop / Docker Engine (gratis)
+- ⚠️ Build pertama kali: 5-10 menit (download images + install deps)
+- ⚠️ Resource: butuh ~2GB RAM untuk run all services
+
+---
+
 ## 📚 Spec Files Reference
 
 Untuk Agent B atau siapapun yang ingin memahami sistem:

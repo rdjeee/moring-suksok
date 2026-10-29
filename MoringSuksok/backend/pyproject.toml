@@ -1,0 +1,149 @@
+# =============================================================================
+# Moring Suksok — Backend Python Project Config
+# =============================================================================
+# File ini digunakan untuk tooling modern (ruff, black, mypy, pytest, dsb).
+# Dependency installation tetap via requirements.txt, file ini hanya untuk
+# konfigurasi tool behavior.
+# =============================================================================
+
+[project]
+name = "moring-suksok-backend"
+version = "1.0.0"
+description = "Sistem Distribusi & Pencatatan Transaksi Produk Moring Suksok - Backend API"
+authors = [
+    {name = "Mahasiswa TA", email = "mahasiswa@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# =============================================================================
+# Ruff — Fast linter & formatter
+# =============================================================================
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["app"]
+exclude = [
+    "venv",
+    ".venv",
+    "alembic/versions",
+    "__pycache__",
+    "build",
+    "dist",
+]
+
+[tool.ruff.linter]
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort (import sorting)
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "UP",    # pyupgrade
+    "N",     # pep8-naming
+    "SIM",   # flake8-simplify
+    "TCH",   # flake8-type-checking
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+    "B008",  # do not perform function call in argument defaults (FastAPI Depends)
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# =============================================================================
+# Black — Code formatter
+# =============================================================================
+[tool.black]
+target-version = ["py311"]
+line-length = 100
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | venv
+  | build
+  | dist
+  | alembic/versions
+  | __pycache__
+)/
+'''
+
+# =============================================================================
+# MyPy — Static type checker
+# =============================================================================
+[tool.mypy]
+python_version = "3.11"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false        # Allow optional types
+disallow_any_explicit = false
+ignore_missing_imports = true         # Untuk libraries tanpa type stubs
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+# =============================================================================
+# Pytest — Test configuration
+# =============================================================================
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+    "--strict-config",
+    "--cov=app",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+    "auth: tests related to authentication",
+    "products: tests related to products",
+    "orders: tests related to orders",
+    "payments: tests related to payments",
+]
+
+[tool.coverage.run]
+source = ["app"]
+omit = [
+    "*/tests/*",
+    "*/alembic/*",
+    "*/venv/*",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]
