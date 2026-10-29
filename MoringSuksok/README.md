@@ -9,6 +9,18 @@
 
 ---
 
+## 📁 Lokasi Repository
+
+```
+Workspace Root:  /home/z/my-project/
+Project Folder:  /home/z/my-project/MoringSuksok/
+```
+
+> ⚠️ **PENTING**: Folder project bernama `MoringSuksok` (camelCase, tidak ada spasi).
+> Jangan dicari di `my-app/` — folder itu sudah direname.
+
+---
+
 ## 📖 Tentang Proyek
 
 Moring Suksok adalah UMKM pengolahan daun kelor (moringa) dengan produk utama snack/kripik moring. Saat ini penjualan masih dilakukan via WhatsApp dengan pencatatan manual menggunakan nota. Sistem ini dibangun untuk:
@@ -57,7 +69,7 @@ Lihat detail di `specs/decisions/ADR-001-tech-stack.md`.
 ## 📁 Struktur Repository
 
 ```
-my-app/
+/home/z/my-project/MoringSuksok/      ← 📂 PROJECT ROOT
 │
 ├── specs/                              ← 🤖 ZONE AGENT A (Planning)
 │   ├── 00-vision.md                    ← Executive summary + tujuan
