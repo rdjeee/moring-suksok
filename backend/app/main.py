@@ -65,9 +65,9 @@ def health() -> dict:
 
 
 # ---------------------------------------------------------------------------
-# Routers — will be wired in later steps
+# Routers
 # ---------------------------------------------------------------------------
-# from app.api.v1 import auth, products, cart, orders, payments, admin, notifications
-# app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
-# app.include_router(products.router, prefix="/api/v1/products", tags=["products"])
-# ... etc per specs/06-api-contracts.md
+from app.api.v1 import auth  # noqa: E402
+
+API_V1_PREFIX = "/api/v1"
+app.include_router(auth.router, prefix=API_V1_PREFIX)

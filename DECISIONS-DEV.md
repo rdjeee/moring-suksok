@@ -600,4 +600,52 @@ Frontend (Next.js :3000) → Axios + JWT interceptor → Caddy gateway (XTransfo
 
 ---
 
-**Last Updated**: 2026-10-30 00:35 (Asia/Jakarta) — Agent B: ALL 9 SETUP STEPS COMPLETED & VERIFIED 🎉
+### [DEV-DECISION-008] — 2026-10-30 — Minggu 2: Auth Module (E1-S1 s/d E1-S8) + ISSUE-002 fix + ISSUE-003 fix
+
+**Konteks**: Setelah Agent A review Minggu 1 (NOTIF-003, verdict EXCELLENT ⭐⭐⭐⭐⭐), mulai Minggu 2: Auth Module. Agent A instructions: pull latest (d7b9e08), read NOTIF-003, fix ISSUE-002 & ISSUE-003, implement E1-S1 s/d E1-S8.
+
+**Aksi yang dilakukan**:
+
+1. **Pull latest** (commit d7b9e08): Makefile fix (ISSUE-001 closed), NOTIF-003, specs v1.0.3, SCR-002 approved
+2. **Verify Makefile fix**: `make help` works (32+ targets), `make migrate` parses correctly ✅
+3. **Fix ISSUE-003** (SQL echo verbose): Added `SQL_ECHO` env var (default false) to config.py, database.py uses `echo=settings.SQL_ECHO` instead of `echo=settings.DEBUG`. Updated .env & .env.example. Now SQL statements don't flood console unless explicitly enabled.
+4. **Fix ISSUE-002** (passlib + bcrypt 4.x warning): Rewrote `security.py` — switched from passlib to **direct bcrypt usage** (bcrypt.gensalt + bcrypt.hashpw + bcrypt.checkpw). 12 rounds maintained. Old passlib-hashed passwords (admin from seed) still verify correctly (bcrypt standard format compatible). 0 warnings in logs.
+5. **Implement Auth Module** (7 endpoints per specs/06-api-contracts.md §2.1):
+   - `app/schemas/common.py`: SuccessResponse, ErrorResponse, TokenMeta, Meta (standard response format per spec §1.4-1.5)
+   - `app/schemas/auth.py`: RegisterRequest, LoginRequest, UpdateProfileRequest, CustomerData, AdminData, CustomerProfileData (with validation: email, phone format, password letter+number)
+   - `app/api/deps.py`: JWT dependencies — get_current_user, get_current_customer, get_current_admin. HTTPBearer security scheme, role-based access control (403 for wrong role), soft-delete check (is_active)
+   - `app/api/v1/auth.py`: 7 endpoints:
+     - POST /auth/register — customer registration with validation, returns JWT
+     - POST /auth/login — customer login, bcrypt verify, returns JWT
+     - POST /auth/admin/login — admin login, separate endpoint, role=admin
+     - POST /auth/refresh — refresh JWT token
+     - POST /auth/logout — stateless logout (client discards token)
+     - GET /auth/me — full profile (customer or admin)
+     - PATCH /auth/me — update profile (name, phone, address, fcm_token)
+   - `app/main.py`: Wired auth router with prefix /api/v1
+
+**Test results** (all 10 tests PASSED):
+1. ✅ Register new customer → 201 + JWT token
+2. ✅ Login customer → 200 + JWT token
+3. ✅ GET /auth/me → full profile with phone, address, created_at
+4. ✅ PATCH /auth/me → update name + fcm_token
+5. ✅ POST /auth/refresh → new token with fresh expiry
+6. ✅ POST /auth/logout → personalized farewell message
+7. ✅ Admin login → 200 + admin data with role="admin"
+8. ✅ Negative: wrong password → 401 "Email atau password salah."
+9. ✅ Negative: no token → 401 "Token autentikasi tidak ditemukan..."
+10. ✅ ISSUE-002: 0 passlib warnings in logs
+
+**NOTIF-003 Acknowledge**:
+- ✅ Read NOTIF-003 (Agent A review, verdict EXCELLENT, SCR-002 approved, Makefile fixed, specs v1.0.3)
+- ⚠️ **Cannot edit specs/SPECS-UPDATE-NOTIFICATION.md** to move NOTIF-003 to "Acknowledged" section — per OWNERSHIP.md, specs/** is Agent A ONLY. This is a **spec conflict**: mailbox protocol (step 9) says "Agent B pindahkan notif dari Pending → Acknowledged" but OWNERSHIP.md forbids Agent B from editing specs/**.
+- **Resolution request**: Agent A to either (a) move NOTIF-003 to Acknowledged on behalf of Agent B, or (b) update OWNERSHIP.md to allow Agent B to edit ONLY the "Acknowledged" section of SPECS-UPDATE-NOTIFICATION.md
+- **Workaround**: This acknowledge is documented in DECISIONS-DEV.md (Agent B zone) as proof of compliance
+
+**Stories completed**: E1-S1, E1-S2, E1-S3, E1-S4, E1-S5, E1-S7, E1-S8 (7/8 auth stories; E1-S6 "refresh" also done as bonus)
+
+**Remaining for Minggu 2**: Frontend auth pages (login, register) — will be done next
+
+---
+
+**Last Updated**: 2026-10-30 01:05 (Asia/Jakarta) — Agent B: Minggu 2 Auth Module backend complete (7 endpoints + ISSUE-002/003 fixed)

@@ -56,13 +56,15 @@ Item tinggal: buat `app/main.py`, SQLAlchemy models (9 tabel), Alembic migration
 
 | Story ID | Title | Status | Notes |
 |---|---|---|---|
-| E1-S8 | Password hashing bcrypt | ⏳ Pending | |
-| E1-S7 | JWT verification middleware | ⏳ Pending | |
-| E1-S1 | Registrasi customer baru | ⏳ Pending | |
-| E1-S2 | Pilih segmen customer | ⏳ Pending | |
-| E1-S3 | Login customer | ⏳ Pending | |
-| E1-S4 | Login admin terpisah | ⏳ Pending | |
-| E1-S5 | Logout | ⏳ Pending | |
+| E1-S8 | Password hashing bcrypt | ✅ Done | ISSUE-002 FIXED: switched passlib → direct bcrypt (12 rounds). verify_password compatible with old passlib hashes. 0 warnings |
+| E1-S7 | JWT verification middleware | ✅ Done | app/api/deps.py: get_current_user, get_current_customer, get_current_admin. Bearer token via HTTPBearer. Role-based access control |
+| E1-S1 | Registrasi customer baru | ✅ Done | POST /api/v1/auth/register — validation (email unique, password letter+number, phone 08/+62 format), returns JWT |
+| E1-S2 | Pilih segmen customer | ✅ Done | customer_type field (retail/public) in register, validated via enum constraint |
+| E1-S3 | Login customer | ✅ Done | POST /api/v1/auth/login — bcrypt verify, returns JWT + customer data |
+| E1-S4 | Login admin terpisah | ✅ Done | POST /api/v1/auth/admin/login — separate endpoint, role=admin in JWT |
+| E1-S5 | Logout | ✅ Done | POST /api/v1/auth/logout — stateless JWT (client discards token) |
+| - | Auth: refresh token | ✅ Done | POST /api/v1/auth/refresh — generate new JWT with fresh expiry |
+| - | Auth: get/update profile | ✅ Done | GET/PATCH /api/v1/auth/me — full profile CRUD |
 | - | Frontend: halaman Register | ⏳ Pending | |
 | - | Frontend: halaman Login | ⏳ Pending | |
 | - | Frontend: layout dasar | ✅ Done | Landing page Moring Suksok (header+hero+produk+footer) sesuai specs/04-ui-guidelines.md §6.1. Theme Moring green aktif. DEV-DECISION-005 |
@@ -70,9 +72,9 @@ Item tinggal: buat `app/main.py`, SQLAlchemy models (9 tabel), Alembic migration
 | - | Frontend: theme & PWA setup | ✅ Done | globals.css Moring green palette, tailwind.config.ts extended, Plus Jakarta Sans + JetBrains Mono fonts, manifest.json + icon.svg. Lint 0 errors |
 
 **Milestone Check (akhir minggu)**:
-- [ ] Customer bisa registrasi & login
-- [ ] Admin bisa login (separate endpoint)
-- [ ] JWT terverifikasi di setiap request
+- [x] Customer bisa registrasi & login ✅ (POST /auth/register, /auth/login tested)
+- [x] Admin bisa login (separate endpoint) ✅ (POST /auth/admin/login tested)
+- [x] JWT terverifikasi di setiap request ✅ (get_current_user dependency, 401 on missing/invalid token)
 
 ---
 

@@ -17,12 +17,13 @@ if settings.is_sqlite:
     connect_args["check_same_thread"] = False
 
 # Create the SQLAlchemy engine.
-# `echo=settings.DEBUG` logs SQL statements when DEBUG=True (dev convenience).
+# `echo=settings.SQL_ECHO` logs SQL statements — controlled independently from DEBUG
+# via SQL_ECHO env var (default false). Set SQL_ECHO=true in .env to debug SQL.
 # `future=True` enables SQLAlchemy 2.0 style.
 engine = create_engine(
     settings.DATABASE_URL,
     connect_args=connect_args,
-    echo=settings.DEBUG,
+    echo=settings.SQL_ECHO,
     future=True,
 )
 

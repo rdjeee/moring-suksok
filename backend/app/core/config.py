@@ -70,6 +70,7 @@ class Settings(BaseSettings):
     APP_VERSION: str = "1.0.0"
     APP_ENV: str = "development"
     DEBUG: bool = True
+    SQL_ECHO: bool = False  # Set true to log SQL statements (independent from DEBUG)
 
     # ------------------------------------------------------------------ #
     # Business Settings (defaults; editable via admin dashboard)
