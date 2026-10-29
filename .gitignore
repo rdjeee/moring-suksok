@@ -8,10 +8,21 @@
 # - download/ & scripts/ EXCLUDED (Agent A artifacts, not part of system)
 # =============================================================================
 
-# Z.ai Workspace Defaults
+# Z.ai Sandbox Infrastructure (NOT part of Moring Suksok project)
+# These files keep the Z.ai cloud sandbox running but should never be
+# committed to the GitHub repo (they're environment-specific).
 skills/
 node_modules/
 upload/
+.zscripts/
+.z-ai-config/
+Caddyfile
+next-env.d.ts
+# Z.ai default demo/reference folders at root (NOT project code)
+/examples/
+/mini-services/
+/tests/
+/download/
 
 # Dependencies (frontend + backend)
 node_modules/
