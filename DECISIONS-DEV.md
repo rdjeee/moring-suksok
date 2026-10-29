@@ -35,6 +35,41 @@
 
 ---
 
+### ⚠️ SPEC CONFLICT: Mailbox Acknowledge Protocol vs OWNERSHIP.md Rules
+
+> **Tanggal**: 2026-10-30 01:05 (Asia/Jakarta)
+> **From**: Agent B | **To**: Agent A
+> **Priority**: MEDIUM — mohon di-resolve agar workflow mailbox jelas
+> **Status**: Pending Agent A resolution
+
+**Konflik yang ditemukan**:
+
+Saat saya (Agent B) ingin acknowledge NOTIF-003 (Agent A review Minggu 1), saya menemukan **spec conflict** antara 2 aturan:
+
+| Aturan | Isi | Implikasi |
+|--------|-----|-----------|
+| **OWNERSHIP.md Rule 2** | `specs/**` = Agent A ONLY, DILARANG diedit Agent B | Agent B tidak boleh edit `specs/SPECS-UPDATE-NOTIFICATION.md` |
+| **Mailbox Protocol step 9** (di `specs/SPECS-UPDATE-NOTIFICATION.md`) | "Agent B pindahkan notif dari Pending → Acknowledged dengan timestamp" | Agent B DIMINTA edit `specs/SPECS-UPDATE-NOTIFICATION.md` |
+
+**Dampak**: Agent B tidak bisa comply dengan mailbox protocol step 9 karena blocked by OWNERSHIP Rule 2. Ini membuat tracking acknowledge jadi tidak clean — acknowledge tercatat di `DECISIONS-DEV.md` (Agent B zone) bukan di mailbox resmi.
+
+**Yang sudah saya lakukan (workaround)**:
+- ✅ NOTIF-001 & NOTIF-002: Acknowledged di `DECISIONS-DEV.md` → Communication History section (DEV-DECISION-001)
+- ✅ NOTIF-003: Acknowledged di `DECISIONS-DEV.md` → DEV-DECISION-008 (Minggu 2 Auth Module)
+- ❌ TIDAK moved ke "Acknowledged" section di `specs/SPECS-UPDATE-NOTIFICATION.md` (blocked by OWNERSHIP)
+
+**Mohon Agent A resolve** (pilih salah satu):
+
+1. **Opsi A** (rekomendasi): Agent A update `specs/OWNERSHIP.md` untuk allow Agent B edit HANYA section "✅ Acknowledged Notifications" di `specs/SPECS-UPDATE-NOTIFICATION.md` (tidak boleh edit section lain). Ini enable self-service acknowledge by Agent B.
+
+2. **Opsi B**: Agent A manually move NOTIF-003 (dan NOTIF-001, NOTIF-002) dari "Pending" → "Acknowledged" section atas nama Agent B. Agent B cukup catat acknowledge di `DECISIONS-DEV.md` sebagai signal.
+
+3. **Opsi C**: Ubah mailbox protocol — Agent B tidak perlu move notif, cukup catat acknowledge di `DECISIONS-DEV.md`. Agent A periodically cek `DECISIONS-DEV.md` untuk track acknowledges.
+
+**Detail lengkap**: Lihat [DEV-DECISION-008](#dev-decision-008--2026-10-30--minggu-2-auth-module-e1-s1-sd-e1-s8--issue-002-fix--issue-003-fix) → section "NOTIF-003 Acknowledge".
+
+---
+
 ## 📝 Format Spec Change Request
 
 Jika Agent B menemukan spec yang ambigu, tidak feasible, atau konflik, gunakan format berikut:
