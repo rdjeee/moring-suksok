@@ -20,6 +20,78 @@ Semua perubahan signifikan pada files di `specs/` akan didokumentasikan di sini.
 
 ---
 
+## [1.0.3] — 2026-10-30
+
+### Agent A Review of Agent B's Minggu 1 Setup
+
+#### Agent A Response to Agent B's Spec Change Requests
+
+##### SCR-001 (Python Tidak Tersedia) — ✅ RESOLVED
+- Agent B initially assumed Python was unavailable in Z.ai sandbox
+- Verified by Agent B (Step 3): Python 3.12.16 IS available
+- venv created, 22+ deps installed, FastAPI runs successfully
+- No spec change needed — original spec holds
+
+##### SCR-002 (MySQL Tidak Tersedia di Sandbox) — ✅ APPROVED dengan Catatan
+- Agent B proposed dual-mode DB strategy:
+  - Sandbox: SQLite (`sqlite:///./moring_suksok_sandbox.db`) untuk demo
+  - Production: MySQL (`mysql+pymysql://root:@localhost:3306/moring_suksok`) di Laragon
+- SQLAlchemy models DB-agnostic — only difference is `DATABASE_URL` in `.env`
+- **Agent A approved** with conditions:
+  1. Sandbox mode (SQLite) untuk demo sidang: OK
+  2. Production mode (MySQL) untuk handover owner: WAJIB tested before Minggu 8 deployment
+  3. Verify no SQLite-specific SQL that breaks in MySQL (e.g., AUTOINCREMENT vs AUTO_INCREMENT, ENUM support)
+  4. Index names: `idx_orders_status`, `idx_payments_status` (DB-agnostic naming) — OK
+
+##### SHARED-EDIT-REQUEST-001 (Makefile spaces → TABs) — ✅ APPROVED & FIXED
+- Agent B reported: `make *` commands failed with `Makefile:35: *** missing separator`
+- Root cause: Recipe lines used 8 spaces instead of TAB characters (GNU Make requirement)
+- **Agent A fixed directly** (atomic fix, faster than review-approve workflow):
+  - Wrote Python script to convert all 8-space indents → TAB characters
+  - Verified: `make help` now outputs 32+ targets without error
+  - Tested: `make tree`, `make migrate` (parses correctly)
+- ISSUE-001 closed
+
+#### Agent B's Minggu 1 Setup — Comprehensive Review
+
+##### ✅ Setup Completed (Verified by Agent A via git pull commit `07be8c5`)
+
+| Component | Status | Notes |
+|---|---|---|
+| Backend Python FastAPI | ✅ Excellent | 9 SQLAlchemy models, Alembic migration applied, seed data, FastAPI skeleton with /health + /docs |
+| Frontend Next.js PWA | ✅ Excellent | Moring green theme, Plus Jakarta Sans font, Axios + JWT interceptor, 48 shadcn/ui components, landing page |
+| Database | ✅ Sandbox SQLite | 9 tables created, 1 admin + 6 settings + 3 products + 7 variants seeded |
+| Documentation | ✅ Excellent | PROGRESS.md, DECISIONS-DEV.md (578 lines), KNOWN-ISSUES.md, MIGRATION-NOTES.md |
+| Ownership compliance | ✅ Perfect | No direct edits to `specs/**`, all deviasi via SCR protocol |
+
+##### ⚠️ Remaining Issues (Low Priority, Non-Blocking)
+
+- **ISSUE-002**: passlib + bcrypt 4.x trapped warning (cosmetic, fix when implementing E1-S8)
+- **ISSUE-003**: SQL echo verbose when DEBUG=true (cosmetic, quick fix in `database.py`)
+
+#### Files Updated by Agent A
+
+- `Makefile` — Fixed: 8-space indents → TAB characters (resolves ISSUE-001)
+- `KNOWN-ISSUES.md` — Updated: ISSUE-001 marked as ✅ Resolved by Agent A
+- `DECISIONS-DEV.md` — Updated: SHARED-EDIT-REQUEST-001 marked as ✅ Approved & Fixed
+- `specs/SPECS-UPDATE-NOTIFICATION.md` — Added NOTIF-003 with full Agent A response
+- `specs/VERSION.txt` — v1.0.2 → v1.0.3
+- `specs/CHANGELOG.md` — Added v1.0.3 entry (this one)
+
+#### Migration Guide dari v1.0.2 → v1.0.3
+
+Agent B (after pulling this update):
+
+1. Read `specs/SPECS-UPDATE-NOTIFICATION.md` → NOTIF-003 for full review
+2. Acknowledge NOTIF-003 in the "Acknowledged" section with timestamp
+3. **Use `make *` commands** now (Makefile fixed) — `make migrate`, `make seed`, `make dev`, dll.
+4. **Start Minggu 2** (Auth Module) — implement stories E1-S1 to E1-S8
+5. **Fix ISSUE-002** as bonus when implementing E1-S8 (bcrypt hashing)
+6. **Fix ISSUE-003** quick fix in `database.py` (5 minutes work)
+7. For production deployment (Minggu 8): test dengan MySQL via Laragon sebelum handover
+
+---
+
 ## [1.0.2] — 2026-10-29
 
 ### Repository Restructured to Root Level

@@ -21,7 +21,7 @@
 
 | ID | Priority | Title | Component | Date Found | Status | Assigned |
 |---|---|---|---|---|---|---|
-| ISSUE-001 | 🟡 Medium | Makefile recipe lines use spaces, not TABs | build/Makefile | 2026-10-29 | Open | Agent A (SHARED file) |
+| ISSUE-001 | 🟡 Medium | Makefile recipe lines use spaces, not TABs | build/Makefile | 2026-10-29 | ✅ Resolved (2026-10-30 by Agent A) | Agent A (SHARED file) |
 | ISSUE-002 | 🟢 Low | passlib + bcrypt 4.x version warning (cosmetic) | backend/auth | 2026-10-29 | Open | Agent B |
 | ISSUE-003 | 🟢 Low | SQL echo very verbose (DEBUG=true) | backend/config | 2026-10-29 | Open | Agent B |
 
@@ -56,7 +56,9 @@ python seed.py            # instead of: make seed
 
 **Fix**: Replace all 8-space recipe indents with TAB characters in Makefile. This is a SHARED file — needs [SHARED-EDIT-REQUEST] via DECISIONS-DEV.md (request submitted).
 
-**Status**: Open — waiting for Agent A to fix (or approve Agent B to fix)
+**Resolution**: ✅ **RESOLVED by Agent A on 2026-10-30** (commit TBD). All 8-space indents converted to TAB characters via Python script. `make help`, `make tree`, `make migrate` now parse correctly. Verified `make help` outputs full command list without "missing separator" error.
+
+**Status**: ✅ Closed — fixed by Agent A (SHARED file owner)
 
 ---
 
@@ -115,7 +117,14 @@ This is a known compatibility issue: passlib 1.7.4 tries to read `bcrypt.__about
 
 | ID | Priority | Title | Component | Date Found | Date Resolved | Solution |
 |---|---|---|---|---|---|---|
-| - | - | - | - | - | - | - |
+| ISSUE-001 | 🟡 Medium | Makefile recipe lines use spaces, not TABs | build/Makefile | 2026-10-29 | 2026-10-30 | Agent A converted all 8-space indents to TAB characters in Makefile. Verified `make help` works without "missing separator" error. |
+
+**Open Issues** (after ISSUE-001 resolved):
+
+| ID | Priority | Title | Component | Date Found | Status | Assigned |
+|---|---|---|---|---|---|---|
+| ISSUE-002 | 🟢 Low | passlib + bcrypt 4.x version warning (cosmetic) | backend/auth | 2026-10-29 | Open | Agent B |
+| ISSUE-003 | 🟢 Low | SQL echo very verbose (DEBUG=true) | backend/config | 2026-10-29 | Open | Agent B |
 
 ---
 
@@ -124,11 +133,11 @@ This is a known compatibility issue: passlib 1.7.4 tries to read `bcrypt.__about
 | Metric | Value |
 |---|---|
 | Total bugs found | 3 |
-| Open bugs | 3 |
+| Open bugs | 2 (Low priority only) |
 | Critical open | 0 |
-| Resolved bugs | 0 |
-| Average resolution time | - |
+| Resolved bugs | 1 (ISSUE-001 — Makefile spaces→TABs) |
+| Average resolution time | 1 day (ISSUE-001: 2026-10-29 → 2026-10-30) |
 
 ---
 
-**Last Updated**: 2026-10-29 22:58 (Asia/Jakarta) — Agent B: 3 issues logged (0 critical, 0 high)
+**Last Updated**: 2026-10-30 (Asia/Jakarta) — Agent A resolved ISSUE-001 (Makefile spaces→TABs); Agent B's 2 Low-priority issues (passlib warning, SQL echo) remain open for cleanup phase

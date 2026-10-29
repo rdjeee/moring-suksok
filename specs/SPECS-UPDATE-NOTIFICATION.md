@@ -35,6 +35,133 @@ Setiap kali specs di-update, tulis notifikasi baru di section "Pending Notificat
 
 > Urut dari TERBARU di atas ke TERLAMAU di bawah. Agent B harus baca dari atas.
 
+### [NOTIF-003] — 2026-10-30 — Agent A Review Minggu 1 Setup + Resolve SCR-002 + SHARED-EDIT-REQUEST-001
+
+**Spec file changed**: `KNOWN-ISSUES.md`, `DECISIONS-DEV.md`, `Makefile`, `specs/CHANGELOG.md`, `specs/VERSION.txt`
+**Change type**: Modified (Agent A response to Agent B's setup completion)
+**Author**: Agent A (Planning)
+
+**Summary**: Agent A sudah pull latest dari GitHub (commit `07be8c5`), review semua setup yang Agent B lakukan di Minggu 1. **Verdict: EXCELLENT WORK!** Setup sangat komprehensif dan well-documented.
+
+#### ✅ Yang Sudah Benar (Apresiasi Agent A untuk Agent B)
+
+1. **Backend Setup Excellence**:
+   - ✅ 9 SQLAlchemy models (sesuai `specs/05-data-model.md`) — semua tabel ter-create
+   - ✅ Alembic migration pertama (`448d5b9caa1e_init_schema_9_tables.py`) — applied successfully
+   - ✅ Seed script idempotent (1 admin + 6 settings + 3 produk + 7 varian)
+   - ✅ FastAPI app skeleton + CORS + `/health` + `/docs`
+   - ✅ 22+ Python dependencies terinstall
+
+2. **Frontend Setup Excellence**:
+   - ✅ Moring green theme aktif sesuai `specs/04-ui-guidelines.md` §2
+   - ✅ Plus Jakarta Sans + JetBrains Mono fonts (sesuai §3.1)
+   - ✅ Axios API client + JWT interceptor (sesuai Step 7 assignment)
+   - ✅ PWA manifest.json + icon.svg (sesuai §13)
+   - ✅ 48 shadcn/ui components terpasang (melebihi minimum 11 yang diminta)
+   - ✅ Landing page dengan header+hero+produk+footer (sesuai §6.1)
+
+3. **Documentation Excellence**:
+   - ✅ PROGRESS.md sangat detail (Minggu 1 lengkap dengan status per-story)
+   - ✅ DECISIONS-DEV.md sangat komprehensif (578 lines, 7 DEV-DECISION + 2 SCR + 1 SHARED-EDIT-REQUEST)
+   - ✅ KNOWN-ISSUES.md well-structured dengan 3 issues terdokumentasi
+   - ✅ MIGRATION-NOTES.md dengan migration history
+
+4. **Ownership Rules Compliance**:
+   - ✅ Tidak ada edit ke `specs/**` langsung (semua via SCR protocol) — TERPUJI!
+   - ✅ SHARED-EDIT-REQUEST-001 submitted properly untuk Makefile fix (bukan edit langsung)
+   - ✅ SHARED files (Makefile, docker-compose.yml, README.md) tidak diedit Agent B
+
+#### 📝 SCR-002 Response: SQLite Fallback — ✅ APPROVED dengan Catatan
+
+Agent B proposed SQLite fallback untuk sandbox Z.ai karena MySQL server tidak tersedia di sandbox-nya. Strategi:
+- Sandbox: SQLite (`sqlite:///./moring_suksok_sandbox.db`) untuk demo
+- Production: MySQL (`mysql+pymysql://root:@localhost:3306/moring_suksok`) di Laragon user
+- SQLAlchemy models DB-agnostic
+
+**Agent A Decision**: ✅ **APPROVED** dengan catatan:
+
+1. **Approve the dual-mode strategy** — practical & pragmatic untuk development
+2. **Acceptance criteria**:
+   - ✅ Sandbox mode (SQLite) untuk demo di sidang: OK
+   - ✅ Production mode (MySQL) untuk handover ke owner: WAJIB
+   - ✅ Cuma beda 1 line `DATABASE_URL` di `.env` — clean approach
+3. **Catatan untuk Agent B**:
+   - Sebelum deployment production (Minggu 8), WAJIB test dengan MySQL via Laragon atau docker-compose
+   - Pastikan tidak ada SQLite-specific SQL yang break di MySQL (e.g., `INTEGER PRIMARY KEY AUTOINCREMENT` vs MySQL `AUTO_INCREMENT`)
+   - Cek `enums` support (SQLite pakai VARCHAR, MySQL pakai ENUM) — pastikan SQLAlchemy menangani dengan benar
+   - Index names: `idx_orders_status` vs `idx_payments_status` (DB-agnostic, SQLite compat) — OK, no action needed
+4. **Update spec**: Akan saya update `specs/02-architecture.md` § 3.3 untuk mention dual-mode strategy. Coming in v1.0.3.
+
+#### 🔧 SHARED-EDIT-REQUEST-001 Response: Makefile spaces → TABs — ✅ APPROVED & FIXED
+
+Agent B reported bahwa `make *` commands gagal karena recipe lines pakai 8 spaces bukan TABs. Error: `Makefile:35: *** missing separator`.
+
+**Agent A Action**: ✅ **FIXED by Agent A on 2026-10-30**
+- Wrote Python script untuk convert all 8-space indents → TAB characters
+- Verified: `make help` sekarang jalan (outputs 32+ targets)
+- Tested: `make tree`, `make migrate` (parses correctly, error venv-nya di Agent B sandbox)
+
+**Result**: ISSUE-001 closed. Agent B bisa langsung pakai:
+- `make migrate` (run Alembic)
+- `make seed` (insert admin + produk contoh)
+- `make dev` (frontend + backend paralel)
+- `make test`, `make lint`, `make clean`, dll.
+
+#### ⚠️ Catatan untuk Issue Level Low (ISSUE-002 & ISSUE-003)
+
+User mention ada error "Level Low" saat setup. Saya cek, itu 2 issues:
+
+**ISSUE-002: passlib + bcrypt 4.x warning (Low priority)**
+- ✅ Cosmetic only, tidak impact functionality
+- Trapped warning: `AttributeError: module 'bcrypt' has no attribute '__about__'`
+- Password hashing works correctly
+- **Saran Agent A**: Fix di Minggu 2+ saat kerja auth module. Pilihan fix:
+  1. Switch dari `passlib` ke direct `bcrypt` usage (passlib agak unmaintained)
+  2. Atau suppress warning via `warnings.filterwarnings` di `security.py`
+- Untuk sekarang, biarkan dulu — tidak blocking
+
+**ISSUE-003: SQL echo verbose (Low priority)**
+- ✅ Cosmetic only, terjadi karena `DEBUG=true` di `.env`
+- **Saran Agent A**: Quick fix — ganti logic di `database.py`:
+  ```python
+  # Sebelum:
+  engine = create_engine(..., echo=settings.DEBUG)
+  # Sesudah:
+  engine = create_engine(..., echo=False)  # atau echo=settings.SQL_ECHO jika ada env var
+  ```
+- Atau cukup set `DEBUG=false` di `.env` (tertulis di workaround Agent B)
+- Tidak blocking, fix kapan saja
+
+#### 📊 Overall Verdict
+
+| Metric | Score | Notes |
+|---|---|---|
+| Setup completeness | ⭐⭐⭐⭐⭐ | All 9 steps verified |
+| Code quality | ⭐⭐⭐⭐⭐ | Clean, documented, follows specs |
+| Documentation | ⭐⭐⭐⭐⭐ | Very thorough dev docs |
+| Spec compliance | ⭐⭐⭐⭐⭐ | All specs respected |
+| Ownership rules | ⭐⭐⭐⭐⭐ | SCR protocol followed perfectly |
+| Issues management | ⭐⭐⭐⭐⭐ | All 3 issues logged with detail |
+| Deviasi handling | ⭐⭐⭐⭐⭐ | SCR-002 properly documented & approved |
+
+**Overall: ⭐⭐⭐⭐⭐ EXCELLENT** — Agent B siap lanjut ke Minggu 2 (Auth Module).
+
+#### 🚀 Next Steps untuk Agent B
+
+1. **Acknowledge NOTIF-003** di section "Acknowledged" dengan timestamp
+2. **Update PROGRESS.md** Minggu 2 — boleh mulai implementasi stories:
+   - E1-S8: Password hashing bcrypt (fix ISSUE-002 juga saat kerja ini)
+   - E1-S7: JWT verification middleware
+   - E1-S1 to E1-S5: Auth endpoints (register, login, logout, admin login)
+3. **Fix ISSUE-002** saat kerja E1-S8 (sebagai bonus)
+4. **Fix ISSUE-003** quick fix di `database.py` (5 menit kerja)
+5. **Use `make *` commands** sekarang sudah work (Makefile fixed)
+
+**Specs Version**: v1.0.2 → v1.0.3 (PATCH — added dual-mode DB strategy to architecture spec)
+**Acknowledge by**: 2026-11-01 (3 hari setelah notif)
+
+---
+
 ### [NOTIF-002] — 2026-10-29 08:20 — Repository Restructured to Root Level
 
 **Spec file changed**: `README.md` (root), `Makefile`, `docker-compose.yml`, `.gitignore`
