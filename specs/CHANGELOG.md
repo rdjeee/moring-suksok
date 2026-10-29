@@ -20,6 +20,42 @@ Semua perubahan signifikan pada files di `specs/` akan didokumentasikan di sini.
 
 ---
 
+## [1.0.2] — 2026-10-29
+
+### Repository Restructured to Root Level
+
+#### Changed
+- Repository dipindahkan dari `/home/z/my-project/MoringSuksok/` ke root `/home/z/my-project/`
+- Frontend folder (`MoringSuksok/frontend/`) dihapus — sekarang dikelola Z.ai Full-Stack feature di root
+- `frontend/.env.example` dipindahkan & direname menjadi `.env.local.example` di root (Next.js convention)
+- `Makefile` paths diupdate: semua command frontend sekarang jalan di root (tidak `cd frontend`)
+- `docker-compose.yml` paths diupdate: frontend service pakai `context: .` (root)
+- `.gitignore` di-merge: combine Z.ai defaults (skills/, node_modules/) + MoringSuksok rules
+- `README.md` update struktur repository + ownership rules table
+
+#### Added
+- `.env.local.example` di root (frontend env vars, Next.js convention)
+- Backup files `.env.backup-zai` & `.gitignore.backup-zai` (untuk revert jika perlu)
+- Section "Aturan Kepemilikan Anti-Konflik" di README.md
+- `[NOTIF-002]` di SPECS-UPDATE-NOTIFICATION.md (inform restructure ke Agent B)
+
+#### Removed
+- Folder `MoringSuksok/` (semua isinya sudah dipindahkan ke root)
+- Folder `frontend/` (sekarang Z.ai Full-Stack yang handle di root)
+
+#### Migration Guide dari v1.0.1 → v1.0.2
+
+Agent B yang sudah baca v1.0.1:
+1. Pathspecs files berubah: dari `/MoringSuksok/specs/` → `/specs/`
+2. Path backend berubah: dari `/MoringSuksok/backend/` → `/backend/`
+3. Folder `frontend/` TIDAK ADA LAGI — Agent B pakai Z.ai Full-Stack feature yang akan create frontend di root
+4. **WAJIB HAPUS** default Z.ai Full-Stack: `prisma/`, `db/`, NextAuth setup (tidak sesuai specs)
+5. **WAJIB BUAT** `/backend/` Python FastAPI secara manual
+6. Makefile commands tetap sama, tapi sekarang jalan di root (no `cd frontend`)
+7. Docker-compose tetap pakai `docker-compose up -d` (sudah diupdate path-nya)
+
+---
+
 ## [1.0.1] — 2026-10-29
 
 ### Infrastructure Update — Dev Experience Improvements

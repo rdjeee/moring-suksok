@@ -108,10 +108,11 @@ services:
 
   # ---------------------------------------------------------------------------
   # Frontend — Next.js PWA (port 3000)
+  # Frontend ada di root project (Z.ai Full-Stack convention)
   # ---------------------------------------------------------------------------
   frontend:
     build:
-      context: ./frontend
+      context: .
       dockerfile: Dockerfile
     container_name: moringsuksok-frontend
     restart: unless-stopped
@@ -130,7 +131,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
+      - .:/app
       - frontend_node_modules:/app/node_modules
       - frontend_next:/app/.next
     command: sh -c "npm install && npm run dev"

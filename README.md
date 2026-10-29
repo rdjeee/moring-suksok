@@ -13,11 +13,12 @@
 
 ```
 Workspace Root:  /home/z/my-project/
-Project Folder:  /home/z/my-project/MoringSuksok/
+Project Root:    /home/z/my-project/   (sudah digabung dengan workspace root)
 ```
 
-> ⚠️ **PENTING**: Folder project bernama `MoringSuksok` (camelCase, tidak ada spasi).
-> Jangan dicari di `my-app/` — folder itu sudah direname.
+> ⚠️ **PENTING**: Repository sekarang berada langsung di root workspace `/home/z/my-project/`.
+> Folder `MoringSuksok/` sudah dihapus (semua isinya dipindahkan ke root).
+> Ini agar Agent B (Z.ai Full-Stack) bisa langsung akses tanpa perlu navigate ke subfolder.
 
 ---
 
@@ -69,9 +70,9 @@ Lihat detail di `specs/decisions/ADR-001-tech-stack.md`.
 ## 📁 Struktur Repository
 
 ```
-/home/z/my-project/MoringSuksok/      ← 📂 PROJECT ROOT
+/home/z/my-project/                     ← 📂 WORKSPACE ROOT = PROJECT ROOT
 │
-├── specs/                              ← 🤖 ZONE AGENT A (Planning)
+├── specs/                              ← 🤖 ZONE AGENT A (Planning - Saya)
 │   ├── 00-vision.md                    ← Executive summary + tujuan
 │   ├── 01-requirements.md              ← Latar belakang + scope + batasan
 │   ├── 02-architecture.md              ← Arsitektur sistem + security
@@ -81,45 +82,60 @@ Lihat detail di `specs/decisions/ADR-001-tech-stack.md`.
 │   ├── 06-api-contracts.md             ← FastAPI endpoint specs
 │   ├── 07-user-flows.md                ← Flow customer + owner + state machine
 │   ├── 08-acceptance-criteria.md       ← AC per story (Given-When-Then)
+│   ├── SPECS-UPDATE-NOTIFICATION.md   ← 📬 Mailbox antar agent (PENTING!)
 │   ├── research/                       ← Riset teknis (QRIS, FCM, dll)
 │   ├── decisions/                      ← ADR (Architecture Decision Records)
 │   │   ├── ADR-001-tech-stack.md
 │   │   ├── ADR-002-qris-self-generated.md
 │   │   └── ADR-003-decoupled-architecture.md
 │   ├── CHANGELOG.md                    ← Tracking perubahan specs
-│   └── VERSION.txt                     ← 1.0.0 (semantic versioning)
+│   └── VERSION.txt                     ← 1.0.1 (semantic versioning)
 │
-├── frontend/                           ← 🤖 ZONE AGENT B (Next.js PWA)
-│   ├── src/
-│   ├── public/
-│   ├── tests/
-│   ├── package.json
-│   ├── next.config.js
-│   └── tailwind.config.ts
+├── src/, public/, package.json         ← 🤖 ZONE AGENT B (FRONTEND via Z.ai Full-Stack)
+│   next.config.js, tailwind.config.ts   Next.js PWA, Tailwind, shadcn/ui
+│   ⚠️ HAPUS default: prisma/, db/, NextAuth.js setup (tidak sesuai specs)
 │
-├── backend/                            ← 🤖 ZONE AGENT B (Python FastAPI)
+├── backend/                            ← 🤖 ZONE AGENT B (BACKEND - Python FastAPI)
 │   ├── app/
 │   │   ├── main.py
 │   │   ├── core/                       ← config, database, security
 │   │   ├── models/                     ← SQLAlchemy models (9 tabel)
-│   │   ├── schemas/                     ← Pydantic schemas
+│   │   ├── schemas/                    ← Pydantic schemas
 │   │   ├── api/v1/                     ← Endpoint modules
 │   │   └── services/                   ← Business logic (QRIS, FCM, dll)
 │   ├── alembic/                        ← Database migrations
+│   ├── tests/                          ← Unit/integration/e2e tests
 │   ├── requirements.txt
+│   ├── pyproject.toml
 │   └── .env.example
+│
+├── docs/                               ← SHARED (read-only untuk kedua agent)
+│   ├── api-openapi.json                ← Postman collection (auto-generate via make openapi)
+│   └── screenshots/                    ← Demo screenshots
+│
+├── docker-compose.yml                  ← SHARED: orchestration frontend + backend + db
+├── Makefile                            ← SHARED: shortcut commands (make dev, make migrate, dll)
+├── .env.example                        ← SHARED: root env template (DB, JWT, Cloudinary, dll)
+├── .env.local.example                  ← SHARED: frontend env (Firebase, API URL)
+├── .gitignore                          ← SHARED
 │
 ├── PROGRESS.md                         ← 🤖 ZONE AGENT B (log progress mingguan)
 ├── DECISIONS-DEV.md                    ← 🤖 ZONE AGENT B (dev decisions + spec change requests)
 ├── MIGRATION-NOTES.md                  ← 🤖 ZONE AGENT B (Alembic migration log)
 ├── KNOWN-ISSUES.md                     ← 🤖 ZONE AGENT B (bug tracker)
 │
-├── docs/                               ← SHARED (read-only untuk kedua agent)
-│   ├── api-collection.json             ← Postman collection (Agent B generate)
-│   └── screenshots/                    ← Demo screenshots
-│
 └── README.md                           ← SHARED (this file)
 ```
+
+### 🛡️ Aturan Kepemilikan Anti-Konflik
+
+| Zone | Owner | Aturan |
+|---|---|---|
+| `/specs/**` | **Agent A ONLY** | DILARANG diedit Agent B. Untuk request perubahan → tulis di `DECISIONS-DEV.md` |
+| `/src/`, `/public/`, `package.json`, `next.config.js` | **Agent B** (Frontend via Z.ai Full-Stack) | Default Z.ai Full-Stack. **HAPUS** `prisma/`, `db/`, NextAuth setup |
+| `/backend/**` | **Agent B** (Backend Python FastAPI) | Manual setup, ikuti `specs/05-data-model.md` & `specs/06-api-contracts.md` |
+| `/docs/`, `docker-compose.yml`, `Makefile`, `.env.example`, `README.md` | SHARED | Siapa pun boleh baca, Agent B yang write |
+| `/PROGRESS.md`, `/DECISIONS-DEV.md`, dll | **Agent B ONLY** | Tracking development |
 
 ---
 

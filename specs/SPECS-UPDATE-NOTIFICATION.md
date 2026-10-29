@@ -35,6 +35,58 @@ Setiap kali specs di-update, tulis notifikasi baru di section "Pending Notificat
 
 > Urut dari TERBARU di atas ke TERLAMAU di bawah. Agent B harus baca dari atas.
 
+### [NOTIF-002] — 2026-10-29 08:20 — Repository Restructured to Root Level
+
+**Spec file changed**: `README.md` (root), `Makefile`, `docker-compose.yml`, `.gitignore`
+**Change type**: Modified (paths updated) + Repository restructured
+**Summary**: Repository telah dipindahkan dari `/home/z/my-project/MoringSuksok/` ke root `/home/z/my-project/`. Ini agar Agent B (Z.ai Full-Stack feature) bisa langsung akses tanpa navigate ke subfolder.
+
+**Perubahan path**:
+- OLD: `/home/z/my-project/MoringSuksok/specs/` → NEW: `/home/z/my-project/specs/`
+- OLD: `/home/z/my-project/MoringSuksok/backend/` → NEW: `/home/z/my-project/backend/`
+- OLD: `/home/z/my-project/MoringSuksok/frontend/` → NEW: **DELETED** (frontend sekarang di root via Z.ai Full-Stack default)
+- OLD: `/home/z/my-project/MoringSuksok/docs/` → NEW: `/home/z/my-project/docs/`
+- OLD: `/home/z/my-project/MoringSuksok/PROGRESS.md` → NEW: `/home/z/my-project/PROGRESS.md`
+- OLD: `/home/z/my-project/MoringSuksok/Makefile` → NEW: `/home/z/my-project/Makefile`
+- OLD: `/home/z/my-project/MoringSuksok/docker-compose.yml` → NEW: `/home/z/my-project/docker-compose.yml`
+
+**File baru di root**:
+- `.env.local.example` — Frontend env vars (dari `frontend/.env.example` lama), Next.js convention
+
+**File default Z.ai Full-Stack yang HARUS DIHAPUS Agent B**:
+- ❌ `prisma/` (kita pakai MySQL + SQLAlchemy, bukan Prisma)
+- ❌ `db/` (kita pakai MySQL, bukan SQLite)
+- ❌ NextAuth.js setup (kita pakai JWT dari FastAPI backend)
+- ❌ `lib/auth.ts`, `lib/db.ts` (kalau ada default dari Z.ai)
+
+**Makefile paths sudah diupdate**:
+- `make setup-frontend` → sekarang jalan di root (bukan `cd frontend`)
+- `make dev-frontend` → sekarang jalan di root
+- `make test-frontend` → sekarang jalan di root
+- `make build-frontend` → sekarang jalan di root
+- `make lint-frontend` → sekarang jalan di root
+- `make format` → frontend formatting di root
+- `make clean` → hapus `.next/`, `coverage/` di root
+
+**docker-compose.yml sudah diupdate**:
+- Frontend service: `context: .` (root), bukan `./frontend`
+- Volume: `.:/app` (root mount), bukan `./frontend:/app`
+
+**Impact to Agent B**:
+- ✅ **BISA langsung pakai Z.ai Full-Stack feature** (frontend akan dibuat di root)
+- ✅ Folder `/specs/`, `/backend/`, `/docs/` tetap utuh di root
+- ⚠️ **WAJIB HAPUS** default Z.ai Full-Stack: `prisma/`, `db/`, NextAuth setup
+- ⚠️ **WAJIB BUAT** `/backend/` Python FastAPI secara manual (lihat specs/05-data-model.md & specs/06-api-contracts.md)
+- ⚠️ **WAJIB KONFIGURASI** Next.js API client (Axios) untuk call `http://localhost:8000/api/v1/*` (Python backend), bukan Next.js API Routes
+- ✅ Makefile & docker-compose.yml siap pakai
+- ✅ .env templates tersedia (.env.example untuk backend, .env.local.example untuk frontend)
+
+**Version bump**: v1.0.1 → v1.0.2 (PATCH — restructure, no spec content changes)
+
+**Acknowledge by**: 2026-10-30
+
+---
+
 ### [NOTIF-001] — 2026-10-29 07:50 — Initial Setup Specs v1.0.0
 
 **Spec files added (all new)**:

@@ -1,2 +1,76 @@
+# =============================================================================
+# Moring Suksok — .gitignore (merged: Z.ai default + Moring Suksok)
+# =============================================================================
+
+# Z.ai Workspace Defaults
 skills/
 node_modules/
+
+# Dependencies (frontend + backend)
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+.env
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables (KEEP .env.example, EXCLUDE actual .env)
+.env
+.env.local
+.env.*.local
+!.env.example
+!.env.local.example
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+db/
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# PWA build artifacts
+public/sw.js
+public/workbox-*.js
+
+# Misc
+.cache/
+temp/
+.tmp/
+
+# Backup files
+*.backup-zai
