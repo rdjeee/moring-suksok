@@ -22,7 +22,7 @@ app = FastAPI(
     version=settings.APP_VERSION,
     description=(
         "Sistem Distribusi & Pencatatan Transaksi Produk Moring Suksok — Backend API. "
-        "Tugas Akhir mini e-commerce UMKM snack kripik daun kelor."
+        "Tugas Akhir mini e-commerce UMKM camilan khas cimol kering (moring)."
     ),
     docs_url="/docs",
     redoc_url="/redoc",

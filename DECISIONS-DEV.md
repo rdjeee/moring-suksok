@@ -493,7 +493,7 @@ migrate:
 
 8. **Landing page** (`src/app/page.tsx`) — sesuai spec §6.1:
    - **Header**: logo (leaf icon + "Moring Suksok"), nav (Beranda/Produk/Tentang/Kontak), cart icon + badge, user icon, Masuk button
-   - **Hero section**: badge "Snack Sehat dari Alam", h1 "Kripik Daun Kelor Renyah & Bergizi", CTA buttons (Belanja Sekarang, Pelajari Lebih), trust badges (100% Natural, Gratis Ongkir, Rating 4.9), gradient background from-moring-green-pale
+   - **Hero section**: badge "Camilan Cimol Kering (Moring)", h1 "Cimol Kering Moring Renyah & Bergizi", CTA buttons (Belanja Sekarang, Pelajari Lebih), trust badges (100% Natural, Gratis Ongkir, Rating 4.9), gradient background from-moring-green-pale
    - **Features strip**: 4 features (Natural, Bergizi, Cepat Sampai, Terpercaya) dengan icons
    - **Products section**: grid 2 cols mobile / 3-4 cols desktop, 3 product cards (Original, Pedas, Keju) dengan harga formatIDR, variants badge, "Tambah" button (interaktif: click → "Ditambahkan ✓")
    - **Tentang section**: brand story + stats (100% Natural, 3+ Varian, 4.9★ Rating)
@@ -552,7 +552,7 @@ migrate:
 
 **Hasil verifikasi** (via agent-browser):
 - ✅ Page title: "Moring Suksok — Snack Sehat dari Alam 🌿"
-- ✅ 3 produk render (Kripik Moring Original, Pedas, Keju) — fallback data
+- ✅ 5 produk render (Moring Original, Pedas, Keju, Balado, Jagung) — fallback data
 - ✅ Console: `"Backend /products belum tersedia, pakai fallback data: Network Error"` — axios interceptor catch error dengan graceful fallback
 - ✅ Tidak ada uncaught errors
 - ✅ Dev server HTTP 200
@@ -598,7 +598,7 @@ Exports:
    - Open `http://localhost:3000` → page renders with title "Moring Suksok — Snack Sehat dari Alam 🌿"
    - Console: `"Backend /products belum tersedia, pakai fallback data: Not Found"`
    - **KEY FINDING**: Error changed from "Network Error" (backend down, Step 7) → "Not Found" (backend up, 404). This PROVES axios client successfully reaches backend FastAPI through the stack!
-   - 3 products render (fallback data): Kripik Moring Original, Pedas, Keju
+   - 5 products render (fallback data): Moring Original, Pedas, Keju, Balado, Jagung
    - Footer green: `rgb(24, 67, 47)` = Moring green dark ✅
 
 4. **Comprehensive verification** (Step 9):

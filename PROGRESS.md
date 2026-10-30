@@ -13,6 +13,7 @@
 - **Completed**: 0 / 50
 - **In Progress**: 0
 - **Blocked**: 0 (SCR-001 RESOLVED: Python tersedia. SCR-002 USER-APPROVED: SQLite fallback untuk sandbox, MySQL tetap production target — tunggu Agent A acknowledge di mailbox)
+- **Status**: ⏸️ PAUSED (NOTIF-006) — tunggu verifikasi judul TA dari dosen. NOTIF-007 (resume) akan dikirim Agent A setelah user konfirmasi. TIDAK mulai Minggu 3 sampai ada NOTIF-007.
 
 ---
 

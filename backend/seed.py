@@ -76,9 +76,9 @@ SETTINGS_DATA = [
 
 PRODUCTS_DATA = [
     {
-        "name": "Kripik Moring Original",
-        "slug": "kripik-moring-original",
-        "description": "Kripik daun kelor original dengan rasa gurih dan renyah. Kaya nutrisi dan antioksidan.",
+        "name": "Moring Original",
+        "slug": "moring-original",
+        "description": "Cimol kering (moring) dengan rasa original, gurih, renyah, dan tahan lama.",
         "category": "snack",
         "base_price": 15000,
         "variants": [
@@ -88,9 +88,9 @@ PRODUCTS_DATA = [
         ],
     },
     {
-        "name": "Kripik Moring Pedas",
-        "slug": "kripik-moring-pedas",
-        "description": "Kripik daun kelor dengan tambahan bumbu pedas untuk pecinta pedas.",
+        "name": "Moring Pedas",
+        "slug": "moring-pedas",
+        "description": "Cimol kering (moring) dengan bumbu pedas untuk pecinta pedas.",
         "category": "snack",
         "base_price": 17000,
         "variants": [
@@ -99,14 +99,36 @@ PRODUCTS_DATA = [
         ],
     },
     {
-        "name": "Kripik Moring Keju",
-        "slug": "kripik-moring-keju",
-        "description": "Kripik daun kelor dengan topping keju untuk rasa yang lebih creamy.",
+        "name": "Moring Keju",
+        "slug": "moring-keju",
+        "description": "Cimol kering (moring) dengan topping keju untuk rasa yang lebih creamy.",
         "category": "snack",
         "base_price": 18000,
         "variants": [
             {"variant_name": "Keju 100gr", "stock": 30},
             {"variant_name": "Keju 250gr", "stock": 12},
+        ],
+    },
+    {
+        "name": "Moring Balado",
+        "slug": "moring-balado",
+        "description": "Cimol kering (moring) dengan bumbu balado yang pedas manis khas Indonesia.",
+        "category": "snack",
+        "base_price": 17000,
+        "variants": [
+            {"variant_name": "Balado 100gr", "stock": 35},
+            {"variant_name": "Balado 250gr", "stock": 14},
+        ],
+    },
+    {
+        "name": "Moring Jagung",
+        "slug": "moring-jagung",
+        "description": "Cimol kering (moring) dengan rasa jagung manis yang disukai anak-anak.",
+        "category": "snack",
+        "base_price": 16000,
+        "variants": [
+            {"variant_name": "Jagung 100gr", "stock": 38},
+            {"variant_name": "Jagung 250gr", "stock": 16},
         ],
     },
 ]

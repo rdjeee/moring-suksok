@@ -27,18 +27,18 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Moring Suksok — Snack Sehat dari Alam 🌿",
+    default: "Moring Suksok — Camilan Cimol Kering (Moring) 🌿",
     template: "%s — Moring Suksok",
   },
   description:
-    "Moring Suksok: kripik daun kelor (moringa) sehat & renyah. Belanja online mudah, bayar QRIS, lacak pesanan real-time. UMKM lokal Indonesia.",
+    "Moring Suksok: cimol kering (moring) sehat & renyah. Belanja online mudah, bayar QRIS, lacak pesanan real-time. UMKM lokal Indonesia.",
   keywords: [
     "Moring Suksok",
-    "kripik daun kelor",
+    "cimol kering moring",
     "moringa",
     "snack sehat",
     "UMKM Indonesia",
-    "kripik moring",
+    "moring cimol kering",
     "belanja online",
     "QRIS",
   ],
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   openGraph: {
     title: "Moring Suksok — Snack Sehat dari Alam",
-    description: "Kripik daun kelor sehat & renyah. Belanja online, bayar QRIS, lacak pesanan.",
+    description: "Cimol kering (moring) sehat & renyah. Belanja online, bayar QRIS, lacak pesanan.",
     siteName: "Moring Suksok",
     locale: "id_ID",
     type: "website",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Moring Suksok — Snack Sehat dari Alam",
-    description: "Kripik daun kelor sehat & renyah. Belanja online, bayar QRIS, lacak pesanan.",
+    description: "Cimol kering (moring) sehat & renyah. Belanja online, bayar QRIS, lacak pesanan.",
   },
 };
 

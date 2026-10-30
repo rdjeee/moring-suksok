@@ -62,10 +62,10 @@ export default function HomePage() {
         const fallbackProducts: ProductWithVariants[] = [
           {
             id: 1,
-            name: "Kripik Moring Original",
-            slug: "kripik-moring-original",
+            name: "Moring Original",
+            slug: "moring-original",
             description:
-              "Kripik daun kelor original dengan rasa gurih dan renyah. Kaya nutrisi dan antioksidan.",
+              "Cimol kering (moring) dengan rasa original, gurih, renyah, dan tahan lama.",
             category: "snack",
             base_price: "15000",
             is_active: true,
@@ -80,10 +80,10 @@ export default function HomePage() {
           },
           {
             id: 2,
-            name: "Kripik Moring Pedas",
-            slug: "kripik-moring-pedas",
+            name: "Moring Pedas",
+            slug: "moring-pedas",
             description:
-              "Kripik daun kelor dengan tambahan bumbu pedas untuk pecinta pedas.",
+              "Cimol kering (moring) dengan bumbu pedas untuk pecinta pedas.",
             category: "snack",
             base_price: "17000",
             is_active: true,
@@ -97,10 +97,10 @@ export default function HomePage() {
           },
           {
             id: 3,
-            name: "Kripik Moring Keju",
-            slug: "kripik-moring-keju",
+            name: "Moring Keju",
+            slug: "moring-keju",
             description:
-              "Kripik daun kelor dengan topping keju untuk rasa yang lebih creamy.",
+              "Cimol kering (moring) dengan topping keju untuk rasa yang lebih creamy.",
             category: "snack",
             base_price: "18000",
             is_active: true,
@@ -110,6 +110,40 @@ export default function HomePage() {
             variants: [
               { id: 6, variant_name: "Keju 100gr", stock: 30 },
               { id: 7, variant_name: "Keju 250gr", stock: 12 },
+            ],
+          },
+          {
+            id: 4,
+            name: "Moring Balado",
+            slug: "moring-balado",
+            description:
+              "Cimol kering (moring) dengan bumbu balado yang pedas manis khas Indonesia.",
+            category: "snack",
+            base_price: "17000",
+            is_active: true,
+            image_url: null,
+            created_at: "",
+            updated_at: "",
+            variants: [
+              { id: 8, variant_name: "Balado 100gr", stock: 35 },
+              { id: 9, variant_name: "Balado 250gr", stock: 14 },
+            ],
+          },
+          {
+            id: 5,
+            name: "Moring Jagung",
+            slug: "moring-jagung",
+            description:
+              "Cimol kering (moring) dengan rasa jagung manis yang disukai anak-anak.",
+            category: "snack",
+            base_price: "16000",
+            is_active: true,
+            image_url: null,
+            created_at: "",
+            updated_at: "",
+            variants: [
+              { id: 10, variant_name: "Jagung 100gr", stock: 38 },
+              { id: 11, variant_name: "Jagung 250gr", stock: 16 },
             ],
           },
         ];
@@ -200,15 +234,15 @@ export default function HomePage() {
               <div className="space-y-6 text-center lg:text-left">
                 <Badge variant="secondary" className="inline-flex items-center gap-1.5">
                   <Leaf className="h-3.5 w-3.5" />
-                  Snack Sehat dari Alam
+                  Camilan Cimol Kering (Moring)
                 </Badge>
                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-                  Kripik Daun Kelor{" "}
+                  Cimol Kering Moring{" "}
                   <span className="text-primary">Renyah & Bergizi</span>
                 </h1>
                 <p className="text-base text-muted-foreground sm:text-lg max-w-prose mx-auto lg:mx-0">
-                  Nikmati kebaikan moringa dalam setiap gigitan. Dibuat dari daun kelor pilihan,
-                  dipanggang sempurna untuk menjaga nutrisi & rasa khas.{" "}
+                  Nikmati kebaikan moring dalam setiap gigitan. Dibuat dari cimol kering pilihan
+                  dengan tekstur renyah dan tahan lama.{" "}
                   <span className="font-medium text-foreground">Sehat, renyah, bikin nagih!</span>
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
@@ -245,10 +279,10 @@ export default function HomePage() {
                       <Leaf className="h-16 w-16 text-primary" />
                     </div>
                     <p className="text-sm font-medium text-muted-foreground">
-                      🌿 Daun Kelor Premium
+                      🌿 Cimol Kering Premium
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      Sumber: kebun lokal Indonesia
+                      Sumber: produksi lokal Indonesia
                     </p>
                   </div>
                 </div>
@@ -290,7 +324,7 @@ export default function HomePage() {
                   Produk Kami
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Pilihan rasa kripik moring untuk Anda
+                  Pilihan rasa cimol kering moring untuk Anda
                 </p>
               </div>
               <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
@@ -347,13 +381,13 @@ export default function HomePage() {
                 Tentang Kami
               </Badge>
               <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-                Dari Kebun Lokal, untuk Keluarga Indonesia
+                Dari Produksi Lokal, untuk Keluarga Indonesia
               </h2>
               <p className="text-muted-foreground text-base sm:text-lg">
-                Moring Suksok adalah UMKM yang mengolah daun kelor (moringa) menjadi snack kripik
-                yang sehat dan lezat. Kami percaya bahwa makanan sehat tidak perlu mahal dan sulit
-                dicari. Setiap produk kami dibuat dengan bahan baku pilihan dari petani lokal dan
-                diproses dengan standar higienis.
+                Moring Suksok adalah UMKM yang memproduksi cimol kering (moring) — camilan
+                sehat dan lezat. Kami percaya bahwa makanan sehat tidak perlu mahal dan sulit
+                dicari. Setiap produk kami dibuat dengan bahan baku pilihan dan diproses dengan
+                standar higienis untuk menghasilkan cimol kering yang renyah dan tahan lama.
               </p>
               <div className="grid grid-cols-3 gap-4 pt-6 max-w-md mx-auto">
                 <div>
@@ -361,7 +395,7 @@ export default function HomePage() {
                   <p className="text-xs text-muted-foreground">Natural</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-primary">3+</p>
+                  <p className="text-2xl font-bold text-primary">5+</p>
                   <p className="text-xs text-muted-foreground">Varian Rasa</p>
                 </div>
                 <div>
@@ -386,7 +420,7 @@ export default function HomePage() {
                 <span>Moring Suksok</span>
               </div>
               <p className="text-sm text-white/80 max-w-xs">
-                Snack sehat dari daun kelor. UMKM lokal Indonesia untuk keluarga sehat.
+                Camilan cimol kering (moring) sehat & renyah. UMKM lokal Indonesia untuk keluarga sehat.
               </p>
             </div>
             <div>
@@ -409,7 +443,7 @@ export default function HomePage() {
           <Separator className="my-6 bg-white/20" />
           <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-white/60">
             <p>© 2026 Moring Suksok. All rights reserved.</p>
-            <p>Snack Sehat dari Alam 🌿</p>
+            <p>Camilan Cimol Kering (Moring) 🌿</p>
           </div>
         </div>
       </footer>

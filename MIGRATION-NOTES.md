@@ -51,7 +51,7 @@
 **Seed data inserted** (via `python seed.py`):
 - Admin: `admin@moring-suksok.com` (password: `admin123`, bcrypt hash with 12 rounds)
 - Settings: 6 keys (owner_qris_static, owner_dana_number, owner_whatsapp, business_name, business_address, shipping_cost_flat)
-- Products: 3 produk (Kripik Moring Original Rp15K, Pedas Rp17K, Keju Rp18K)
+- Products: 5 produk (Moring Original Rp15K, Pedas Rp17K, Keju Rp18K, Balado Rp17K, Jagung Rp16K) — cimol kering (moring), BUKAN kripik daun kelor
 - Variants: 7 total (Original: 3, Pedas: 2, Keju: 2)
 
 **Commands run**:
