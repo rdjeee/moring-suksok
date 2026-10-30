@@ -20,6 +20,82 @@ Semua perubahan signifikan pada files di `specs/` akan didokumentasikan di sini.
 
 ---
 
+## [1.0.6] — 2026-10-30
+
+### ⏸️ PAUSE Development — Tunggu Verifikasi Judul TA dari Dosen
+
+#### Background
+
+User (mahasiswa) sedang dalam proses pengajuan judul Tugas Akhir ke dosen pembimbing. Judul yang diajukan:
+
+> **"Rancang Bangun Sistem Distribusi dan Pencatatan Transaksi Produk UMKM Moring Suksok Berbasis Progressive Web App dengan Verifikasi Pembayaran QRIS dan Notifikasi Otomatis"**
+
+Dosen pembimbing sedang review judul. Ada kemungkinan dosen akan meminta revisi judul atau penyesuaian scope proyek.
+
+#### Decision
+
+**Pause new feature development** sampai dosen verifikasi judul TA. Setelah acknowledge NOTIF-004, NOTIF-005, Agent B **TIDAK BOLEH mulai Minggu 3 (Product Module)**.
+
+#### Reasoning
+
+1. Jika dosen meminta revisi judul, kemungkinan ada perubahan scope atau fokus proyek
+2. Jika dosen meminta penyesuaian (tambah fitur, ubah pendekatan), spec mungkin perlu diupdate
+3. Coding Minggu 3 sekarang berisiko pemborosan effort jika spec berubah
+
+#### Files Updated
+
+- `specs/SPECS-UPDATE-NOTIFICATION.md` — Added NOTIF-006 (Pause development)
+  - Update statistics (6 total, 3 pending, 3 acknowledged, status: PAUSED)
+- `specs/CHANGELOG.md` — Added v1.0.6 entry
+- `specs/VERSION.txt` — v1.0.5 → v1.0.6
+
+#### What Agent B Can Do While Waiting
+
+1. Acknowledge NOTIF-004 dan NOTIF-005 (wajib)
+2. Apply perubahan dari NOTIF-004 (koreksi deskripsi produk)
+3. Apply perubahan dari NOTIF-005 (fix main.py description)
+4. Regression test Auth Module
+5. Update PROGRESS.md dengan catatan pause
+6. Code review sendiri (baca ulang kode Auth Module)
+7. **Pelajari** specs untuk Minggu 3 (tanpa coding):
+   - `specs/03-features.json` (epic E2)
+   - `specs/06-api-contracts.md` § 2.2 (Product Module endpoints)
+   - `specs/05-data-model.md` § 4.3-4.4 (products & product_variants tables)
+
+#### What Agent B Cannot Do
+
+- ❌ Mulai Minggu 3 (Product Module — E2-S1 to E2-S9)
+- ❌ Buat file baru di `backend/app/api/v1/products.py` atau `backend/app/api/v1/cart.py`
+- ❌ Buat frontend page untuk produk (katalog, detail produk, dll.)
+- ❌ Setup Cloudinary upload
+
+#### When Will NOTIF-007 (Resume) Be Sent?
+
+**NOTIF-007 akan dikirim oleh Agent A setelah:**
+- ✅ User konfirmasi bahwa dosen pembimbing sudah verifikasi judul TA
+- ✅ Tidak ada perubahan scope yang signifikan (atau jika ada, spec sudah diupdate dulu)
+
+**Estimasi timeline**: Tidak terdefinisi (tergantung response dosen). Bisa 1 hari, 1 minggu, atau lebih.
+
+#### Migration Guide dari v1.0.5 → v1.0.6
+
+Agent B (after pulling this update):
+
+1. Baca NOTIF-006 di `specs/SPECS-UPDATE-NOTIFICATION.md`
+2. Selesaikan acknowledge NOTIF-004 dan NOTIF-005 (apply perubahan + format baru Rule 7)
+3. Acknowledge NOTIF-006 dengan format:
+   - Status: paused, siap tunggu NOTIF-007 (resume)
+   - Konfirmasi tidak akan mulai Minggu 3 sampai ada NOTIF-007
+4. Sambil menunggu, lakukan aktivitas yang boleh (lihat list di atas)
+
+#### Impact
+
+- **Breaking changes**: NONE
+- **Spec content changes**: NONE (workflow decision only)
+- **Code change needed by Agent B**: NONE baru (cuma apply perubahan dari NOTIF-004 & NOTIF-005)
+
+---
+
 ## [1.0.5] — 2026-10-30
 
 ### Auth Module Review + SPEC CONFLICT Resolution

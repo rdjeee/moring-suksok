@@ -35,6 +35,91 @@ Setiap kali specs di-update, tulis notifikasi baru di section "Pending Notificat
 
 > Urut dari TERBARU di atas ke TERLAMAU di bawah. Agent B harus baca dari atas.
 
+### [NOTIF-006] — 2026-10-30 — ⏸️ PAUSE Development: Tunggu Verifikasi Judul TA dari Dosen
+
+**Spec files changed**: NONE (workflow decision only)
+**Change type**: Process / Workflow update — pause new feature development
+**Author**: Agent A (Planning) — atas instruksi user (mahasiswa)
+**Priority**: 🟠 HIGH — wajib dipatuhi sebelum mulai Minggu 3
+
+#### 📋 Konteks
+
+User (mahasiswa) sedang dalam proses pengajuan judul Tugas Akhir ke dosen pembimbing. Judul yang diajukan:
+
+> **"Rancang Bangun Sistem Distribusi dan Pencatatan Transaksi Produk UMKM Moring Suksok Berbasis Progressive Web App dengan Verifikasi Pembayaran QRIS dan Notifikasi Otomatis"**
+
+Dosen pembimbing sedang review judul tersebut. Ada kemungkinan dosen akan meminta revisi judul atau penyesuaian scope proyek.
+
+#### ⏸️ Instruksi untuk Agent B
+
+**SETELAH acknowledge NOTIF-004 dan NOTIF-005, JANGAN mulai Minggu 3 (Product Module).**
+
+Alasan:
+1. Jika dosen meminta revisi judul, kemungkinan ada perubahan scope atau fokus proyek
+2. Jika dosen meminta penyesuaian (misal: tambah fitur tertentu, ubah pendekatan), spec mungkin perlu diupdate
+3. Coding Minggu 3 sekarang berisiko pemborosan effort jika spec berubah
+
+#### ✅ Yang BOLEH Dilakukan Agent B (Sambil Menunggu)
+
+1. **Acknowledge NOTIF-004 dan NOTIF-005** (wajib, sesuai instruksi sebelumnya)
+2. **Apply perubahan dari NOTIF-004**:
+   - Update file di zone Anda (DECISIONS-DEV.md, MIGRATION-NOTES.md, public/manifest.json)
+   - Update `backend/seed.py` dengan 5 produk baru
+   - Update `public/logo.svg` → pakai `docs/branding/logo_moring.jpg`
+   - Re-seed database
+3. **Apply perubahan dari NOTIF-005**:
+   - Fix `backend/app/main.py` line 26 (description string)
+4. **Test & verify** setup Auth Module sudah berjalan dengan baik (regression test)
+5. **Update PROGRESS.md** dengan catatan pause
+6. **Code review** sendiri — baca ulang kode Auth Module yang sudah dibuat, pastikan kualitas
+
+#### ❌ Yang TIDAK BOLEH Dilakukan Agent B
+
+1. ❌ Mulai Minggu 3 (Product Module — E2-S1 to E2-S9)
+2. ❌ Buat file baru di `backend/app/api/v1/products.py` atau `backend/app/api/v1/cart.py`
+3. ❌ Buat frontend page untuk produk (katalog, detail produk, dll.)
+4. ❌ Setup Cloudinary upload (itu bagian dari Product Module E2-S1)
+
+#### 🔔 Kapan Akan Ada NOTIF-007 (Resume)
+
+**NOTIF-007 akan dikirim oleh Agent A setelah:**
+- ✅ User konfirmasi bahwa dosen pembimbing sudah verifikasi judul TA
+- ✅ Tidak ada perubahan scope yang signifikan (atau jika ada, spec sudah diupdate dulu)
+
+**Estimasi timeline**: Tidak terdefinisi (tergantung response dosen). Bisa 1 hari, 1 minggu, atau lebih. Mohon bersabar.
+
+#### 📊 Status Proyek Saat Ini
+
+| Komponen | Status |
+|---|---|
+| Specs | v1.0.6 (final, mungkin update kalau dosen minta revisi) |
+| Minggu 1 (Setup) | ✅ Complete |
+| Minggu 2 (Auth Module) | ✅ Complete — excellent quality |
+| **Minggu 3 (Product Module)** | ⏸️ **PAUSED — tunggu verifikasi dosen** |
+| Minggu 4-8 | ⏸️ Belum dimulai |
+
+#### 📝 Catatan untuk Agent B
+
+Sambil menunggu, Anda bisa:
+- Pelajari spesifikasi Product Module di `specs/03-features.json` (epic E2) untuk persiapan
+- Baca `specs/06-api-contracts.md` § 2.2 (Product Module endpoints)
+- Baca `specs/05-data-model.md` § 4.3-4.4 (products & product_variants tables)
+- Review kode Auth Module sendiri untuk pola yang bisa dipakai di Product Module nanti
+- Jangan coding dulu ya, cukup baca & pahami
+
+Jika ada pertanyaan atau ide untuk improvement, tetap bisa catat di `DECISIONS-DEV.md` dengan tag `[IDEA]` atau `[QUESTION]`.
+
+#### ✅ Acknowledge Deadline
+
+Acknowledge NOTIF-006 dalam **48 jam** (by 2026-11-01) dengan format:
+- Status: paused, siap tunggu NOTIF-007 (resume)
+- Konfirmasi tidak akan mulai Minggu 3 sampai ada NOTIF-007
+
+**Specs Version**: v1.0.5 → v1.0.6 (PATCH — workflow update, pause development)
+**Acknowledge by**: 2026-11-01
+
+---
+
 ### [NOTIF-005] — 2026-10-30 — Auth Module Review (EXCELLENT) + SPEC CONFLICT Resolved (Opsi A) + minor issue: main.py description
 
 **Spec files changed**: `OWNERSHIP.md` (Rule 7 added), `specs/SPECS-UPDATE-NOTIFICATION.md` (acknowledged section populated)
@@ -562,11 +647,12 @@ User mention ada error "Level Low" saat setup. Saya cek, itu 2 issues:
 
 | Metric | Value |
 |---|---|
-| Total notifications sent | 5 (NOTIF-000, 001, 002, 003, 004) |
-| Pending (belum dibaca Agent B) | 2 (NOTIF-004, NOTIF-005) |
+| Total notifications sent | 6 (NOTIF-000 to NOTIF-005, NOTIF-006) |
+| Pending (belum dibaca Agent B) | 3 (NOTIF-004, NOTIF-005, NOTIF-006) |
 | Acknowledged | 3 (NOTIF-001, 002, 003) |
-| Last notification date | 2026-10-30 (NOTIF-005) |
-| Specs current version | v1.0.5 |
+| Last notification date | 2026-10-30 (NOTIF-006 — Pause development) |
+| Specs current version | v1.0.6 |
+| Development status | ⏸️ PAUSED — tunggu verifikasi dosen |
 
 ---
 
