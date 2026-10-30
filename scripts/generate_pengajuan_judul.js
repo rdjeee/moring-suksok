@@ -229,7 +229,7 @@ function buildBody() {
   // ============ Latar Belakang Masalah ============
   children.push(h1("Latar Belakang Masalah"));
 
-  children.push(bodyPara("UMKM Moring Suksok merupakan usaha pengolahan produk berbahan dasar daun kelor (moringa) dengan produk utama berupa snack/kripik moring yang memiliki beberapa varian rasa. Usaha ini dimiliki oleh seorang pengusaha berusia 40 tahun dan melayani dua jenis pelanggan, yaitu Customer Ritel (toko/agen yang membeli untuk dijual ulang) dan Customer Masyarakat (konsumen akhir yang membeli untuk konsumsi pribadi)."));
+  children.push(bodyPara("UMKM Moring Suksok merupakan usaha kuliner yang mengolah produk camilan khas berupa cimol kering (moring) — yaitu cimol yang digoreng dengan tekstur kering, renyah, dan tahan lama. Produk ini memiliki beberapa varian rasa, antara lain Original, Pedas, Keju, Balado, dan Jagung. Usaha ini dimiliki oleh seorang pengusaha berusia 40 tahun dan melayani dua jenis pelanggan, yaitu Customer Ritel (toko/agen yang membeli untuk dijual ulang) dan Customer Masyarakat (konsumen akhir yang membeli untuk konsumsi pribadi)."));
 
   children.push(bodyPara("Saat ini, proses penjualan masih dilakukan secara konvensional. Pelanggan menghubungi pemilik usaha melalui WhatsApp untuk melakukan pemesanan, kemudian pemilik mencatat transaksi pada nota manual sebagai bukti pembelian dan pembukuan akuntan. Pendekatan ini telah berjalan cukup lama, namun seiring bertambahnya jumlah pelanggan dan kompleksitas transaksi, muncul berbagai kendala operasional yang perlu diatasi."));
 
@@ -255,9 +255,9 @@ function buildBody() {
   // Analisis Objek dan Batas Proses
   children.push(h2("Analisis Objek dan Batas Proses"));
 
-  children.push(bodyPara("Objek yang dikelola adalah produk olahan daun kelor (snack/kripik moring) beserta varian yang dimiliki, transaksi pemesanan dari customer, serta bukti pembayaran yang perlu diverifikasi."));
+  children.push(bodyPara("Objek yang dikelola adalah produk camilan khas berupa cimol kering (moring) beserta varian rasa yang dimiliki, transaksi pemesanan dari customer, serta bukti pembayaran yang perlu diverifikasi."));
 
-  children.push(bodyPara("Satu pesanan dapat memiliki lebih dari satu item produk dengan varian berbeda. Sebagai contoh, satu pesanan dapat berisi 2 pack Kripik Moring Original 100gr dan 1 pack Kripik Moring Pedas 250gr dengan total harga yang dihitung otomatis oleh sistem."));
+  children.push(bodyPara("Satu pesanan dapat memiliki lebih dari satu item produk dengan varian berbeda. Sebagai contoh, satu pesanan dapat berisi 2 pack Moring Original 100gr dan 1 pack Moring Pedas 250gr dengan total harga yang dihitung otomatis oleh sistem."));
 
   children.push(bodyPara("Aplikasi tidak menggantikan proses produksi atau manajemen stok bahan baku, tidak menangani pengesahan legal dokumen, dan tidak melakukan akuntansi lengkap (pajak, laba-rugi). Aplikasi hanya membantu pencatatan transaksi, verifikasi pembayaran, pemantauan distribusi produk jadi, serta penyusunan laporan dasar untuk pembukuan akuntan."));
 
@@ -314,14 +314,14 @@ function buildBody() {
   // Analisis Kebutuhan Data
   children.push(h2("Analisis Kebutuhan Data"));
 
-  children.push(bodyPara("Data utama yang direncanakan meliputi: data admin/owner (login credentials), data customer (dengan segmen Ritel/Masyarakat dan Firebase Cloud Messaging token untuk push notification), data produk (dengan deskripsi, harga, foto), data varian produk (nama varian dan stok), data pesanan (header dengan kode unik, alamat pengiriman, total), data detail item pesanan (snapshot produk+varian+harga saat checkout), data pembayaran (method QRIS/manual transfer, raw QRIS payload, URL bukti upload, status verifikasi), data notifikasi (log push notif dan WhatsApp deep link), serta data pengaturan sistem (settings: QRIS statis pemilik, nomor DANA, info bisnis, ongkir default)."));
+  children.push(bodyPara("Data utama yang direncanakan meliputi: data admin/owner (login credentials), data customer (dengan segmen Ritel/Masyarakat dan Firebase Cloud Messaging token untuk push notification), data produk cimol kering (dengan deskripsi, harga, foto), data varian produk (nama varian rasa dan ukuran, stok), data pesanan (header dengan kode unik, alamat pengiriman, total), data detail item pesanan (snapshot produk+varian+harga saat checkout), data pembayaran (method QRIS/manual transfer, raw QRIS payload, URL bukti upload, status verifikasi), data notifikasi (log push notif dan WhatsApp deep link), serta data pengaturan sistem (settings: QRIS statis pemilik, nomor DANA, info bisnis, ongkir default)."));
 
   // ============ Rencana Solusi ============
   children.push(h1("Rencana Solusi"));
 
   children.push(bodyPara("Solusi yang direncanakan adalah aplikasi Progressive Web App (PWA) terpusat untuk mengelola distribusi dan pencatatan transaksi produk Moring Suksok, dengan arsitektur decoupled antara frontend (Next.js PWA) dan backend (Python FastAPI):"));
 
-  children.push(numberedItem(1, "Pengelolaan katalog produk: Sistem menyediakan pencatatan produk dengan varian (rasa/ukuran), harga, foto, dan stok. Pemilik dapat menambah, mengedit, dan menghapus produk melalui dashboard admin. Foto produk diunggah dan disimpan di Cloudinary untuk optimasi CDN."));
+  children.push(numberedItem(1, "Pengelolaan katalog produk: Sistem menyediakan pencatatan produk cimol kering (moring) dengan varian rasa (Original, Pedas, Keju, Balado, Jagung) dan ukuran (100gr, 250gr, 500gr), harga, foto, dan stok. Pemilik dapat menambah, mengedit, dan menghapus produk melalui dashboard admin. Foto produk diunggah dan disimpan di Cloudinary untuk optimasi CDN."));
 
   children.push(numberedItem(2, "Pemesanan terstruktur: Customer dapat melakukan registrasi akun, browse katalog produk, menambahkan produk ke keranjang dengan pilihan varian dan quantity, melakukan checkout dengan konfirmasi alamat pengiriman dan catatan. Sistem otomatis generate kode pesanan unik (format ORD-YYYYMMDD-XXX) serta menyimpan snapshot data produk untuk menjaga integritas data historis."));
 
@@ -337,7 +337,7 @@ function buildBody() {
 
   children.push(numberedItem(8, "PWA installable: Aplikasi dapat diinstall di perangkat Android melalui fitur \"Add to Home Screen\" tanpa perlu download dari Play Store, sehingga customer dapat mengakses aplikasi seperti native app. Service worker memungkinkan offline caching untuk halaman utama dan push notification di background."));
 
-  children.push(bodyPara("Batasan pengembangan: Diterapkan untuk satu UMKM (Moring Suksok) dengan skala lokal kecil (di bawah 100 customer aktif), berfokus pada produk olahan daun kelor (snack/kripik), tidak mencakup integrasi payment gateway berbayar (Midtrans/Xendit/Faspay) dengan biaya admin per transaksi, tidak mencakup WhatsApp Business API otomatis (Fonnte/Wablas) yang berbayar per pesan dan cukup menggunakan deep link wa.me sebagai alternatif gratis, tidak mencakup auto-calculate ongkir berdasarkan jarak (RajaOngkir/Binderbyte), tidak mencakup inventory management advanced dengan alert stok otomatis, tidak mencakup multi-vendor/multi-seller, serta tidak mencakup fitur loyalty program, wishlist, review produk, dan coupon system."));
+  children.push(bodyPara("Batasan pengembangan: Diterapkan untuk satu UMKM (Moring Suksok) dengan skala lokal kecil (di bawah 100 customer aktif), berfokus pada produk camilan cimol kering (moring) dengan varian rasa (Original, Pedas, Keju, Balado, Jagung), tidak mencakup integrasi payment gateway berbayar (Midtrans/Xendit/Faspay) dengan biaya admin per transaksi, tidak mencakup WhatsApp Business API otomatis (Fonnte/Wablas) yang berbayar per pesan dan cukup menggunakan deep link wa.me sebagai alternatif gratis, tidak mencakup auto-calculate ongkir berdasarkan jarak (RajaOngkir/Binderbyte), tidak mencakup inventory management advanced dengan alert stok otomatis, tidak mencakup multi-vendor/multi-seller, serta tidak mencakup fitur loyalty program, wishlist, review produk, dan coupon system."));
 
   // ============ Referensi ============
   children.push(h1("Referensi"));

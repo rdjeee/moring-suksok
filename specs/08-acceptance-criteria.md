@@ -279,7 +279,7 @@ Scenario: Password berbeda verify false
 Scenario: Tambah produk berhasil
   Given admin sudah login di dashboard
   When admin buka /admin/products/new, isi form:
-    | name        | Kripik Moring Pedas       |
+    | name        | Moring Pedas       |
     | description | Kripik dengan bumbu pedas |
     | category    | snack                     |
     | base_price  | 17000                     |
@@ -308,7 +308,7 @@ Scenario: Validasi ukuran file image
 
 Scenario: Auto-generate slug unik
   Given sudah ada produk dengan slug "kripik-moring-pedas"
-  When admin tambah produk baru dengan name "Kripik Moring Pedas"
+  When admin tambah produk baru dengan name "Moring Pedas"
   Then sistem generate slug "kripik-moring-pedas-2" (atau dengan suffix lain)
 ```
 
@@ -671,7 +671,7 @@ Scenario: Order items menyimpan snapshot
   When order dibuat
   Then tabel `order_items` menyimpan:
     - product_id: 1
-    - product_name: "Kripik Moring Original" (snapshot, bukan lookup)
+    - product_name: "Moring Original" (snapshot, bukan lookup)
     - variant_id: 1
     - variant_name: "Original 100gr" (snapshot)
     - price_per_unit: 15000 (snapshot)
@@ -1436,8 +1436,8 @@ Scenario: Top 5 produk terlaris
   When admin buka dashboard atau /admin/reports/top-products
   Then GET /api/v1/admin/reports/top-products?limit=5
   And tampilkan list:
-    - Rank 1: Kripik Moring Original - 45 sold - Rp 675.000
-    - Rank 2: Kripik Moring Pedas - 30 sold - Rp 510.000
+    - Rank 1: Moring Original - 45 sold - Rp 675.000
+    - Rank 2: Moring Pedas - 30 sold - Rp 510.000
     - dst
 ```
 

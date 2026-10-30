@@ -35,6 +35,131 @@ Setiap kali specs di-update, tulis notifikasi baru di section "Pending Notificat
 
 > Urut dari TERBARU di atas ke TERLAMAU di bawah. Agent B harus baca dari atas.
 
+### [NOTIF-004] — 2026-10-30 — ⚠️ CRITICAL: Koreksi Deskripsi Produk Moring Suksok (Bukan Daun Kelor)
+
+**Spec files changed**: `specs/00-vision.md`, `specs/01-requirements.md`, `specs/04-ui-guidelines.md`, `specs/05-data-model.md`, `specs/06-api-contracts.md`, `specs/08-acceptance-criteria.md`, `specs/decisions/ADR-002-qris-self-generated.md`, `README.md`
+**Change type**: CRITICAL — Content correction (factual error in product description)
+**Author**: Agent A (Planning)
+**Priority**: 🔴 HIGH — must acknowledge & apply to your code before continuing development
+
+#### 🚨 Apa yang Salah?
+
+Setelah verifikasi lebih mendalam dengan mitra (owner Moring Suksok), ditemukan bahwa **deskripsi produk yang kita pakai di seluruh spec adalah SALAH**:
+
+| ❌ SALAH (sebelumnya) | ✅ BENAR (sekarang) |
+|---|---|
+| "produk berbahan dasar daun kelor (moringa)" | "produk camilan khas berupa cimol kering (moring) — cimol yang digoreng dengan tekstur kering, renyah, dan tahan lama" |
+| "snack/kripik moring" | "cimol kering (moring)" |
+| "olahan daun kelor" | "camilan cimol kering" |
+| "Kripik Moring Original" | "Moring Original" |
+| "Kripik Moring Pedas" | "Moring Pedas" |
+| "Kripik Moring Keju" | "Moring Keju" |
+| "hijau daun kelor" (palette reference) | "hijau natural" (tetap pakai warna hijau yang sama, hanya deskripsi yang diubah) |
+
+#### 📦 Daftar Produk yang Benar (5 produk dengan varian)
+
+```
+Produk 1: Moring Original    — varian: 100gr, 250gr, 500gr (3 varian)
+Produk 2: Moring Pedas       — varian: 100gr, 250gr (2 varian)
+Produk 3: Moring Keju        — varian: 100gr, 250gr (2 varian)
+Produk 4: Moring Balado      — varian: 100gr, 250gr (2 varian)  ← BARU
+Produk 5: Moring Jagung      — varian: 100gr, 250gr (2 varian)  ← BARU
+```
+
+Total: 5 produk dengan 11 varian (sebelumnya hanya 3 produk dengan 7 varian).
+
+#### 🎨 Logo Resmi Moring Suksok
+
+Logo resmi sudah saya simpan di:
+```
+docs/branding/logo_moring.jpg
+```
+
+**Deskripsi logo**:
+- Background: pure green (sesuai tema yang sudah dipakai)
+- Center: white/cream leaf shape (ikon daun sebagai elemen desain, BUKAN referensi produk daun kelor)
+- Brand text: "Suksok" (handwritten calligraphic style, larger) + "Snack" (smaller, di bawah)
+
+**Untuk Agent B**: Ganti file `public/logo.svg` (placeholder) dengan `docs/branding/logo_moring.jpg`. Update juga `public/manifest.json` untuk icon PWA.
+
+#### 🛠️ Apa yang Sudah Saya (Agent A) Update?
+
+✅ **8 spec files** sudah diupdate (39 replacements total):
+- `specs/00-vision.md` — profil mitra + jenis usaha + produk utama
+- `specs/01-requirements.md` — latar belakang masalah
+- `specs/04-ui-guidelines.md` — palette description (tetap hijau, hanya ganti terminologi)
+- `specs/05-data-model.md` — seed data (5 produk dengan deskripsi & varian baru)
+- `specs/06-api-contracts.md` — contoh response produk
+- `specs/08-acceptance-criteria.md` — test scenarios dengan nama produk baru
+- `specs/decisions/ADR-002-qris-self-generated.md` — context mitra
+- `README.md` — overview proyek
+
+✅ **Pengajuan Judul TA (.docx)** sudah di-regenerate dengan info yang benar:
+- File: `/home/z/my-project/download/Pengajuan_Judul_TA_Moring_Suksok.docx`
+- Konten: judul TA, latar belakang, analisis, solusi, referensi — semua sudah pakai "cimol kering (moring)"
+
+#### 🔧 Yang HARUS Agent B Lakukan
+
+Karena Anda (Agent B) punya file-file yang juga menggunakan deskripsi lama (di zone Anda sendiri), WAJIB update:
+
+**1. Cek & update file-file berikut di zone Anda**:
+```
+DECISIONS-DEV.md     (2 occurrences "daun kelor" / "kripik moring")
+MIGRATION-NOTES.md   (1 occurrence)
+public/manifest.json (1 occurrence "Snack Sehat dari Alam" atau similar)
+```
+
+**2. Update kode backend**:
+- `backend/seed.py` — ganti 3 produk contoh lama dengan 5 produk baru (lihat `specs/05-data-model.md` § 6.3 untuk detail)
+- `backend/app/...` — cek apakah ada hardcoded description yang masih pakai terminologi lama
+
+**3. Update kode frontend**:
+- `public/logo.svg` — ganti dengan `docs/branding/logo_moring.jpg` (rename jadi `logo.jpg` atau konversi ke SVG)
+- `public/manifest.json` — update icon PWA dengan logo baru
+- `src/app/layout.tsx` atau `src/app/page.tsx` — cek hardcoded "Kripik Moring" atau "daun kelor"
+
+**4. Run migration & seed ulang**:
+```bash
+make db-reset      # reset database
+make migrate       # apply migration
+make seed          # seed data baru (5 produk)
+```
+
+**5. Update PROGRESS.md**:
+- Tambah entry di Minggu 1 atau 2 untuk catatan koreksi deskripsi produk
+- Note bahwa ini adalah perubahan dari spec v1.0.3 → v1.0.4
+
+#### 📊 Versi & Impact
+
+- **Specs Version**: v1.0.3 → v1.0.4 (PATCH — koreksi deskripsi produk)
+- **Breaking changes**: Tidak ada perubahan schema DB, hanya konten seed data yang bertambah (3 → 5 produk)
+- **Database migration needed**: Tidak perlu migration baru, hanya re-seed
+- **Code change effort estimate**: 1-2 jam untuk update all files + re-seed + verify
+
+#### 🚦 Priority
+
+🔴 **HIGH PRIORITY** — Kerjakan ini SEBELUM lanjut ke Minggu 2 (Auth Module). Karena:
+1. Spec sudah berubah, kalau Anda coding pakai spec lama, akan ada inconsistency
+2. Seed data lama masih bilang "Kripik Moring" — akan terlihat tidak profesional saat demo
+3. Logo resmi belum di-integrate ke frontend
+
+#### ✅ Acknowledge Deadline
+
+Tolang acknowledge NOTIF-004 dalam **48 jam** (by 2026-11-01) dengan:
+1. Update semua file di zone Anda (DECISIONS-DEV.md, MIGRATION-NOTES.md, public/manifest.json)
+2. Update backend/seed.py dengan 5 produk baru
+3. Update frontend logo
+4. Test: `make db-reset && make migrate && make seed` → verify 5 produk muncul
+5. Pindahkan NOTIF-004 dari "Pending" → "Acknowledged" di mailbox dengan timestamp
+
+#### 📚 Referensi
+
+- Lihat `specs/05-data-model.md` § 6.3 untuk daftar lengkap 5 produk dengan deskripsi & varian
+- Lihat `docs/branding/logo_moring.jpg` untuk logo resmi
+- Lihat `specs/04-ui-guidelines.md` § 2 untuk palette (tetap sama, hanya deskripsi yang diubah)
+
+---
+
 ### [NOTIF-003] — 2026-10-30 — Agent A Review Minggu 1 Setup + Resolve SCR-002 + SHARED-EDIT-REQUEST-001
 
 **Spec file changed**: `KNOWN-ISSUES.md`, `DECISIONS-DEV.md`, `Makefile`, `specs/CHANGELOG.md`, `specs/VERSION.txt`

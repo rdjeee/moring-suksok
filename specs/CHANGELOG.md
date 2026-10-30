@@ -20,6 +20,93 @@ Semua perubahan signifikan pada files di `specs/` akan didokumentasikan di sini.
 
 ---
 
+## [1.0.4] — 2026-10-30
+
+### CRITICAL: Koreksi Deskripsi Produk Moring Suksok
+
+#### Background
+
+Setelah verifikasi lebih mendalam dengan mitra (owner Moring Suksok), ditemukan bahwa deskripsi produk yang dipakai di seluruh spec adalah **SALAH**. Awalnya kita mengira Moring Suksok adalah "produk olahan daun kelor (moringa)" dengan "snack/kripik moring". Faktanya:
+
+- **Moring Suksok BUKAN produk olahan daun kelor**
+- **Moring Suksok adalah produk camilan khas berupa cimol kering (moring)** — yaitu cimol yang digoreng dengan tekstur kering, renyah, dan tahan lama
+
+#### Changes Applied (39 replacements across 8 files)
+
+| File | Replacements | Description |
+|---|---|---|
+| `specs/00-vision.md` | 4 | Profil mitra: "Jenis Usaha" → "UMKM Camilan Khas (Cimol Kering / Moring)"; "Produk Utama" → "Cimol Kering (Moring) dengan beberapa varian rasa" |
+| `specs/01-requirements.md` | 2 | Latar belakang masalah |
+| `specs/04-ui-guidelines.md` | 3 | Palette description: "hijau daun kelor" → "hijau natural" (warna tetap sama, hanya terminologi) |
+| `specs/05-data-model.md` | 11 | Seed data: 3 produk → 5 produk (Original, Pedas, Keju, Balado, Jagung); deskripsi produk diperbaiki |
+| `specs/06-api-contracts.md` | 7 | Contoh response API dengan nama produk baru |
+| `specs/08-acceptance-criteria.md` | 5 | Test scenarios dengan nama produk baru |
+| `specs/decisions/ADR-002-qris-self-generated.md` | 1 | Context mitra |
+| `README.md` | 7 | Overview proyek |
+
+#### New Product Examples (5 produk dengan 11 varian)
+
+```
+Produk 1: Moring Original    — varian: 100gr, 250gr, 500gr (3 varian)
+Produk 2: Moring Pedas       — varian: 100gr, 250gr (2 varian)
+Produk 3: Moring Keju        — varian: 100gr, 250gr (2 varian)
+Produk 4: Moring Balado      — varian: 100gr, 250gr (2 varian)  ← BARU
+Produk 5: Moring Jagung      — varian: 100gr, 250gr (2 varian)  ← BARU
+```
+
+#### Logo Resmi Moring Suksok
+
+- File: `docs/branding/logo_moring.jpg` (BARU)
+- Deskripsi: Background pure green, center white leaf shape dengan text "Suksok" + "Snack"
+- Catatan: Ikon daun pada logo adalah elemen desain, BUKAN referensi produk daun kelor
+- Tema warna: Tetap pakai palette hijau `#2D6A4F` (tidak berubah)
+
+#### Files NOT Updated by Agent A (Agent B's Zone)
+
+File-file berikut masih mengandung terminologi lama dan HARUS diupdate oleh Agent B (inform via NOTIF-004):
+
+- `DECISIONS-DEV.md` (2 occurrences "daun kelor" / "kripik moring")
+- `MIGRATION-NOTES.md` (1 occurrence)
+- `public/manifest.json` (1 occurrence)
+- `backend/seed.py` (kode seed data 3 produk lama → 5 produk baru)
+- `public/logo.svg` (placeholder → ganti dengan `docs/branding/logo_moring.jpg`)
+- `src/app/...` (cek hardcoded "Kripik Moring" atau "daun kelor")
+
+#### Other Updates
+
+- `Pengajuan_Judul_TA_Moring_Suksok.docx` — di-regenerate dengan info yang benar (file lama di-overwrite)
+- `specs/SPECS-UPDATE-NOTIFICATION.md` — Added NOTIF-004 dengan priority 🔴 HIGH untuk Agent B
+- `scripts/fix_product_description.py` — Python script bulk replacement (saved for reference)
+
+#### Impact
+
+- **Breaking changes**: Tidak ada perubahan schema DB, hanya konten seed data
+- **Database migration needed**: Tidak perlu migration baru, hanya re-seed (3 → 5 produk)
+- **Code change effort (Agent B)**: 1-2 jam untuk update semua file + re-seed + verify
+
+#### Migration Guide dari v1.0.3 → v1.0.4
+
+Agent B (after pulling this update):
+
+1. **Baca NOTIF-004** di `specs/SPECS-UPDATE-NOTIFICATION.md` — priority 🔴 HIGH
+2. **Update file-file di zone Anda** yang masih pakai terminologi lama:
+   - `DECISIONS-DEV.md` (2 occurrences)
+   - `MIGRATION-NOTES.md` (1 occurrence)
+   - `public/manifest.json` (1 occurrence)
+   - `backend/seed.py` (ganti 3 produk → 5 produk, lihat `specs/05-data-model.md` § 6.3)
+   - `public/logo.svg` → ganti dengan `docs/branding/logo_moring.jpg`
+   - `src/app/...` — cek hardcoded "Kripik Moring" atau "daun kelor"
+3. **Re-seed database**:
+   ```bash
+   make db-reset
+   make migrate
+   make seed
+   ```
+4. **Verify 5 produk** muncul di `GET /api/v1/products`
+5. **Acknowledge NOTIF-004** di mailbox dengan timestamp
+
+---
+
 ## [1.0.3] — 2026-10-30
 
 ### Agent A Review of Agent B's Minggu 1 Setup

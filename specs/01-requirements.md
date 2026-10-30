@@ -10,7 +10,7 @@
 
 ### 1.1 Profil Moring Suksok
 
-Moring Suksok adalah UMKM yang bergerak di bidang pengolahan produk berbahan dasar daun kelor (moringa), dengan produk utama berupa snack/kripik moring yang memiliki beberapa varian rasa. Usaha ini dimiliki oleh seorang pengusaha berusia 40 tahun, dan memiliki dua jenis customer yaitu Customer Ritel (toko/agen yang membeli untuk dijual ulang) dan Customer Masyarakat (konsumen akhir yang membeli untuk konsumsi pribadi).
+Moring Suksok adalah UMKM yang bergerak di bidang pengolahan produk berbahan dasar cimol kering (moring), dengan produk utama berupa cimol kering (moring) yang memiliki beberapa varian rasa. Usaha ini dimiliki oleh seorang pengusaha berusia 40 tahun, dan memiliki dua jenis customer yaitu Customer Ritel (toko/agen yang membeli untuk dijual ulang) dan Customer Masyarakat (konsumen akhir yang membeli untuk konsumsi pribadi).
 
 Saat ini, proses penjualan masih dilakukan secara konvensional: customer menghubungi owner melalui WhatsApp untuk memesan produk, lalu owner mencatat transaksi pada nota manual sebagai bukti pembelian dan pembukuan akuntan. Pendekatan ini telah berjalan cukup lama, namun seiring bertambahnya jumlah customer dan kompleksitas transaksi, muncul berbagai kendala operasional yang perlu diatasi.
 

@@ -1,6 +1,6 @@
 # 🌿 Moring Suksok — Sistem Distribusi & Pencatatan Transaksi
 
-> **Tugas Akhir** — Aplikasi mini e-commerce untuk UMKM Moring Suksok (snack kripik daun kelor)
+> **Tugas Akhir** — Aplikasi mini e-commerce untuk UMKM Moring Suksok (snack kripik cimol kering)
 > Menggantikan pemesanan via WhatsApp & nota manual dengan sistem terstruktur + pencatatan transaksi otomatis.
 
 ![Status](https://img.shields.io/badge/Status-Planning%20v1.0.0-success)
@@ -24,7 +24,7 @@ Project Root:    /home/z/my-project/   (sudah digabung dengan workspace root)
 
 ## 📖 Tentang Proyek
 
-Moring Suksok adalah UMKM pengolahan daun kelor (moringa) dengan produk utama snack/kripik moring. Saat ini penjualan masih dilakukan via WhatsApp dengan pencatatan manual menggunakan nota. Sistem ini dibangun untuk:
+Moring Suksok adalah UMKM pengcamilan cimol kering (moring) dengan produk utama cimol kering (moring). Saat ini penjualan masih dilakukan via WhatsApp dengan pencatatan manual menggunakan nota. Sistem ini dibangun untuk:
 
 1. **Menggantikan pemesanan via WhatsApp** dengan mini e-commerce terstruktur
 2. **Menggantikan nota manual** dengan nota digital otomatis (PDF)
@@ -487,9 +487,9 @@ Setelah `python seed.py` dijalankan:
 ## 🌿 Branding
 
 - **Nama Bisnis**: Moring Suksok
-- **Tagline**: Snack Sehat dari Alam 🌿
-- **Logo**: Leaf icon (moringa) + text "Moring Suksok"
-- **Color**: Hijau daun kelor (moring-green #2D6A4F)
+- **Tagline**: Snack Khas Suksok 🌿
+- **Logo**: Leaf icon (moring) + text "Moring Suksok"
+- **Color**: Hijau cimol kering (moring-green #2D6A4F)
 
 ---
 
@@ -522,4 +522,4 @@ Proyek ini adalah **Tugas Akhir** untuk menyelesaikan studi. Source code boleh d
 **Last Updated**: 2026-10-29
 **Status**: Ready for Development Phase (Agent B)
 
-🌿 *Moring Suksok — Snack Sehat dari Alam untuk Indonesia*
+🌿 *Moring Suksok — Snack Khas Suksok untuk Indonesia*

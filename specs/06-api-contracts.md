@@ -241,7 +241,7 @@ Authorization: Bearer <token>
   "data": [
     {
       "id": 1,
-      "name": "Kripik Moring Original",
+      "name": "Moring Original",
       "slug": "kripik-moring-original",
       "category": "snack",
       "base_price": 15000,
@@ -269,9 +269,9 @@ Authorization: Bearer <token>
   "success": true,
   "data": {
     "id": 1,
-    "name": "Kripik Moring Original",
+    "name": "Moring Original",
     "slug": "kripik-moring-original",
-    "description": "Kripik daun kelor original...",
+    "description": "Kripik cimol kering original...",
     "category": "snack",
     "base_price": 15000,
     "image_url": "https://res.cloudinary.com/moring/...",
@@ -306,7 +306,7 @@ Authorization: Bearer <token>
   "message": "Produk berhasil ditambahkan",
   "data": {
     "id": 2,
-    "name": "Kripik Moring Pedas",
+    "name": "Moring Pedas",
     "slug": "kripik-moring-pedas",
     "base_price": 17000,
     "image_url": "https://res.cloudinary.com/moring/...",
@@ -340,7 +340,7 @@ Authorization: Bearer <token>
       {
         "id": 1,
         "product_id": 1,
-        "product_name": "Kripik Moring Original",
+        "product_name": "Moring Original",
         "variant_id": 1,
         "variant_name": "Original 100gr",
         "quantity": 2,
@@ -493,7 +493,7 @@ Authorization: Bearer <token>
     "items": [
       {
         "product_id": 1,
-        "product_name": "Kripik Moring Original",
+        "product_name": "Moring Original",
         "variant_id": 1,
         "variant_name": "Original 100gr",
         "quantity": 2,
@@ -919,7 +919,7 @@ Authorization: Bearer <token>
   "data": [
     {
       "product_id": 1,
-      "product_name": "Kripik Moring Original",
+      "product_name": "Moring Original",
       "total_sold": 45,
       "revenue": 675000
     }

@@ -98,7 +98,7 @@ Pilih **Option B: QRIS Self-Generated**.
 
 1. **UMKM budget constraint**: Owner Moring Suksok adalah UMKM kecil. Fee Rp 315rb/tahun mungkin terasa kecil untuk bisnis besar, tapi untuk UMKM yang transaksinya <50/bulan, setiap rupiah dihitung. Apalagi fee ini ongoing selama sistem dipakai.
 
-2. **Cash flow real-time critical**: Owner sering butuh uang langsung dipakai (beli bahan baku daun kelor, dll). Settlement H+1 dari Midtrans akan menghambat operasional. Dengan QRIS self-generated, uang langsung masuk DANA owner dan bisa dipakai hari yang sama.
+2. **Cash flow real-time critical**: Owner sering butuh uang langsung dipakai (beli bahan baku cimol kering, dll). Settlement H+1 dari Midtrans akan menghambat operasional. Dengan QRIS self-generated, uang langsung masuk DANA owner dan bisa dipakai hari yang sama.
 
 3. **Existing assets**: Owner sudah punya QRIS statis aktif. Tidak perlu setup merchant baru, cukup scan dan paste payload-nya.
 

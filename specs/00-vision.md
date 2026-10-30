@@ -8,7 +8,7 @@
 
 ## 1. Ringkasan Visi
 
-Membangun **sistem distribusi produk berbasis mini e-commerce** untuk UMKM **Moring Suksok**, sebuah bisnis olahan daun kelor (snack/kripik moring) yang saat ini masih melakukan transaksi melalui WhatsApp dan pencatatan manual menggunakan nota. Sistem yang dibangun bertujuan untuk **menggantikan proses pemesanan via WhatsApp** dengan aplikasi terstruktur, serta **menggantikan nota manual** dengan pencatatan transaksi digital otomatis yang dapat berfungsi sebagai pembukuan akuntan.
+Membangun **sistem distribusi produk berbasis mini e-commerce** untuk UMKM **Moring Suksok**, sebuah bisnis camilan cimol kering (cimol kering (moring)) yang saat ini masih melakukan transaksi melalui WhatsApp dan pencatatan manual menggunakan nota. Sistem yang dibangun bertujuan untuk **menggantikan proses pemesanan via WhatsApp** dengan aplikasi terstruktur, serta **menggantikan nota manual** dengan pencatatan transaksi digital otomatis yang dapat berfungsi sebagai pembukuan akuntan.
 
 Sistem dibangun dengan **arsitektur decoupled** (Frontend-Backend terpisah): Frontend menggunakan Next.js PWA yang dapat diinstall di Android dan berjalan di web browser, sedangkan Backend menggunakan Python FastAPI dengan database MySQL yang dikelola melalui phpMyAdmin. Pendekatan ini dipilih untuk memberikan separation of concerns yang jelas, memudahkan maintenance, serta memanfaatkan ekosistem Python yang kuat untuk pengembangan API modern.
 
@@ -17,9 +17,9 @@ Sistem dibangun dengan **arsitektur decoupled** (Frontend-Backend terpisah): Fro
 | Item | Detail |
 |---|---|
 | Nama Mitra | Moring Suksok |
-| Jenis Usaha | UMKM Pengolahan Daun Kelor (Moringa) |
+| Jenis Usaha | UMKM Camilan Khas (Cimol Kering / Moring) |
 | Usia Owner | 40 Tahun |
-| Produk Utama | Snack/Kripik Moring dengan beberapa varian rasa |
+| Produk Utama | Cimol Kering (Moring) dengan beberapa varian rasa |
 | Customer | Ritel (toko/agen) & Masyarakat (konsumen akhir) |
 | Cara Penjualan Saat Ini | Pemesanan via WhatsApp + nota manual |
 | Skala Bisnis | Lokal kecil (<100 customer aktif, <50 order/bulan) |

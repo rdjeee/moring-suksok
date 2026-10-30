@@ -14,7 +14,7 @@ Sistem menggunakan **MySQL 8.4.3** dengan charset `utf8mb4_unicode_ci` (support 
 |---|---|---|
 | 1 | `admins` | Data admin/owner (login) |
 | 2 | `customers` | Data customer Ritel & Masyarakat |
-| 3 | `products` | Data produk (snack kripik moring) |
+| 3 | `products` | Data produk (cimol kering (moring)) |
 | 4 | `product_variants` | Varian produk (rasa/ukuran) |
 | 5 | `orders` | Header pesanan (1 pesanan = 1 record) |
 | 6 | `order_items` | Detail item per pesanan |
@@ -213,7 +213,7 @@ CREATE TABLE product_variants (
 ```
 
 **Contoh data**:
-- Product "Kripik Moring Original" (id=1)
+- Product "Moring Original" (id=1)
   - Variant 1: "Original 100gr" (stock=50)
   - Variant 2: "Original 250gr" (stock=20)
   - Variant 3: "Original 500gr" (stock=10)
@@ -421,9 +421,9 @@ settings_data = {
 ```python
 products_data = [
     {
-        'name': 'Kripik Moring Original',
-        'slug': 'kripik-moring-original',
-        'description': 'Kripik daun kelor original dengan rasa gurih dan renyah. Kaya nutrisi dan antioksidan.',
+        'name': 'Moring Original',
+        'slug': 'moring-original',
+        'description': 'Cimol kering (moring) dengan rasa original, gurih, renyah, dan tahan lama.',
         'category': 'snack',
         'base_price': 15000,
         'variants': [
@@ -433,9 +433,9 @@ products_data = [
         ]
     },
     {
-        'name': 'Kripik Moring Pedas',
-        'slug': 'kripik-moring-pedas',
-        'description': 'Kripik daun kelor dengan tambahan bumbu pedas untuk pecinta pedas.',
+        'name': 'Moring Pedas',
+        'slug': 'moring-pedas',
+        'description': 'Cimol kering (moring) dengan bumbu pedas untuk pecinta pedas.',
         'category': 'snack',
         'base_price': 17000,
         'variants': [
@@ -444,14 +444,36 @@ products_data = [
         ]
     },
     {
-        'name': 'Kripik Moring Keju',
-        'slug': 'kripik-moring-keju',
-        'description': 'Kripik daun kelor dengan topping keju untuk rasa yang lebih creamy.',
+        'name': 'Moring Keju',
+        'slug': 'moring-keju',
+        'description': 'Cimol kering (moring) dengan topping keju untuk rasa yang lebih creamy.',
         'category': 'snack',
         'base_price': 18000,
         'variants': [
             {'variant_name': 'Keju 100gr', 'stock': 30},
             {'variant_name': 'Keju 250gr', 'stock': 12},
+        ]
+    },
+    {
+        'name': 'Moring Balado',
+        'slug': 'moring-balado',
+        'description': 'Cimol kering (moring) dengan bumbu balado yang pedas manis khas Indonesia.',
+        'category': 'snack',
+        'base_price': 17000,
+        'variants': [
+            {'variant_name': 'Balado 100gr', 'stock': 35},
+            {'variant_name': 'Balado 250gr', 'stock': 14},
+        ]
+    },
+    {
+        'name': 'Moring Jagung',
+        'slug': 'moring-jagung',
+        'description': 'Cimol kering (moring) dengan rasa jagung manis yang disukai anak-anak.',
+        'category': 'snack',
+        'base_price': 16000,
+        'variants': [
+            {'variant_name': 'Jagung 100gr', 'stock': 38},
+            {'variant_name': 'Jagung 250gr', 'stock': 16},
         ]
     },
 ]

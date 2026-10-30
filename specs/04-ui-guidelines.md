@@ -19,7 +19,7 @@ Membangun antarmuka yang **sederhana, ramah, dan profesional** untuk UMKM Moring
 4. **Touch-Friendly**: Min target ukuran 44x44px untuk tap area
 5. **Fast Loading**: Optimasi image, lazy load, skeleton loading
 6. **Accessibility**: WCAG 2.1 Level AA, contrast ratio ≥4.5:1 untuk text
-7. **Branding Moring**: Warna hijau daun kelor + natural earthy tone
+7. **Branding Moring**: Warna hijau cimol kering + natural earthy tone
 
 ### 1.3 Tone & Voice
 - **Bahasa**: Indonesia formal-santai (tidak kaku, tapi profesional)
@@ -36,7 +36,7 @@ Membangun antarmuka yang **sederhana, ramah, dan profesional** untuk UMKM Moring
 
 ### 2.1 Primary Colors (Branding Moring)
 
-Palet warna terinspirasi dari daun kelor (moringa) — hijau alami dengan aksen earthy. Memberikan kesan natural, healthy, dan trustworthy.
+Palet warna terinspirasi dari cimol kering (moring) — hijau natural dengan aksen earthy. Memberikan kesan natural, healthy, dan trustworthy.
 
 | Token | Hex | Usage |
 |---|---|---|
