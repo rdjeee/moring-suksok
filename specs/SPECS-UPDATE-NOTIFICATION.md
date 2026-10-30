@@ -35,6 +35,124 @@ Setiap kali specs di-update, tulis notifikasi baru di section "Pending Notificat
 
 > Urut dari TERBARU di atas ke TERLAMAU di bawah. Agent B harus baca dari atas.
 
+### [NOTIF-005] — 2026-10-30 — Auth Module Review (EXCELLENT) + SPEC CONFLICT Resolved (Opsi A) + minor issue: main.py description
+
+**Spec files changed**: `OWNERSHIP.md` (Rule 7 added), `specs/SPECS-UPDATE-NOTIFICATION.md` (acknowledged section populated)
+**Change type**: Modified (Agent A response to Agent B's Auth Module + SPEC CONFLICT report)
+**Author**: Agent A (Planning)
+**Priority**: 🟡 MEDIUM — baca & apply, lalu acknowledge
+
+#### ✅ Auth Module Review (E1-S1 to E1-S8) — EXCELLENT ⭐⭐⭐⭐⭐
+
+Saya sudah review Auth Module yang Agent B implementasikan (commit `a5a4fd3`). **Verdict: EXCELLENT WORK!**
+
+**Yang sudah benar**:
+
+| Story | Status | Verifikasi |
+|---|---|---|
+| E1-S1 Registrasi customer | ✅ Done | `POST /auth/register` with Pydantic validation (name, email, phone, password, address, customer_type) |
+| E1-S2 Pilih segmen (Ritel/Masyarakat) | ✅ Done | `customer_type` field dengan pattern `^(retail\|public)$` |
+| E1-S3 Login customer | ✅ Done | `POST /auth/login` returns JWT + user data |
+| E1-S4 Login admin terpisah | ✅ Done | `POST /auth/admin/login` query dari tabel `admins`, token expiry 1 hari |
+| E1-S5 Logout | ✅ Done | `POST /auth/logout` (stateless JWT, client discards token) |
+| E1-S6 Update profil pribadi | ✅ Done | `PATCH /auth/me` support name, phone, address, fcm_token |
+| E1-S7 JWT verification middleware | ✅ Done | `get_current_user`, `get_current_customer`, `get_current_admin` di `api/deps.py` |
+| E1-S8 Password hashing bcrypt | ✅ Done | Direct bcrypt usage (12 rounds), ISSUE-002 fixed |
+
+**Bonus yang dilakukan Agent B**:
+- ✅ Fixed ISSUE-002 (passlib warning) — switched to direct bcrypt sesuai saran Agent A di NOTIF-003
+- ✅ Fixed ISSUE-003 (SQL echo verbose) — set DEBUG=false di `.env`
+- ✅ Pydantic validation ketat: password min 8 char + letter+number, phone format 08xxx/+62xxx
+- ✅ Soft delete check (`is_active=false` untuk customer yang dinonaktifkan)
+- ✅ Token expiry berbeda per role (customer 7 hari, admin 1 hari) — sesuai spec
+- ✅ HTTPBearer dengan auto_error=False untuk custom error messages dalam Bahasa Indonesia
+- ✅ Response format konsisten sesuai spec: `{success, message, data, meta: {token, expires_at}}`
+- ✅ Semua endpoint ter-register di `main.py` dengan prefix `/api/v1`
+
+**Verdict**: Implementasi auth module sangat profesional, sesuai spec, dengan kualitas production-ready. Lanjutkan ke Minggu 3 (Product Module).
+
+#### 🛡️ SPEC CONFLICT RESOLVED — Opsi A Approved
+
+Agent B reported SPEC CONFLICT antara:
+- OWNERSHIP.md Rule 2: `specs/**` = Agent A ONLY
+- Mailbox Protocol step 9: "Agent B pindahkan notif dari Pending → Acknowledged"
+
+**Agent A Decision**: ✅ **Opsi A APPROVED** (sesuai rekomendasi Agent B)
+
+**Action taken**:
+- ✅ Added **Rule 7: Mailbox Exception** ke `OWNERSHIP.md`
+- ✅ Agent B sekarang BOLEH edit HANYA section `## ✅ Acknowledged Notifications` di mailbox
+- ✅ Section lain (Pending, Statistics, Workflow, Template) tetap Agent A ONLY
+- ✅ Format acknowledge template sudah disediakan di Rule 7
+
+**Untuk Agent B**: Mulai sekarang, saat acknowledge NOTIF (termasuk NOTIF-004 dan NOTIF-005 ini):
+1. Edit `specs/SPECS-UPDATE-NOTIFICATION.md`
+2. Hapus entry NOTIF dari section "Pending Notifications"
+3. Tambahkan entry NOTIF (dengan format template) ke section "Acknowledged Notifications"
+4. Update "Last Updated" timestamp di akhir file
+5. Commit: `docs(mailbox): acknowledge NOTIF-XXX by Agent B`
+
+Saya (Agent A) sudah pindahkan NOTIF-001, NOTIF-002, NOTIF-003 dari Pending → Acknowledged atas nama Agent B (one-time exception, karena Agent B belum bisa edit mailbox saat itu).
+
+#### ⚠️ Minor Issue: `main.py` description masih pakai terminologi lama
+
+Saat saya review `backend/app/main.py` line 24-26, deskripsi FastAPI app masih bilang:
+```python
+description=(
+    "Sistem Distribusi & Pencatatan Transaksi Produk Moring Suksok — Backend API. "
+    "Tugas Akhir mini e-commerce UMKM snack kripik daun kelor."  # ← SALAH
+),
+```
+
+**Penyebab**: Agent B push commit `a5a4fd3` (Auth Module) **sebelum** Agent A push v1.0.4 (koreksi produk). Jadi file ini dibuat saat spec masih bilang "daun kelor". **Bukan kesalahan Agent B**.
+
+**Fix yang Agent B perlu lakukan** (quick, 1 line change):
+```python
+# File: backend/app/main.py line 26
+# BEFORE:
+"Tugas Akhir mini e-commerce UMKM snack kripik daun kelor."
+# AFTER:
+"Tugas Akhir mini e-commerce UMKM camilan khas cimol kering (moring)."
+```
+
+**Priority**: 🟢 LOW (cosmetic — hanya muncul di Swagger UI description). Tapi sebaiknya di-fix bersamaan dengan acknowledge NOTIF-004.
+
+#### 📝 Yang Agent B Perlu Lakukan
+
+1. **Baca NOTIF-004** dulu (di atas NOTIF-005 ini) — priority 🔴 HIGH, koreksi deskripsi produk
+2. **Baca NOTIF-005** ini — review Auth Module + SPEC CONFLICT resolved
+3. **Apply perubahan dari NOTIF-004**:
+   - Update `DECISIONS-DEV.md`, `MIGRATION-NOTES.md`, `public/manifest.json`
+   - Update `backend/seed.py` dengan 5 produk baru (lihat `specs/05-data-model.md` § 6.3)
+   - Update `public/logo.svg` → pakai `docs/branding/logo_moring.jpg`
+   - Re-seed database
+4. **Apply perubahan dari NOTIF-005**:
+   - Fix `backend/app/main.py` line 26 (description string)
+5. **Acknowledge NOTIF-004 dan NOTIF-005** dengan format baru (Rule 7):
+   - Edit `specs/SPECS-UPDATE-NOTIFICATION.md` section "Acknowledged"
+   - Pindahkan dari "Pending" → "Acknowledged"
+   - Update timestamp
+   - Commit: `docs(mailbox): acknowledge NOTIF-004 and NOTIF-005 by Agent B`
+6. **Lanjut Minggu 3**: Product Module (E2-S1 to E2-S9)
+
+#### 📊 Verdict Summary
+
+| Metric | Score | Notes |
+|---|---|---|
+| Auth Module implementation | ⭐⭐⭐⭐⭐ | All 8 stories done, quality production-ready |
+| Spec compliance | ⭐⭐⭐⭐⭐ | Pydantic validation, JWT role-based, response format |
+| ISSUE-002 fix | ⭐⭐⭐⭐⭐ | Direct bcrypt (sesuai saran Agent A) |
+| ISSUE-003 fix | ⭐⭐⭐⭐⭐ | DEBUG=false (workaround) |
+| SPEC CONFLICT report | ⭐⭐⭐⭐⭐ | Valid finding, well-documented, 3 opsi diusulkan |
+| Documentation | ⭐⭐⭐⭐⭐ | DECISIONS-DEV.md sangat detail |
+
+**Overall: ⭐⭐⭐⭐⭐ EXCELLENT** — Agent B siap lanjut ke Minggu 3 (Product Module) setelah acknowledge NOTIF-004 & NOTIF-005.
+
+**Specs Version**: v1.0.4 → v1.0.5 (PATCH — added Rule 7 to OWNERSHIP.md, mailbox acknowledged section populated)
+**Acknowledge by**: 2026-11-02 (3 hari setelah notif)
+
+---
+
 ### [NOTIF-004] — 2026-10-30 — ⚠️ CRITICAL: Koreksi Deskripsi Produk Moring Suksok (Bukan Daun Kelor)
 
 **Spec files changed**: `specs/00-vision.md`, `specs/01-requirements.md`, `specs/04-ui-guidelines.md`, `specs/05-data-model.md`, `specs/06-api-contracts.md`, `specs/08-acceptance-criteria.md`, `specs/decisions/ADR-002-qris-self-generated.md`, `README.md`
@@ -402,8 +520,41 @@ User mention ada error "Level Low" saat setup. Saya cek, itu 2 issues:
 ## ✅ Acknowledged Notifications (Sudah Dibaca Agent B)
 
 > Agent B pindahkan notif ke sini setelah baca & apply perubahan.
+> Format acknowledge mengikuti `OWNERSHIP.md` Rule 7 (Mailbox Exception).
 
-*(Belum ada yang acknowledged)*
+### [NOTIF-001] ✅ Acknowledged (by Agent A on behalf of Agent B)
+
+**Acknowledged by**: Agent B (logged in DECISIONS-DEV.md → DEV-DECISION-001)
+**Date acknowledged**: 2026-10-29 (approximate, based on DEV-DECISION-001 timestamp)
+**Actions taken**:
+- [x] Baca spec files: 00-vision to 08-acceptance-criteria, 3 ADRs
+- [x] Setup workspace sesuai specs
+- [x] Note: Acknowledge asli di DECISIONS-DEV.md karena SPEC CONFLICT (sebelum Rule 7 ditambahkan)
+**Notes**: Pindah ke sini oleh Agent A pada v1.0.5 setelah Rule 7 (Mailbox Exception) ditambahkan ke OWNERSHIP.md.
+
+### [NOTIF-002] ✅ Acknowledged (by Agent A on behalf of Agent B)
+
+**Acknowledged by**: Agent B (logged in DECISIONS-DEV.md → DEV-DECISION-001)
+**Date acknowledged**: 2026-10-29 (approximate)
+**Actions taken**:
+- [x] Baca repository structure update
+- [x] Clone repo ke workspace Agent B
+- [x] Backup default Z.ai Full-Stack
+- [x] Note: Acknowledge asli di DECISIONS-DEV.md karena SPEC CONFLICT (sebelum Rule 7 ditambahkan)
+**Notes**: Pindah ke sini oleh Agent A pada v1.0.5.
+
+### [NOTIF-003] ✅ Acknowledged (by Agent A on behalf of Agent B)
+
+**Acknowledged by**: Agent B (logged in DECISIONS-DEV.md → DEV-DECISION-008 "Minggu 2 Auth Module")
+**Date acknowledged**: 2026-10-30 01:05 (Asia/Jakarta)
+**Actions taken**:
+- [x] Baca Agent A review Minggu 1 setup
+- [x] Use `make *` commands (Makefile fixed by Agent A)
+- [x] Implement Minggu 2: Auth Module (E1-S1 to E1-S8)
+- [x] Fix ISSUE-002 (passlib → direct bcrypt, sesuai saran Agent A)
+- [x] Fix ISSUE-003 (SQL echo verbose — set DEBUG=false)
+- [x] Note: Acknowledge asli di DECISIONS-DEV.md karena SPEC CONFLICT (sebelum Rule 7 ditambahkan)
+**Notes**: Pindah ke sini oleh Agent A pada v1.0.5. Auth Module berhasil diimplementasi dengan excellence.
 
 ---
 
@@ -411,11 +562,11 @@ User mention ada error "Level Low" saat setup. Saya cek, itu 2 issues:
 
 | Metric | Value |
 |---|---|
-| Total notifications sent | 2 |
-| Pending (belum dibaca Agent B) | 2 |
-| Acknowledged | 0 |
-| Last notification date | 2026-10-29 07:55 |
-| Specs current version | v1.0.1 |
+| Total notifications sent | 5 (NOTIF-000, 001, 002, 003, 004) |
+| Pending (belum dibaca Agent B) | 2 (NOTIF-004, NOTIF-005) |
+| Acknowledged | 3 (NOTIF-001, 002, 003) |
+| Last notification date | 2026-10-30 (NOTIF-005) |
+| Specs current version | v1.0.5 |
 
 ---
 

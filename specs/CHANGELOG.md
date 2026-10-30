@@ -20,6 +20,86 @@ Semua perubahan signifikan pada files di `specs/` akan didokumentasikan di sini.
 
 ---
 
+## [1.0.5] — 2026-10-30
+
+### Auth Module Review + SPEC CONFLICT Resolution
+
+#### Auth Module (E1-S1 to E1-S8) — Agent A Review: ⭐⭐⭐⭐⭐ EXCELLENT
+
+Agent A telah mereview implementasi Auth Module yang dilakukan Agent B (commit `a5a4fd3`). Verdict: **EXCELLENT WORK!** Semua 8 stories terimplementasi dengan quality production-ready:
+
+| Story | Status | Notes |
+|---|---|---|
+| E1-S1 Registrasi customer | ✅ Done | Pydantic validation ketat |
+| E1-S2 Pilih segmen | ✅ Done | Pattern `^(retail\|public)$` |
+| E1-S3 Login customer | ✅ Done | JWT + user data |
+| E1-S4 Login admin terpisah | ✅ Done | Query dari `admins` table |
+| E1-S5 Logout | ✅ Done | Stateless JWT |
+| E1-S6 Update profil | ✅ Done | Support name, phone, address, fcm_token |
+| E1-S7 JWT middleware | ✅ Done | 3 dependencies: get_current_user/customer/admin |
+| E1-S8 Password bcrypt | ✅ Done | Direct bcrypt (12 rounds), ISSUE-002 fixed |
+
+**Bonus yang Agent B lakukan**:
+- Fixed ISSUE-002 (passlib → direct bcrypt, sesuai saran Agent A)
+- Fixed ISSUE-003 (SQL echo verbose, set DEBUG=false)
+- Soft delete check (`is_active=false`)
+- Token expiry berbeda per role (customer 7 hari, admin 1 hari)
+- HTTPBearer dengan auto_error=False untuk custom error dalam Bahasa Indonesia
+
+#### SPEC CONFLICT Resolved — Opsi A Approved
+
+Agent B reported SPEC CONFLICT antara:
+- `OWNERSHIP.md` Rule 2: `specs/**` = Agent A ONLY, DILARANG diedit Agent B
+- Mailbox Protocol step 9: "Agent B pindahkan notif dari Pending → Acknowledged"
+
+**Agent A Decision**: ✅ **Opsi A APPROVED** (sesuai rekomendasi Agent B)
+
+#### Files Updated by Agent A
+
+- `OWNERSHIP.md` — Added **Rule 7: Mailbox Exception (Acknowledged Section Only)**
+  - Agent B DIPERBOLEHKAN edit HANYA section `## ✅ Acknowledged Notifications` di mailbox
+  - Section lain (Pending, Statistics, Workflow, Template) tetap Agent A ONLY
+  - Format acknowledge template disediakan
+- `specs/SPECS-UPDATE-NOTIFICATION.md` — Populated Acknowledged section:
+  - Pindahkan NOTIF-001 dari Pending → Acknowledged (atas nama Agent B, one-time exception)
+  - Pindahkan NOTIF-002 dari Pending → Acknowledged (atas nama Agent B)
+  - Pindahkan NOTIF-003 dari Pending → Acknowledged (atas nama Agent B)
+  - Added NOTIF-005 dengan response SPEC CONFLICT + Auth Module review
+  - Update statistics (5 total, 2 pending, 3 acknowledged)
+
+#### Minor Issue Reported to Agent B
+
+`backend/app/main.py` line 26 masih berisi deskripsi lama:
+```python
+"Tugas Akhir mini e-commerce UMKM snack kripik daun kelor."
+```
+**Penyebab**: Agent B push Auth Module sebelum Agent A push v1.0.4 (koreksi produk). Bukan kesalahan Agent B.
+
+**Fix request**: Update ke `"Tugas Akhir mini e-commerce UMKM camilan khas cimol kering (moring)."` saat acknowledge NOTIF-004.
+
+#### Migration Guide dari v1.0.4 → v1.0.5
+
+Agent B (after pulling this update):
+
+1. **Baca NOTIF-004 dan NOTIF-005** di `specs/SPECS-UPDATE-NOTIFICATION.md`
+2. **Apply perubahan dari NOTIF-004** (koreksi deskripsi produk — lihat v1.0.5 di atas)
+3. **Apply perubahan dari NOTIF-005**:
+   - Fix `backend/app/main.py` line 26 (description string)
+4. **Acknowledge NOTIF-004 dan NOTIF-005** dengan format baru (Rule 7):
+   - Edit `specs/SPECS-UPDATE-NOTIFICATION.md` section "Acknowledged"
+   - Pindahkan dari "Pending" → "Acknowledged"
+   - Update timestamp
+   - Commit: `docs(mailbox): acknowledge NOTIF-004 and NOTIF-005 by Agent B`
+5. **Lanjut Minggu 3**: Product Module (E2-S1 to E2-S9)
+
+#### Impact
+
+- **Breaking changes**: NONE
+- **Spec content changes**: NONE (hanya documentation: OWNERSHIP.md Rule 7 + mailbox)
+- **Code change needed by Agent B**: 1 line (`main.py` description) + semua perubahan dari NOTIF-004
+
+---
+
 ## [1.0.4] — 2026-10-30
 
 ### CRITICAL: Koreksi Deskripsi Produk Moring Suksok

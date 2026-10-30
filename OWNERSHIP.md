@@ -241,6 +241,49 @@ Kalau terjadi konflik saat `git pull`:
 | `PROGRESS.md`, `DECISIONS-DEV.md`, dll | Agent B | Agent B resolve |
 | `README.md`, `Makefile`, dll (SHARED) | Yang menambah commit terakhir | Komunikasi via mailbox |
 
+### Rule 7: Mailbox Exception (Acknowledged Section Only)
+
+> **Added**: v1.0.5 (2026-10-30) — resolve SPEC CONFLICT reported by Agent B
+
+**Exception to Rule 2**: Untuk file `specs/SPECS-UPDATE-NOTIFICATION.md`, Agent B **DIPERBOLEHKAN** edit HANYA section `## ✅ Acknowledged Notifications (Sudah Dibaca Agent B)`.
+
+**Aturan detail**:
+
+| Section di mailbox | Boleh edit siapa? |
+|---|---|
+| Section "📋 Cara Pakai Mailbox Ini" | ❌ Agent A ONLY |
+| Section "🔔 Pending Notifications" (termasuk semua NOTIF-XXX entries) | ❌ Agent A ONLY |
+| Section `## ✅ Acknowledged Notifications` | ✅ Agent B (untuk pindahkan notif dari Pending → Acknowledged) |
+| Section "📊 Notification Statistics" | ❌ Agent A ONLY |
+| Section "🔄 Workflow Update Specs" | ❌ Agent A ONLY |
+| Section "📝 Template Acknowledge oleh Agent B" | ❌ Agent A ONLY |
+| Section "Last Updated" timestamp | ✅ Agent B (update timestamp saat acknowledge) |
+
+**Format yang HARUS dipakai Agent B saat acknowledge**:
+
+```markdown
+### [NOTIF-XXX] ✅ Acknowledged
+
+**Acknowledged by**: Agent B
+**Date acknowledged**: YYYY-MM-DD HH:MM (Asia/Jakarta)
+**Actions taken**:
+- [x] Baca spec file yang diupdate
+- [x] Apply perubahan ke code:
+  - Modified: `frontend/src/components/X.tsx`
+  - Added: `backend/app/api/v1/Y.py`
+- [x] Run tests: ✅ all pass
+- [x] Update PROGRESS.md dengan note perubahan
+**Notes**: [catatan tambahan jika ada]
+```
+
+**Saat acknowledge, Agent B WAJIB**:
+1. Hapus entry NOTIF-XXX dari section "Pending Notifications"
+2. Tambahkan entry NOTIF-XXX (dengan format di atas) ke section "Acknowledged"
+3. Update "Last Updated" timestamp di akhir file
+4. Commit dengan message: `docs(mailbox): acknowledge NOTIF-XXX by Agent B`
+
+**Agent A TIDAK BOLEH** mengganggu section "Acknowledged" kecuali kalau ada kesalahan format yang jelas (misal: Agent B salah format, Agent A boleh fix typo).
+
 ---
 
 ## ✅ Pre-Push Checklist
