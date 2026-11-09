@@ -104,7 +104,8 @@
   "phone": "081234567890",
   "password": "secret123",
   "address": "Jl. Merdeka No. 1, Jakarta",
-  "customer_type": "retail"
+  "customer_type": "retail",
+  "acquisition_channel": "reseller"
 }
 ```
 
@@ -133,6 +134,7 @@
 - `password`: required, min 8 chars, must contain letter+number
 - `address`: required, min 10 chars
 - `customer_type`: required, enum ['retail', 'public']
+- `acquisition_channel`: optional, enum ['direct', 'reseller', 'social_media', 'word_of_mouth', 'other'], default 'direct'
 
 #### 2.1.2 POST `/auth/login`
 

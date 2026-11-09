@@ -20,6 +20,56 @@ Semua perubahan signifikan pada files di `specs/` akan didokumentasikan di sini.
 
 ---
 
+## [1.0.7] — 2026-11-09
+
+### Story Owner + Masalah 6 + Field `acquisition_channel`
+
+#### Background
+
+User melakukan wawancara langsung dengan owner Moring Suksok, mendapatkan 3 jawaban penting:
+1. Latar belakang usaha (hobi → rezeki, Rp500 → Rp2.000)
+2. Masalah yang dihadapi (SDM, bahan baku, pemasaran, tempat produksi, pasar)
+3. Alur pemesanan (6 jalur pemasaran: reseller, e-commerce, sekolah, sosmed, retail modern, toko oleh-oleh)
+
+#### Level 1: Documentation Updates (3 files)
+
+- `specs/00-vision.md` — Profil Mitra diperkaya dengan:
+  - Sejarah usaha (hobi → rezeki, Rp500 → Rp2.000)
+  - Pilihan kemasan (mini, standing pouch, aluminium foil)
+  - Jalur pemasaran existing (6 jalur)
+  - Impian owner (pasar nasional)
+
+- `specs/01-requirements.md` — Latar Belakang diperkaya dengan:
+  - Story owner versi asli
+  - Masalah 6 baru: "Pemasaran Belum Tergabungkan Secara Digital"
+
+#### Level 2: New Database Field (2 files)
+
+- `specs/05-data-model.md` — Tabel `customers` ditambah field:
+  ```sql
+  acquisition_channel VARCHAR(50) DEFAULT 'direct',
+  INDEX idx_acquisition_channel (acquisition_channel)
+  ```
+  Values: `direct` (default), `reseller`, `social_media`, `word_of_mouth`, `other`
+
+- `specs/06-api-contracts.md` — `POST /auth/register` ditambah field:
+  - `acquisition_channel`: optional, enum, default 'direct'
+
+#### Other Updates
+
+- `specs/SPECS-UPDATE-NOTIFICATION.md` — Added NOTIF-007 (pending, apply saat resume)
+- `specs/CHANGELOG.md` — Added v1.0.7 entry
+- `specs/VERSION.txt` — v1.0.6 → v1.0.7
+
+#### Impact
+
+- **Specs version**: v1.0.6 → v1.0.7 (MINOR — new field, backward compatible)
+- **Breaking changes**: NONE (field nullable, default 'direct')
+- **DB migration needed**: YES (Agent B generate saat resume, ~30 min effort)
+- **Development status**: Still PAUSED (NOTIF-006), NOTIF-007 apply saat resume
+
+---
+
 ## [1.0.6] — 2026-10-30
 
 ### ⏸️ PAUSE Development — Tunggu Verifikasi Judul TA dari Dosen

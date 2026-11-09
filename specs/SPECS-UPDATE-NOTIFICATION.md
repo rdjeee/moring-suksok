@@ -35,7 +35,39 @@ Setiap kali specs di-update, tulis notifikasi baru di section "Pending Notificat
 
 > Urut dari TERBARU di atas ke TERLAMAU di bawah. Agent B harus baca dari atas.
 
-*(Semua notifikasi sudah di-acknowledge oleh Agent B — lihat section Acknowledged di bawah)*
+### [NOTIF-007] — 2026-11-09 — Update Specs: Story Owner + Masalah 6 + Field `acquisition_channel` (v1.0.7)
+
+**Spec files changed**: `specs/00-vision.md`, `specs/01-requirements.md`, `specs/05-data-model.md`, `specs/06-api-contracts.md`
+**Change type**: MINOR — Added new field + enriched documentation
+**Author**: Agent A — atas hasil wawancara user dengan owner Moring Suksok
+**Priority**: 🟡 MEDIUM — apply saat resume (NOTIF-008), bukan sekarang
+
+#### Konteks
+User melakukan wawancara dengan owner, mendapat: (1) sejarah usaha (hobi→rezeki, Rp500→Rp2.000), (2) 6 jalur pemasaran, (3) masalah pemasaran belum tergabungkan digital.
+
+#### Yang sudah Agent A update (Level 1 — Documentation)
+- `specs/00-vision.md`: Profil Mitra diperkaya (sejarah, kemasan, jalur pemasaran, impian owner)
+- `specs/01-requirements.md`: Latar Belakang diperkaya (story owner + Masalah 6 baru: pemasaran belum tergabungkan)
+
+#### Yang sudah Agent A update (Level 2 — New DB Field)
+- `specs/05-data-model.md`: Tabel `customers` + field `acquisition_channel VARCHAR(50) DEFAULT 'direct'` + index
+  - Values: `direct`, `reseller`, `social_media`, `word_of_mouth`, `other`
+- `specs/06-api-contracts.md`: `POST /auth/register` + field `acquisition_channel` (optional, default 'direct')
+
+#### Yang Agent B perlu lakukan SAAT RESUME (bukan sekarang):
+1. Add `acquisition_channel = Column(String(50), default='direct')` to `backend/app/models/customer.py`
+2. Generate Alembic migration: `make migrate-create m="add acquisition_channel to customers"`
+3. Update `RegisterRequest` schema di `backend/app/schemas/auth.py`
+4. Update `register()` endpoint di `backend/app/api/v1/auth.py`
+5. Update frontend register form: tambah dropdown "Darimana Anda mengetahui Moring Suksok?"
+6. Estimasi effort: ~30 menit
+
+#### Impact
+- Specs version: v1.0.6 → v1.0.7 (MINOR, backward compatible)
+- Breaking changes: NONE (field nullable, default 'direct')
+- DB migration needed: YES (Agent B generate saat resume)
+
+**Acknowledge by**: Bersamaan dengan NOTIF-008 (resume) nanti
 
 ---
 

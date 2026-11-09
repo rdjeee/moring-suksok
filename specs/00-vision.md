@@ -19,10 +19,14 @@ Sistem dibangun dengan **arsitektur decoupled** (Frontend-Backend terpisah): Fro
 | Nama Mitra | Moring Suksok |
 | Jenis Usaha | UMKM Camilan Khas (Cimol Kering / Moring) |
 | Usia Owner | 40 Tahun |
-| Produk Utama | Cimol Kering (Moring) dengan beberapa varian rasa |
-| Customer | Ritel (toko/agen) & Masyarakat (konsumen akhir) |
+| Sejarah Usaha | Berawal dari hobi dan coba-coba — awalnya dibuat sendiri, diracik sendiri, lalu dibagikan ke tetangga untuk dicicipi. Dari respons positif, muncul keberanian untuk mulai berjualan. Memulai dari harga Rp500 saja, kini produk moring ukuran mini dihargai Rp2.000. Perjalanannya terus berkembang dengan berbagai pilihan kemasan. |
+| Produk Utama | Cimol Kering (Moring) dengan varian rasa: Original, Pedas, Keju, Balado, Jagung |
+| Pilihan Kemasan | Mini, Standing Pouch, Aluminium Foil (disesuaikan dengan kebutuhan dan target pasar) |
+| Customer | Ritel (toko/agen/reseller) & Masyarakat (konsumen akhir) |
 | Cara Penjualan Saat Ini | Pemesanan via WhatsApp + nota manual |
+| Jalur Pemasaran Existing | (1) Reseller, (2) E-commerce (platform belanja online), (3) Sekolah-sekolah, (4) Penjualan online via media sosial, (5) Retail modern (Alfamart & Indomart di Kab. Subang), (6) Toko oleh-oleh di Kab. Subang |
 | Skala Bisnis | Lokal kecil (<100 customer aktif, <50 order/bulan) |
+| Impian Owner | Moring Suksok dikenal dan dinikmati oleh masyarakat di seluruh Indonesia |
 | Timeline TA | 8 minggu development + 1 minggu buffer |
 
 ## 3. Highlight Fitur Utama

@@ -153,24 +153,27 @@ CREATE TABLE admins (
 
 ```sql
 CREATE TABLE customers (
-    id              INT AUTO_INCREMENT PRIMARY KEY,
-    email           VARCHAR(255) NOT NULL UNIQUE,
-    password_hash   VARCHAR(255) NOT NULL,
-    name            VARCHAR(100) NOT NULL,
-    phone           VARCHAR(20) NOT NULL,
-    address         TEXT NOT NULL,
-    customer_type   ENUM('retail', 'public') NOT NULL DEFAULT 'public',
-    fcm_token       TEXT NULL,
-    is_active       BOOLEAN DEFAULT TRUE,
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_customer_type (customer_type)
+    id                   INT AUTO_INCREMENT PRIMARY KEY,
+    email                VARCHAR(255) NOT NULL UNIQUE,
+    password_hash        VARCHAR(255) NOT NULL,
+    name                 VARCHAR(100) NOT NULL,
+    phone                VARCHAR(20) NOT NULL,
+    address              TEXT NOT NULL,
+    customer_type        ENUM('retail', 'public') NOT NULL DEFAULT 'public',
+    acquisition_channel  VARCHAR(50) DEFAULT 'direct',
+    fcm_token            TEXT NULL,
+    is_active            BOOLEAN DEFAULT TRUE,
+    created_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_customer_type (customer_type),
+    INDEX idx_acquisition_channel (acquisition_channel)
 );
 ```
 
 **Kolom kunci**:
 - `email`: UNIQUE, untuk login customer
 - `customer_type`: ENUM 'retail' atau 'public' (Masyarakat)
+- `acquisition_channel`: VARCHAR(50), untuk tracking darimana customer berasal. Values: `direct` (default), `reseller`, `social_media`, `word_of_mouth`, `other`. Field ini menjawab Masalah 6 (Pemasaran Belum Tergabungkan Secara Digital) — owner dapat melihat efektivitas tiap jalur pemasaran melalui laporan analitik.
 - `fcm_token`: token Firebase Cloud Messaging (untuk push notif), nullable jika customer belum install PWA
 - `is_active`: soft delete flag
 

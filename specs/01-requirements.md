@@ -10,7 +10,9 @@
 
 ### 1.1 Profil Moring Suksok
 
-Moring Suksok adalah UMKM yang bergerak di bidang pengolahan produk berbahan dasar cimol kering (moring), dengan produk utama berupa cimol kering (moring) yang memiliki beberapa varian rasa. Usaha ini dimiliki oleh seorang pengusaha berusia 40 tahun, dan memiliki dua jenis customer yaitu Customer Ritel (toko/agen yang membeli untuk dijual ulang) dan Customer Masyarakat (konsumen akhir yang membeli untuk konsumsi pribadi).
+Moring Suksok adalah UMKM kuliner yang mengolah produk camilan khas berupa cimol kering (moring) — yaitu cimol yang digoreng dengan tekstur kering, renyah, dan tahan lama. Produk ini memiliki beberapa varian rasa antara lain Original, Pedas, Keju, Balado, dan Jagung, dengan pilihan kemasan yang disesuaikan dengan kebutuhan dan target pasar: ukuran mini, standing pouch, hingga aluminium foil. Usaha ini dimiliki oleh seorang pengusaha berusia 40 tahun, dan memiliki dua jenis customer yaitu Customer Ritel (toko/agen/reseller yang membeli untuk dijual ulang) dan Customer Masyarakat (konsumen akhir yang membeli untuk konsumsi pribadi).
+
+Moring Suksok berdiri bukan karena rencana besar, tapi berawal dari hobi dan coba-coba. Awalnya dibuat sendiri, diracik sendiri, lalu dibagikan ke tetangga untuk dicicipi. Alhamdulillah, responsnya positif. Dari situlah muncul keberanian untuk mulai berjualan. Dulu memulai dari harga Rp500 saja, dan kini produk moring ukuran mini sudah dihargai Rp2.000. Perjalanannya terus berkembang dengan pemasaran yang semakin luas melalui berbagai jalur: reseller, e-commerce (platform belanja online), sekolah-sekolah, penjualan online via media sosial, retail modern (Alfamart dan Indomart di Kabupaten Subang), serta toko oleh-oleh di Kabupaten Subang.
 
 Saat ini, proses penjualan masih dilakukan secara konvensional: customer menghubungi owner melalui WhatsApp untuk memesan produk, lalu owner mencatat transaksi pada nota manual sebagai bukti pembelian dan pembukuan akuntan. Pendekatan ini telah berjalan cukup lama, namun seiring bertambahnya jumlah customer dan kompleksitas transaksi, muncul berbagai kendala operasional yang perlu diatasi.
 
@@ -33,11 +35,14 @@ Owner secara informal membedakan customer Ritel dan Masyarakat, namun tidak ada 
 #### Masalah 5: Pembayaran Tidak Terdokumentasi
 Saat customer membayar via transfer ke DANA owner atau scan QRIS statis, owner harus memverifikasi manual melalui mutasi rekening. Tidak ada audit trail digital yang menghubungkan pembayaran dengan pesanan tertentu, sehingga sulit untuk rekonsiliasi jika ada sengketa atau pertanyaan dari customer di kemudian hari.
 
+#### Masalah 6: Pemasaran Belum Tergabungkan Secara Digital
+Owner menjalankan 6 jalur pemasaran (reseller, e-commerce, sekolah-sekolah, penjualan online via media sosial, retail modern seperti Alfamart/Indomart, serta toko oleh-oleh), namun belum terdapat sistem terpusat yang dapat mengelola dan melacak customer dari berbagai sumber tersebut. Owner berkeinginan untuk memperluas jaringan pemasaran agar Moring Suksok dapat dikenal dan dinikmati oleh masyarakat di seluruh Indonesia, namun tidak memiliki data terstruktur tentang dari mana customer berasal (acquisition channel) untuk mengukur efektivitas tiap jalur pemasaran.
+
 ### 1.3 Urgensi & Justifikasi Proyek
 
 Permasalahan-permasalahan di atas menghambat pertumbuhan Moring Suksok sebagai UMKM. Tanpa sistem yang terstruktur, owner menghabiskan waktu berharga untuk tugas administratif yang seharusnya bisa diotomatisasi, alih-alih fokus pada pengembangan produk dan ekspansi pasar. Selain itu, customer experience yang buruk (sulit lihat katalog, tidak tahu status pesanan) dapat menurunkan loyalitas dan repeat order.
 
-Pembangunan sistem distribusi dan pencatatan transaksi digital akan menyelesaikan kelima masalah di atas secara komprehensif: nota manual diganti dengan nota digital otomatis ter-generate, status pesanan ter-track real-time, katalog produk dapat diakses mandiri oleh customer, segmentasi customer tercatat dalam database, dan setiap pembayaran terdokumentasi dengan bukti upload.
+Pembangunan sistem distribusi dan pencatatan transaksi digital akan menyelesaikan keenam masalah di atas secara komprehensif: nota manual diganti dengan nota digital otomatis ter-generate, status pesanan ter-track real-time, katalog produk dapat diakses mandiri oleh customer, segmentasi customer tercatat dalam database, setiap pembayaran terdokumentasi dengan bukti upload, serta acquisition channel customer tercatat untuk analisis efektivitas pemasaran.
 
 ---
 
