@@ -133,7 +133,7 @@
 - `phone`: required, format `08xxxxxxxx` or `+62xxx`
 - `password`: required, min 8 chars, must contain letter+number
 - `address`: required, min 10 chars
-- `customer_type`: required, enum ['retail', 'public']
+- `customer_type`: required, enum ['partner', 'consumer']
 - `acquisition_channel`: optional, enum ['direct', 'reseller', 'social_media', 'word_of_mouth', 'other'], default 'direct'
 
 #### 2.1.2 POST `/auth/login`
@@ -520,7 +520,7 @@ Authorization: Bearer <token>
 **Query Params:**
 - `page`, `per_page`: pagination
 - `status`: filter by status
-- `customer_type`: filter by Ritel/Masyarakat
+- `customer_type`: filter by Mitra Kerjasama/Konsumen Akhir
 - `search`: search by order_code or customer name
 - `from`, `to`: date range filter (YYYY-MM-DD)
 

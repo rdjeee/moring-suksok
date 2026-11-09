@@ -20,6 +20,58 @@ Semua perubahan signifikan pada files di `specs/` akan didokumentasikan di sini.
 
 ---
 
+## [1.2.0] — 2026-11-09
+
+### Epic E8: Mitra Kerjasama + Rename Segmentasi Customer
+
+#### Background
+
+Owner Moring Suksok pernah ditawari sebagai Sponsor oleh universitas/politeknik dalam acara "Expo". User mendapat ide untuk membagi customer menjadi:
+- **Mitra Kerjasama** = Ritel, Alfamart, Indomaret, Kantin Sekolah, Organisasi Kampus, Koperasi (institusi/organisasi)
+- **Konsumen Akhir** = Masyarakat/individu
+
+#### Breaking Changes
+
+1. **Rename enum `customer_type`**: `retail` → `partner`, `public` → `consumer`
+2. **New table: `partners`** (1:1 with customers where customer_type='partner')
+3. **New table: `sponsor_events`** (1:N with partners, for tracking Expo/Bazar/Sponsor events)
+4. **New business rules for checkout**:
+   - Ongoing partner: can checkout anytime
+   - One-time partner: can only checkout when has active sponsor_event
+   - One-time partner can re-apply for new events after previous event completed
+
+#### New Epic E8 (5 Stories)
+
+| Story | Title | Priority |
+|---|---|---|
+| E8-S1 | Registrasi Mitra Kerjasama | Must |
+| E8-S2 | Verifikasi & Setup Mitra oleh Owner | Must |
+| E8-S3 | Dashboard Mitra Kerjasama | Must |
+| E8-S4 | Auto-Expire One-Time Partnership | Must |
+| E8-S5 | Owner Dashboard: Performa per Mitra | Should |
+
+#### Files Updated (35 replacements across 8 files)
+
+- `specs/00-vision.md` — Customer segmentasi updated
+- `specs/01-requirements.md` — Customer roles updated (18 replacements)
+- `specs/03-features.json` — Added Epic E8 (5 stories), total 55 stories, 8 epics
+- `specs/05-data-model.md` — Renamed enum + added 2 new tables (partners, sponsor_events)
+- `specs/06-api-contracts.md` — Register endpoint updated
+- `specs/08-acceptance-criteria.md` — AC references updated
+- `README.md` — Customer segmentasi updated
+- `specs/SPECS-UPDATE-NOTIFICATION.md` — Added NOTIF-009
+
+#### Impact
+
+- **Specs version**: v1.1.0 → v1.2.0 (MINOR with breaking changes)
+- **Breaking changes**: YES (enum rename, new tables, new endpoints)
+- **Database migration needed**: YES (rename enum + 2 new tables)
+- **Total stories**: 50 → 55 (8 epics, 43 Must + 12 Should)
+- **Total estimated hours**: 285 → 316
+- **Development status**: Still PAUSED, resume ~9 Des 2026
+
+---
+
 ## [1.1.0] — 2026-11-09
 
 ### Timeline Expansion: 8 Minggu → 16 Minggu (8 Sprint × 2 Minggu)

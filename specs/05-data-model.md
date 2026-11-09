@@ -21,6 +21,8 @@ Sistem menggunakan **MySQL 8.4.3** dengan charset `utf8mb4_unicode_ci` (support 
 | 7 | `payments` | Data pembayaran + bukti upload |
 | 8 | `notifications` | Log notifikasi yang dikirim |
 | 9 | `settings` | Konfigurasi sistem (QRIS owner, info bisnis) |
+| 10 | `partners` | Data khusus Mitra Kerjasama (organisasi, agreement, partnership type) |
+| 11 | `sponsor_events` | Tracking event sponsor/bazar/expo per mitra |
 
 ---
 
@@ -159,7 +161,7 @@ CREATE TABLE customers (
     name                 VARCHAR(100) NOT NULL,
     phone                VARCHAR(20) NOT NULL,
     address              TEXT NOT NULL,
-    customer_type        ENUM('retail', 'public') NOT NULL DEFAULT 'public',
+    customer_type        ENUM('partner', 'consumer') NOT NULL DEFAULT 'consumer',
     acquisition_channel  VARCHAR(50) DEFAULT 'direct',
     fcm_token            TEXT NULL,
     is_active            BOOLEAN DEFAULT TRUE,
@@ -172,7 +174,7 @@ CREATE TABLE customers (
 
 **Kolom kunci**:
 - `email`: UNIQUE, untuk login customer
-- `customer_type`: ENUM 'retail' atau 'public' (Masyarakat)
+- `customer_type`: ENUM 'partner' (Mitra Kerjasama) atau 'consumer' (Konsumen Akhir). Mitra Kerjasama = institusi/organisasi (Ritel, Alfamart, Indomaret, Kantin Sekolah, Organisasi Kampus, Koperasi). Konsumen Akhir = masyarakat/individu.
 - `acquisition_channel`: VARCHAR(50), untuk tracking darimana customer berasal. Values: `direct` (default), `reseller`, `social_media`, `word_of_mouth`, `other`. Field ini menjawab Masalah 6 (Pemasaran Belum Tergabungkan Secara Digital) — owner dapat melihat efektivitas tiap jalur pemasaran melalui laporan analitik.
 - `fcm_token`: token Firebase Cloud Messaging (untuk push notif), nullable jika customer belum install PWA
 - `is_active`: soft delete flag
@@ -371,6 +373,95 @@ INSERT INTO settings (key_name, value, description) VALUES
 | `business_name` | string | Nama bisnis untuk header nota |
 | `business_address` | string | Alamat bisnis untuk footer nota |
 | `shipping_cost_flat` | int (Rupiah) | Ongkir default flat |
+
+---
+
+### 4.10 Tabel: `partners` (BARU v1.2.0 — Epic E8: Mitra Kerjasama)
+
+```sql
+CREATE TABLE partners (
+    id                   INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id          INT NOT NULL UNIQUE,
+    organization_name    VARCHAR(150) NOT NULL,
+    organization_type    ENUM('retail', 'modern_retail', 'school_cafeteria',
+                             'campus_organization', 'cooperative', 'event_organizer',
+                             'other') NOT NULL,
+    partnership_type     ENUM('ongoing', 'one_time') NOT NULL DEFAULT 'ongoing',
+    agreement_status    ENUM('pending', 'active', 'completed', 'inactive', 'rejected') DEFAULT 'pending',
+    agreement_start_date DATE NULL,
+    agreement_end_date   DATE NULL,
+    contact_person       VARCHAR(100),
+    contact_phone        VARCHAR(20),
+    notes                TEXT,
+    created_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE,
+    INDEX idx_partner_type (partnership_type),
+    INDEX idx_partner_status (agreement_status)
+);
+```
+
+**Kolom kunci**:
+- `customer_id`: UNIQUE FK ke `customers` (1:1 — 1 mitra = 1 customer dengan `customer_type='partner'`)
+- `organization_name`: Nama institusi/organisasi (contoh: "Alfamart Subang", "Koperasi Kampus Polsub")
+- `organization_type`: ENUM tipe organisasi
+- `partnership_type`: **Pembeda utama**:
+  - `ongoing` = berkelanjutan (Alfamart, Kantin Sekolah, Koperasi) → bisa checkout kapan saja
+  - `one_time` = sekali event (Expo, Bazar, Sponsor) → checkout **hanya saat ada sponsor_event aktif**
+- `agreement_status`: 
+  - `pending` = menunggu approval owner
+  - `active` = disetujui & sedang berlaku
+  - `completed` = one_time partnership yang event-nya sudah selesai (auto-expire)
+  - `inactive` = ongoing partnership yang dinonaktifkan manual oleh owner
+  - `rejected` = ditolak owner
+- `agreement_start_date`: tanggal mulai (ongoing = tanggal approve, one_time = tanggal mulai event)
+- `agreement_end_date`: tanggal selesai (ongoing = NULL, one_time = tanggal selesai event)
+- `contact_person` & `contact_phone`: kontak PIC organisasi
+
+**Aturan Bisnis**:
+- One-time partner bisa **re-apply** untuk event baru → buat record baru di `sponsor_events`
+- Checkout validation: `partner` + `ongoing` + `active` → ALLOWED; `partner` + `one_time` + `active` + has active sponsor_event → ALLOWED; else → BLOCKED
+
+---
+
+### 4.11 Tabel: `sponsor_events` (BARU v1.2.0 — Epic E8: Mitra Kerjasama)
+
+```sql
+CREATE TABLE sponsor_events (
+    id               INT AUTO_INCREMENT PRIMARY KEY,
+    partner_id       INT NOT NULL,
+    event_name       VARCHAR(200) NOT NULL,
+    event_type       ENUM('expo', 'bazar', 'sponsor', 'collaboration') DEFAULT 'expo',
+    event_start_date DATE NOT NULL,
+    event_end_date   DATE NOT NULL,
+    event_location   VARCHAR(200),
+    description      TEXT,
+    status           ENUM('planned', 'ongoing', 'completed', 'cancelled') DEFAULT 'planned',
+    created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (partner_id) REFERENCES partners(id) ON DELETE CASCADE,
+    INDEX idx_event_status (status),
+    INDEX idx_event_dates (event_start_date, event_end_date)
+);
+```
+
+**Kolom kunci**:
+- `partner_id`: FK ke `partners` (1 partner bisa punya banyak events — untuk re-apply one_time)
+- `event_name`: Nama event (contoh: "Expo UMKM Polsub 2026", "Bazar Hari Kebangsaan")
+- `event_type`: ENUM tipe event
+- `event_start_date` & `event_end_date`: Rentang tanggal event (wajib diisi)
+- `status`:
+  - `planned` = sudah dibuat, belum mulai
+  - `ongoing` = sedang berlangsung (start_date ≤ today ≤ end_date)
+  - `completed` = sudah selesai (today > end_date) — trigger auto-expire partner agreement
+  - `cancelled` = dibatalkan
+
+**Aturan Bisnis**:
+- **One-time partnership WAJIB punya minimal 1 sponsor_event** (validasi saat approve)
+- **Ongoing partnership BISA punya sponsor_events** (opsional, untuk tracking event)
+- Saat sponsor_event status = `ongoing` → partner `agreement_status` = `active`
+- Saat sponsor_event status = `completed` → partner `agreement_status` = `completed` (auto-expire)
+- One-time partner yang sudah `completed` bisa buat sponsor_event baru → re-apply → owner approve → `active` lagi
 
 ---
 

@@ -70,7 +70,7 @@ Scenario: Validasi field minimal
 
 ### AC-E1-S2: Pilih segmen customer saat registrasi
 
-**User Story**: Sebagai customer, saya ingin memilih segmen (Ritel/Masyarakat) saat registrasi
+**User Story**: Sebagai customer, saya ingin memilih segmen (Mitra Kerjasama/Konsumen Akhir) saat registrasi
 
 ```gherkin
 Scenario: Radio button segmen wajib dipilih
@@ -883,7 +883,7 @@ Scenario: Search by order_code atau customer name
 Scenario: Detail pesanan lengkap
   Given admin klik order ORD-20261029-001
   Then tampilkan:
-    - Order info: code, tanggal, customer name, customer type (Ritel/Masyarakat)
+    - Order info: code, tanggal, customer name, customer type (Mitra Kerjasama/Konsumen Akhir)
     - Shipping address
     - Items list: foto + nama + varian + qty + harga + subtotal
     - Subtotal + ongkir + total
@@ -1443,7 +1443,7 @@ Scenario: Top 5 produk terlaris
 
 ---
 
-### AC-E6-S8: Persentase penjualan Ritel vs Masyarakat
+### AC-E6-S8: Persentase penjualan Mitra Kerjasama vs Konsumen Akhir
 
 ```gherkin
 Scenario: Pie chart breakdown

@@ -22,7 +22,7 @@ Sistem dibangun dengan **arsitektur decoupled** (Frontend-Backend terpisah): Fro
 | Sejarah Usaha | Berawal dari hobi dan coba-coba — awalnya dibuat sendiri, diracik sendiri, lalu dibagikan ke tetangga untuk dicicipi. Dari respons positif, muncul keberanian untuk mulai berjualan. Memulai dari harga Rp500 saja, kini produk moring ukuran mini dihargai Rp2.000. Perjalanannya terus berkembang dengan berbagai pilihan kemasan. |
 | Produk Utama | Cimol Kering (Moring) dengan varian rasa: Original, Pedas, Keju, Balado, Jagung |
 | Pilihan Kemasan | Mini, Standing Pouch, Aluminium Foil (disesuaikan dengan kebutuhan dan target pasar) |
-| Customer | Ritel (toko/agen/reseller) & Masyarakat (konsumen akhir) |
+| Customer | Mitra Kerjasama (Ritel, Alfamart, Indomaret, Kantin Sekolah, Organisasi Kampus, Koperasi) & Konsumen Akhir (masyarakat/individu) |
 | Cara Penjualan Saat Ini | Pemesanan via WhatsApp + nota manual |
 | Jalur Pemasaran Existing | (1) Reseller, (2) E-commerce (platform belanja online), (3) Sekolah-sekolah, (4) Penjualan online via media sosial, (5) Retail modern (Alfamart & Indomart di Kab. Subang), (6) Toko oleh-oleh di Kab. Subang |
 | Skala Bisnis | Lokal kecil (<100 customer aktif, <50 order/bulan) |
@@ -33,7 +33,7 @@ Sistem dibangun dengan **arsitektur decoupled** (Frontend-Backend terpisah): Fro
 
 Sistem akan memiliki fitur-fitur kunci sebagai berikut:
 
-1. **Registrasi akun wajib** untuk customer dengan segmentasi Ritel/Masyarakat sebagai label analisis
+1. **Registrasi akun wajib** untuk customer dengan segmentasi Mitra Kerjasama/Konsumen Akhir sebagai label analisis
 2. **Katalog produk** dengan varian dan harga yang sama untuk semua segmen customer
 3. **Keranjang belanja (cart)** dengan kalkulasi total otomatis
 4. **Pembayaran via QRIS dinamis** (nominal embedded) yang difoto dan di-upload sebagai bukti
@@ -49,12 +49,12 @@ Membangun sistem distribusi produk dan pencatatan transaksi berbasis aplikasi we
 
 ## 5. Tujuan Khusus
 
-1. Membangun mini e-commerce untuk Moring Suksok dengan fitur katalog produk, keranjang belanja, checkout, dan pembayaran yang dapat diakses oleh customer Ritel maupun Masyarakat melalui registrasi akun terlebih dahulu
+1. Membangun mini e-commerce untuk Moring Suksok dengan fitur katalog produk, keranjang belanja, checkout, dan pembayaran yang dapat diakses oleh Mitra Kerjasama maupun Masyarakat melalui registrasi akun terlebih dahulu
 2. Mengimplementasikan pembayaran via QRIS dinamis dengan nominal embedded (sesuai standar EMVCo QRIS) yang dapat di-scan menggunakan berbagai e-wallet (DANA, OVO, GoPay, SeaBank, ShopeePay, m-banking), dengan mekanisme upload bukti pembayaran dan verifikasi manual oleh owner
 3. Menggantikan nota manual dengan nota digital otomatis yang ter-generate setiap checkout, lengkap dengan order ID unik, timestamp, detail items, customer info, total transaksi, dan dapat diekspor ke PDF untuk pembukuan akuntan
 4. Memantau distribusi produk melalui tracking status pesanan dengan state machine yang jelas (Pending → Diproses → Dikirim → Selesai), dapat dipantau oleh customer secara real-time dan oleh owner melalui dashboard terpusat
 5. Mengimplementasikan notifikasi hybrid dengan Push Notification PWA (otomatis via Firebase Cloud Messaging) sebagai primary channel, dan WhatsApp deep link (wa.me) sebagai backup/secondary
-6. Memberikan segmentasi customer Ritel/Masyarakat sebagai label analisis untuk keperluan laporan owner, tanpa membedakan harga atau flow belanja
+6. Memberikan segmentasi Mitra Kerjasama/Masyarakat sebagai label analisis untuk keperluan laporan owner, tanpa membedakan harga atau flow belanja
 7. Membangun Progressive Web App (PWA) yang installable di perangkat Android (Add to Home Screen) sehingga customer dapat mengakses aplikasi seperti native app tanpa harus mendownload dari Play Store
 
 ## 6. Manfaat Sistem
@@ -63,10 +63,10 @@ Membangun sistem distribusi produk dan pencatatan transaksi berbasis aplikasi we
 - Menghemat waktu administratif (tidak perlu buat nota manual, tidak perlu cari status di chat WhatsApp)
 - Memiliki data terstruktur untuk pembukuan akuntan (bisa export PDF/Excel per periode)
 - Mendapat visibility terhadap distribusi produk (status setiap pesanan)
-- Mendapat insight analitik (persentase penjualan Ritel vs Masyarakat, produk terlaris, dst.)
+- Mendapat insight analitik (persentase penjualan Mitra Kerjasama vs Konsumen Akhir, produk terlaris, dst.)
 - Membangun aset digital yang dapat di-scale untuk ekspansi bisnis
 
-### Manfaat bagi Customer Ritel & Masyarakat
+### Manfaat bagi Mitra Kerjasama & Masyarakat
 - Dapat melihat katalog produk secara mandiri tanpa harus tanya owner via WhatsApp
 - Dapat melihat riwayat pesanan dan repeat order dengan mudah
 - Dapat tracking status pesanan real-time tanpa harus menanyakan ulang
@@ -85,8 +85,8 @@ Membangun sistem distribusi produk dan pencatatan transaksi berbasis aplikasi we
 | # | Stakeholder | Kepentingan |
 |---|---|---|
 | 1 | Owner Moring Suksok | Operasional harian, pembukuan, keputusan strategis |
-| 2 | Customer Ritel | Pemesanan grosir, riwayat, repeat order |
-| 3 | Customer Masyarakat | Pemesanan eceran, tracking pesanan |
+| 2 | Mitra Kerjasama | Pemesanan grosir, riwayat, repeat order |
+| 3 | Konsumen Akhir | Pemesanan eceran, tracking pesanan |
 | 4 | Mahasiswa (Anda) | Penyelesaian TA |
 | 5 | Dosen Pembimbing | Validasi metodologi |
 | 6 | Dosen Penguji | Evaluasi implementasi |

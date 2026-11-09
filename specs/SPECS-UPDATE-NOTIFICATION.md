@@ -35,6 +35,79 @@ Setiap kali specs di-update, tulis notifikasi baru di section "Pending Notificat
 
 > Urut dari TERBARU di atas ke TERLAMAU di bawah. Agent B harus baca dari atas.
 
+### [NOTIF-009] — 2026-11-09 — ⚠️ BREAKING CHANGE: Mitra Kerjasama (E8) + Rename Segmentasi Customer (v1.2.0)
+
+**Spec files changed**: `specs/00-vision.md`, `specs/01-requirements.md`, `specs/03-features.json`, `specs/05-data-model.md`, `specs/06-api-contracts.md`, `specs/08-acceptance-criteria.md`, `README.md`
+**Change type**: MINOR with BREAKING CHANGES — New epic + renamed enum + new tables
+**Author**: Agent A — atas ide user dari konteks Expo/Sponsor
+**Priority**: 🔴 HIGH — breaking changes ke Auth Module yang sudah jalan
+
+#### 📋 Konteks
+
+Owner Moring Suksok pernah ditawari sebagai Sponsor oleh universitas/politeknik dalam acara "Expo". User mendapat ide untuk membagi customer menjadi:
+- **Mitra Kerjasama** = Ritel, Alfamart, Indomaret, Kantin Sekolah, Organisasi Kampus, Koperasi (institusi/organisasi)
+- **Konsumen Akhir** = Masyarakat/individu
+
+#### ⚠️ BREAKING CHANGES (Agent B WAJIB update saat resume)
+
+**1. Rename enum `customer_type` di tabel `customers`:**
+```sql
+-- BEFORE (v1.1.0):
+customer_type ENUM('retail', 'public') DEFAULT 'public'
+
+-- AFTER (v1.2.0):
+customer_type ENUM('partner', 'consumer') DEFAULT 'consumer'
+```
+
+**2. Tabel baru: `partners` (11 tabel total, sebelumnya 9)**
+- 1:1 relationship dengan `customers` (customer_type='partner')
+- Fields: organization_name, organization_type, partnership_type (ongoing/one_time), agreement_status, agreement dates, contact info
+- Lihat `specs/05-data-model.md` § 4.10 untuk DDL lengkap
+
+**3. Tabel baru: `sponsor_events` (12 tabel total)**
+- 1:N relationship dengan `partners` (1 partner bisa multiple events untuk re-apply)
+- Fields: event_name, event_type (expo/bazar/sponsor/collaboration), event dates, status, location
+- Lihat `specs/05-data-model.md` § 4.11 untuk DDL lengkap
+
+**4. Epic E8 baru: Mitra Kerjasama (5 stories)**
+- E8-S1: Registrasi Mitra Kerjasama (Must) — dengan organization data + partnership_type
+- E8-S2: Verifikasi & Setup Mitra oleh Owner (Must) — approve/reject + set agreement dates
+- E8-S3: Dashboard Mitra Kerjasama (Must) — lihat pesanan, status, sponsor events
+- E8-S4: Auto-Expire One-Time Partnership (Must) — auto-expire + allow re-apply
+- E8-S5: Owner Dashboard: Performa per Mitra (Should) — filter ongoing/one_time, stats
+
+**5. Aturan Bisnis baru untuk Checkout:**
+- `partner` + `ongoing` + `active` → ALLOWED (checkout kapan saja)
+- `partner` + `one_time` + `active` + has active sponsor_event → ALLOWED
+- `partner` + `one_time` + `completed` → BLOCKED (harus re-apply untuk event baru)
+- `consumer` → ALLOWED (selama is_active=true)
+
+#### 🔧 Yang Agent B Perlu Lakukan SAAT RESUME
+
+1. **Update `backend/app/models/customer.py`**: enum values `retail→partner`, `public→consumer`
+2. **Update `backend/app/schemas/auth.py`**: `RegisterRequest.customer_type` pattern `^(partner|consumer)$`
+3. **Update `backend/app/api/v1/auth.py`**: register endpoint handle partner registration
+4. **Create `backend/app/models/partner.py`**: Partner + SponsorEvent models
+5. **Create `backend/app/models/sponsor_event.py`**: SponsorEvent model
+6. **Create `backend/app/schemas/partner.py`**: Pydantic schemas for partner + sponsor_event
+7. **Create `backend/app/api/v1/partners.py`**: Partner endpoints (register, dashboard, re-apply)
+8. **Generate Alembic migration**: rename enum + add 2 new tables
+9. **Update frontend register form**: "Mitra Kerjasama/Konsumen Akhir" + conditional partner fields
+10. **Create frontend partner dashboard**: `/partner/dashboard`
+
+#### 📊 Impact
+
+- **Specs version**: v1.1.0 → v1.2.0 (MINOR with breaking changes)
+- **Breaking changes**: YES (enum rename, new tables, new endpoints)
+- **Database migration needed**: YES (rename enum + 2 new tables)
+- **Code change effort**: ~1 sprint (Sprint 6, 18 Feb-3 Mar 2027)
+- **Total stories**: 50 → 55 (8 epics, 43 Must + 12 Should)
+- **Development status**: Still PAUSED, resume ~9 Des 2026
+
+**Acknowledge by**: Bersamaan dengan resume (NOTIF-010) nanti
+
+---
+
 ### [NOTIF-008] — 2026-11-09 — 📅 Timeline Update: 8 Minggu → 16 Minggu (8 Sprint × 2 Minggu) + Pre-Implementation Plan
 
 **Spec files changed**: `specs/00-vision.md`, `specs/CHANGELOG.md`, `specs/decisions/ADR-001/002/003.md`, `README.md`, `Proposal_TA_Moring_Suksok.docx`, `specs/VERSION.txt`

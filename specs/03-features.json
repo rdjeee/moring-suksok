@@ -31,7 +31,7 @@
         {
           "id": "E1-S2",
           "title": "Pilih segmen customer saat registrasi",
-          "user_story": "Sebagai customer, saya ingin memilih segmen (Ritel/Masyarakat) saat registrasi",
+          "user_story": "Sebagai customer, saya ingin memilih segmen (Mitra Kerjasama/Konsumen Akhir) saat registrasi",
           "priority": "must",
           "module": "frontend:register",
           "acceptance_criteria_ref": "AC-E1-S2",
@@ -570,7 +570,7 @@
         {
           "id": "E6-S2",
           "title": "Filter laporan by segmen customer",
-          "user_story": "Sebagai admin, saya ingin filter laporan by segmen customer (Ritel/Masyarakat)",
+          "user_story": "Sebagai admin, saya ingin filter laporan by segmen customer (Mitra Kerjasama/Konsumen Akhir)",
           "priority": "must",
           "module": "backend:reports + frontend:admin-reports",
           "acceptance_criteria_ref": "AC-E6-S2",
@@ -634,8 +634,8 @@
         },
         {
           "id": "E6-S8",
-          "title": "Lihat persentase penjualan Ritel vs Masyarakat",
-          "user_story": "Sebagai admin, saya ingin lihat persentase penjualan Ritel vs Masyarakat (pie chart)",
+          "title": "Lihat persentase penjualan Mitra Kerjasama vs Konsumen Akhir",
+          "user_story": "Sebagai admin, saya ingin lihat persentase penjualan Mitra Kerjasama vs Konsumen Akhir (pie chart)",
           "priority": "should",
           "module": "backend:reports + frontend:admin-dashboard",
           "acceptance_criteria_ref": "AC-E6-S8",
@@ -718,14 +718,76 @@
           "estimated_hours": 4
         }
       ]
+    },
+    {
+      "id": "E8",
+      "name": "Mitra Kerjasama (Partnership Management)",
+      "description": "Manajemen Mitra Kerjasama (institusi/organisasi) dengan tipe ongoing & one-time partnership, sponsor event tracking, auto-expire, dan re-apply",
+      "effort_estimate": "medium",
+      "stories": [
+        {
+          "id": "E8-S1",
+          "title": "Registrasi Mitra Kerjasama",
+          "user_story": "Sebagai customer, saya ingin mendaftar sebagai Mitra Kerjasama dengan data organisasi dan tipe partnership (ongoing/one_time)",
+          "priority": "must",
+          "module": "backend:auth+partners + frontend:register",
+          "acceptance_criteria_ref": "AC-E8-S1",
+          "endpoints": ["POST /api/v1/auth/register", "POST /api/v1/partners"],
+          "frontend_routes": ["/register"],
+          "estimated_hours": 8
+        },
+        {
+          "id": "E8-S2",
+          "title": "Verifikasi & Setup Mitra oleh Owner",
+          "user_story": "Sebagai admin, saya ingin approve/reject mitra dan setup agreement (start/end date untuk one-time)",
+          "priority": "must",
+          "module": "backend:partners + frontend:admin-partners",
+          "acceptance_criteria_ref": "AC-E8-S2",
+          "endpoints": ["PATCH /api/v1/admin/partners/{id}/approve", "PATCH /api/v1/admin/partners/{id}/reject"],
+          "frontend_routes": ["/admin/partners"],
+          "estimated_hours": 6
+        },
+        {
+          "id": "E8-S3",
+          "title": "Dashboard Mitra Kerjasama",
+          "user_story": "Sebagai mitra, saya ingin lihat dashboard: ringkasan pesanan, status partnership, sponsor event details, auto-expire indicator",
+          "priority": "must",
+          "module": "frontend:partner-dashboard",
+          "acceptance_criteria_ref": "AC-E8-S3",
+          "endpoints": ["GET /api/v1/partners/me", "GET /api/v1/partners/me/events"],
+          "frontend_routes": ["/partner/dashboard"],
+          "estimated_hours": 6
+        },
+        {
+          "id": "E8-S4",
+          "title": "Auto-Expire One-Time Partnership",
+          "user_story": "Sebagai backend, saya ingin auto-expire one-time partnership saat event selesai, dan allow re-apply untuk event baru",
+          "priority": "must",
+          "module": "backend:partners+cron",
+          "acceptance_criteria_ref": "AC-E8-S4",
+          "endpoints": ["POST /api/v1/partners/me/events (re-apply)"],
+          "estimated_hours": 6
+        },
+        {
+          "id": "E8-S5",
+          "title": "Owner Dashboard: Performa per Mitra",
+          "user_story": "Sebagai admin, saya ingin lihat daftar mitra dengan filter ongoing/one_time, status, total order, total revenue, sponsor events",
+          "priority": "should",
+          "module": "backend:reports + frontend:admin-partners",
+          "acceptance_criteria_ref": "AC-E8-S5",
+          "endpoints": ["GET /api/v1/admin/partners", "GET /api/v1/admin/partners/{id}/performance"],
+          "frontend_routes": ["/admin/partners"],
+          "estimated_hours": 5
+        }
+      ]
     }
   ],
   "summary": {
-    "total_epics": 7,
-    "total_stories": 50,
+    "total_epics": 8,
+    "total_stories": 55,
     "by_priority": {
-      "must": 39,
-      "should": 11,
+      "must": 43,
+      "should": 12,
       "could": 0,
       "wont": 0
     },
@@ -736,10 +798,11 @@
       "E4": 11,
       "E5": 10,
       "E6": 8,
-      "E7": 7
+      "E7": 7,
+      "E8": 5
     },
-    "total_estimated_hours": 285,
-    "estimated_weeks_at_20hr_per_week": 14.25
+    "total_estimated_hours": 316,
+    "estimated_weeks_at_20hr_per_week": 15.8
   },
   "notes": {
     "priority_strategy": "MVP terdiri dari semua story dengan priority 'must'. Story 'should' dikerjakan setelah MVP selesai, jika timeline mengizinkan.",

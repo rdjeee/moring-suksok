@@ -10,7 +10,7 @@
 
 ### 1.1 Profil Moring Suksok
 
-Moring Suksok adalah UMKM kuliner yang mengolah produk camilan khas berupa cimol kering (moring) — yaitu cimol yang digoreng dengan tekstur kering, renyah, dan tahan lama. Produk ini memiliki beberapa varian rasa antara lain Original, Pedas, Keju, Balado, dan Jagung, dengan pilihan kemasan yang disesuaikan dengan kebutuhan dan target pasar: ukuran mini, standing pouch, hingga aluminium foil. Usaha ini dimiliki oleh seorang pengusaha berusia 40 tahun, dan memiliki dua jenis customer yaitu Customer Ritel (toko/agen/reseller yang membeli untuk dijual ulang) dan Customer Masyarakat (konsumen akhir yang membeli untuk konsumsi pribadi).
+Moring Suksok adalah UMKM kuliner yang mengolah produk camilan khas berupa cimol kering (moring) — yaitu cimol yang digoreng dengan tekstur kering, renyah, dan tahan lama. Produk ini memiliki beberapa varian rasa antara lain Original, Pedas, Keju, Balado, dan Jagung, dengan pilihan kemasan yang disesuaikan dengan kebutuhan dan target pasar: ukuran mini, standing pouch, hingga aluminium foil. Usaha ini dimiliki oleh seorang pengusaha berusia 40 tahun, dan memiliki dua jenis customer yaitu Mitra Kerjasama (toko/agen/reseller yang membeli untuk dijual ulang) dan Konsumen Akhir (konsumen akhir yang membeli untuk konsumsi pribadi).
 
 Moring Suksok berdiri bukan karena rencana besar, tapi berawal dari hobi dan coba-coba. Awalnya dibuat sendiri, diracik sendiri, lalu dibagikan ke tetangga untuk dicicipi. Alhamdulillah, responsnya positif. Dari situlah muncul keberanian untuk mulai berjualan. Dulu memulai dari harga Rp500 saja, dan kini produk moring ukuran mini sudah dihargai Rp2.000. Perjalanannya terus berkembang dengan pemasaran yang semakin luas melalui berbagai jalur: reseller, e-commerce (platform belanja online), sekolah-sekolah, penjualan online via media sosial, retail modern (Alfamart dan Indomart di Kabupaten Subang), serta toko oleh-oleh di Kabupaten Subang.
 
@@ -21,7 +21,7 @@ Saat ini, proses penjualan masih dilakukan secara konvensional: customer menghub
 Berdasarkan analisis kondisi existing Moring Suksok, ditemukan beberapa permasalahan utama yang menjadi pain point baik bagi owner maupun customer:
 
 #### Masalah 1: Pencatatan Transaksi Manual yang Tidak Terstruktur
-Owner mencatat setiap transaksi pada nota manual, baik yang dijual ke customer Ritel maupun Masyarakat. Pencatatan ini rentan terhadap human error (salah catat jumlah, varian, atau harga), sulit dilakukan rekapitulasi bulanan, dan tidak ada backup digital jika nota hilang atau rusak. Untuk keperluan pembukuan akuntan, owner harus memilah-milah nota satu per satu yang memakan waktu berjam-jam setiap akhir bulan.
+Owner mencatat setiap transaksi pada nota manual, baik yang dijual ke Mitra Kerjasama maupun Masyarakat. Pencatatan ini rentan terhadap human error (salah catat jumlah, varian, atau harga), sulit dilakukan rekapitulasi bulanan, dan tidak ada backup digital jika nota hilang atau rusak. Untuk keperluan pembukuan akuntan, owner harus memilah-milah nota satu per satu yang memakan waktu berjam-jam setiap akhir bulan.
 
 #### Masalah 2: Tidak Ada Pemantauan Distribusi Produk
 Owner tidak memiliki visibility terhadap pergerakan distribusi produknya. Tidak ada data historis tentang pesanan mana yang sedang diproses, mana yang sudah dikirim, dan mana yang sudah selesai. Status pesanan hanya tersimpan di chat WhatsApp yang sulit ditelusuri, sehingga customer sering menanyakan ulang status pesanan mereka dan owner harus mencari manual di chat.
@@ -30,7 +30,7 @@ Owner tidak memiliki visibility terhadap pergerakan distribusi produknya. Tidak 
 Customer harus menghubungi owner via WhatsApp untuk setiap pemesanan, yang seringkali terjadi miscommunication terkait varian produk, jumlah, dan harga. Tidak ada katalog produk yang dapat diakses customer secara mandiri, sehingga owner harus mengirim foto produk dan penjelasan via WhatsApp berulang-ulang ke setiap customer baru.
 
 #### Masalah 4: Tidak Ada Segmentasi Customer yang Jelas
-Owner secara informal membedakan customer Ritel dan Masyarakat, namun tidak ada data terstruktur tentang persentase penjualan dari masing-masing segmen. Hal ini menyulitkan owner dalam pengambilan keputusan strategis seperti penentuan stok, promo khusus, atau target market yang lebih potensial untuk diekspansi.
+Owner secara informal membedakan Mitra Kerjasama dan Masyarakat, namun tidak ada data terstruktur tentang persentase penjualan dari masing-masing segmen. Hal ini menyulitkan owner dalam pengambilan keputusan strategis seperti penentuan stok, promo khusus, atau target market yang lebih potensial untuk diekspansi.
 
 #### Masalah 5: Pembayaran Tidak Terdokumentasi
 Saat customer membayar via transfer ke DANA owner atau scan QRIS statis, owner harus memverifikasi manual melalui mutasi rekening. Tidak ada audit trail digital yang menghubungkan pembayaran dengan pesanan tertentu, sehingga sulit untuk rekonsiliasi jika ada sengketa atau pertanyaan dari customer di kemudian hari.
@@ -54,7 +54,7 @@ Customer-facing features yang harus diimplementasi:
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-C01 | Registrasi akun customer dengan data: Nama, WA, Email, Password, Alamat, Segmen (Ritel/Masyarakat) | Must |
+| FR-C01 | Registrasi akun customer dengan data: Nama, WA, Email, Password, Alamat, Segmen (Mitra Kerjasama/Konsumen Akhir) | Must |
 | FR-C02 | Login & logout customer | Must |
 | FR-C03 | Browse katalog produk (list dengan pagination, search, filter) | Must |
 | FR-C04 | Lihat detail produk (foto, nama, deskripsi, harga, varian, stok) | Must |
@@ -87,7 +87,7 @@ Admin-facing features yang harus diimplementasi:
 | FR-A07 | Input no resi pengiriman | Must |
 | FR-A08 | Generate & download nota PDF per pesanan | Must |
 | FR-A09 | Lihat laporan transaksi (harian/mingguan/bulanan) | Must |
-| FR-A10 | Filter laporan by segmen customer (Ritel/Masyarakat) | Must |
+| FR-A10 | Filter laporan by segmen customer (Mitra Kerjasama/Konsumen Akhir) | Must |
 | FR-A11 | Export laporan ke PDF | Must |
 | FR-A12 | Lihat dashboard analitik (summary cards) | Must |
 | FR-A13 | Setup QRIS statis owner di settings | Must |
@@ -96,7 +96,7 @@ Admin-facing features yang harus diimplementasi:
 | FR-A16 | Lihat daftar customer & analitik | Should |
 | FR-A17 | Tombol "Kirim WhatsApp ke Customer" (deep link) | Should |
 | FR-A18 | Lihat produk terlaris (top 5) | Should |
-| FR-A19 | Lihat persentase penjualan Ritel vs Masyarakat | Should |
+| FR-A19 | Lihat persentase penjualan Mitra Kerjasama vs Konsumen Akhir | Should |
 | FR-A20 | Grafik penjualan per hari (bar chart) | Should |
 
 ### 2.3 Modul Backend (Python FastAPI)
@@ -151,21 +151,21 @@ Sistem memiliki **3 jenis pengguna** dengan kewenangan berbeda. Detail lengkap m
 - **Token expiry**: 1 hari
 - **Akses**: Full access ke semua modul operasional
 
-### 3.2 Customer Ritel
+### 3.2 Mitra Kerjasama
 
-- **Auth**: Email + password, disimpan di tabel `customers` dengan `customer_type = 'retail'`
+- **Auth**: Email + password, disimpan di tabel `customers` dengan `customer_type = 'partner'`
 - **Token expiry**: 7 hari
 - **Akses**: Belanja normal, label segmentasi untuk analisis owner
-- **Flow belanja**: Identik dengan Customer Masyarakat
+- **Flow belanja**: Identik dengan Konsumen Akhir
 
-### 3.3 Customer Masyarakat
+### 3.3 Konsumen Akhir
 
-- **Auth**: Email + password, disimpan di tabel `customers` dengan `customer_type = 'public'`
+- **Auth**: Email + password, disimpan di tabel `customers` dengan `customer_type = 'consumer'`
 - **Token expiry**: 7 hari
 - **Akses**: Belanja normal, label segmentasi untuk analisis owner
-- **Flow belanja**: Identik dengan Customer Ritel
+- **Flow belanja**: Identik dengan Mitra Kerjasama
 
-> **Catatan**: Secara flow belanja, Ritel & Masyarakat sama persis. Pembeda hanya label di akun untuk keperluan laporan owner.
+> **Catatan**: Secara flow belanja, Mitra Kerjasama & Konsumen Akhir sama persis. Pembeda hanya label di akun untuk keperluan laporan owner.
 
 ---
 
@@ -174,7 +174,7 @@ Sistem memiliki **3 jenis pengguna** dengan kewenangan berbeda. Detail lengkap m
 ### 4.1 In-Scope (Akan Dikerjakan)
 
 #### 4.1.1 Modul Customer (Frontend)
-- Registrasi akun customer (Nama, WA, Email, Password, Alamat, Segmen Ritel/Masyarakat)
+- Registrasi akun customer (Nama, WA, Email, Password, Alamat, Segmen Mitra Kerjasama/Konsumen Akhir)
 - Login & logout customer
 - Browse katalog produk (list & detail)
 - Tambah produk ke keranjang (cart)
@@ -196,7 +196,7 @@ Sistem memiliki **3 jenis pengguna** dengan kewenangan berbeda. Detail lengkap m
 - Update status pesanan (Diproses → Dikirim dengan no resi → Selesai)
 - Generate dan download nota PDF per pesanan
 - Lihat laporan transaksi (harian/mingguan/bulanan)
-- Filter laporan by segmen customer (Ritel/Masyarakat)
+- Filter laporan by segmen customer (Mitra Kerjasama/Konsumen Akhir)
 - Export laporan ke Excel/PDF
 - Kirim WhatsApp manual ke customer via deep link
 - Lihat dashboard analitik (total penjualan, jumlah order, customer terbanyak)
@@ -307,8 +307,8 @@ Batasan-batasan teknis dan operasional yang melekat pada sistem ini:
 | **wa.me** | WhatsApp deep link URL scheme (https://wa.me/62xxx?text=...) |
 | **JWT** | JSON Web Token — standar token untuk autentikasi |
 | **UMKM** | Usaha Mikro, Kecil, dan Menengah |
-| **Customer Ritel** | Toko/agen yang membeli produk Moring Suksok untuk dijual ulang |
-| **Customer Masyarakat** | Konsumen akhir yang membeli produk Moring Suksok untuk konsumsi pribadi |
+| **Mitra Kerjasama** | Toko/agen yang membeli produk Moring Suksok untuk dijual ulang |
+| **Konsumen Akhir** | Konsumen akhir yang membeli produk Moring Suksok untuk konsumsi pribadi |
 | **Owner** | Pemilik Moring Suksok (40 tahun) |
 | **Nota Digital** | Bukti transaksi digital (PDF) yang ter-generate otomatis oleh sistem, menggantikan nota manual |
 | **State Machine** | Model status pesanan dengan transisi yang jelas (Pending → Diproses → Dikirim → Selesai) |

@@ -41,7 +41,7 @@ Moring Suksok adalah UMKM pengcamilan cimol kering (moring) dengan produk utama 
 - ✅ Notifikasi hybrid: Push Notification PWA + WhatsApp deep link
 - ✅ PWA installable di Android (Add to Home Screen)
 - ✅ Laporan transaksi dengan export PDF/Excel
-- ✅ Segmentasi customer Ritel/Masyarakat (untuk analisis owner)
+- ✅ Segmentasi Mitra Kerjasama/Masyarakat (untuk analisis owner)
 - ✅ Admin dashboard dengan analytics
 
 ---
