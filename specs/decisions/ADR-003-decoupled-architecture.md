@@ -80,7 +80,7 @@ Keputusan ini berdampak pada:
 - ❌ Over-engineering untuk TA (skala <100 customer)
 - ❌ Setup & maintenance sangat kompleks
 - ❌ Latency antar service
-- ❌ Tidak feasible untuk 8 minggu development
+- ❌ Over-engineering untuk TA (skala <100 customer), meskipun timeline 16 minggu
 
 ## Decision
 

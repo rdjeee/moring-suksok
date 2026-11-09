@@ -159,7 +159,7 @@ function bab2() {
   c.push(h3("2.2.4 Arsitektur Decoupled dan Technology Acceptance Model (TAM)"));
   c.push(bp("Arsitektur decoupled adalah pendekatan pengembangan perangkat lunak yang memisahkan antara lapisan presentasi (frontend) dan lapisan business logic (backend) ke dalam dua codebase terpisah yang berkomunikasi melalui REST API menggunakan format JSON. Dalam penelitian ini, frontend menggunakan Next.js PWA dan backend menggunakan Python FastAPI, dengan JWT sebagai mekanisme autentikasi stateless. Technology Acceptance Model (TAM) merupakan model adopsi teknologi yang dikembangkan oleh Davis (1989) yang mengidentifikasi dua faktor kunci: Persepsi Kemanfaatan (Perceived Usefulness) dan Persepsi Kemudahan (Perceived Ease of Use) [4]. Sholihah dan Nurhapsari (2023) membuktikan bahwa kedua faktor tersebut berpengaruh positif dan signifikan terhadap intensi penggunaan QRIS oleh UMKM [4]. Hasil ini menjadi landasan desain sistem yang diusulkan."));
   c.push(h3("2.2.5 Metode Pengembangan Perangkat Lunak Agile (Scrum)"));
-  c.push(bp("Agile merupakan pendekatan pengembangan perangkat lunak yang bersifat iteratif dan inkremental, di mana sistem dibangun dalam siklus-siklus pendek yang disebut sprint [6]. Berbeda dengan model Waterfall yang bersifat sekuensial dan linear, Agile memungkinkan adaptasi terhadap perubahan kebutuhan selama proses pengembangan berlangsung. Framework Scrum yang digunakan dalam penelitian ini mengadopsi beberapa praktik utama: (1) Product Backlog berisi daftar user stories yang diprioritaskan berdasarkan nilai bisnis; (2) Sprint berdurasi 2 minggu untuk setiap iterasi; (3) Sprint Planning di awal sprint untuk menentukan tujuan dan scope; (4) Daily Standup untuk sinkronisasi progress tim; (5) Sprint Review di akhir sprint untuk demonstrasi hasil; dan (6) Sprint Retrospective untuk evaluasi dan perbaikan proses. Dalam konteks penelitian ini, terdapat 4 sprint yang masing-masing berdurasi 2 minggu, dengan total 8 minggu pengembangan. Pendekatan Agile dipilih karena memungkinkan validasi bertahap fitur sistem bersama mitra UMKM, sehingga masukan dapat langsung diintegrasikan pada sprint berikutnya."));
+  c.push(bp("Agile merupakan pendekatan pengembangan perangkat lunak yang bersifat iteratif dan inkremental, di mana sistem dibangun dalam siklus-siklus pendek yang disebut sprint [6]. Berbeda dengan model Waterfall yang bersifat sekuensial dan linear, Agile memungkinkan adaptasi terhadap perubahan kebutuhan selama proses pengembangan berlangsung. Framework Scrum yang digunakan dalam penelitian ini mengadopsi beberapa praktik utama: (1) Product Backlog berisi daftar user stories yang diprioritaskan berdasarkan nilai bisnis; (2) Sprint berdurasi 2 minggu untuk setiap iterasi; (3) Sprint Planning di awal sprint untuk menentukan tujuan dan scope; (4) Daily Standup untuk sinkronisasi progress tim; (5) Sprint Review di akhir sprint untuk demonstrasi hasil; dan (6) Sprint Retrospective untuk evaluasi dan perbaikan proses. Dalam konteks penelitian ini, terdapat 8 sprint yang masing-masing berdurasi 2 minggu, dengan total 16 minggu pengembangan (10 Desember 2026 hingga 3 April 2027). Pendekatan Agile dipilih karena memungkinkan validasi bertahap fitur sistem bersama mitra UMKM, sehingga masukan dapat langsung diintegrasikan pada sprint berikutnya."));
   return c;
 }
 
@@ -190,7 +190,7 @@ function bab3() {
     ["14","Perangkat lunak","Postman","API testing untuk endpoint FastAPI"]
   ]));
   c.push(h2("3.2 Prosedur Penelitian"));
-  c.push(bp("Prosedur penelitian mengikuti metode Agile dengan framework Scrum, yang terdiri dari 4 sprint berdurasi 2 minggu per sprint (total 8 minggu). Setiap sprint mencakup tahap Sprint Planning, implementasi, Sprint Review, dan Sprint Retrospective. Bagan alur penelitian disajikan pada Gambar 3.1."));
+  c.push(bp("Prosedur penelitian mengikuti metode Agile dengan framework Scrum, yang terdiri dari 8 sprint berdurasi 2 minggu per sprint (total 16 minggu, dari 10 Desember 2026 hingga 3 April 2027). Setiap sprint mencakup tahap Sprint Planning, implementasi, Sprint Review, dan Sprint Retrospective. Bagan alur penelitian disajikan pada Gambar 3.1."));
   c.push(placeholder("[Bagan alur penelitian — sisipkan gambar di sini]"));
   c.push(fCap("Gambar 3.1 Alur Penelitian"));
   c.push(h2("3.3 Perancangan"));
@@ -216,12 +216,24 @@ function bab4() {
   const c = [];
   c.push(h1c("BAB IV")); c.push(h1c("PENUTUP"));
   c.push(h2("4.1 Jadwal Penelitian"));
-  c.push(bp("Jadwal kegiatan penelitian disusun per bulan selama 6 bulan. Rincian jadwal disajikan dalam Tabel 4.1."));
+  c.push(bp("Jadwal kegiatan penelitian disusun per sprint selama 8 sprint (16 minggu), dari 10 Desember 2026 hingga 3 April 2027. Rincian jadwal disajikan dalam Tabel 4.1."));
   c.push(tCap("Tabel 4.1 Jadwal Penelitian"));
-  function mc(text) { return new TableCell({ margins: { top: 60, bottom: 60, left: 60, right: 60 }, verticalAlign: VerticalAlign.CENTER, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text, size: 20, color: P.body, font: { ascii: "Times New Roman", eastAsia: "SimSun" } })] })] }); }
-  function lc(text, w) { return new TableCell({ width: { size: w || 3000, type: WidthType.DXA }, margins: { top: 60, bottom: 60, left: 100, right: 100 }, verticalAlign: VerticalAlign.CENTER, children: [new Paragraph({ alignment: AlignmentType.LEFT, spacing: { line: 240 }, children: [new TextRun({ text, size: 20, color: P.body, font: { ascii: "Times New Roman", eastAsia: "SimSun" } })] })] }); }
-  const hdr = new TableRow({ tableHeader: true, cantSplit: true, children: [lc("No",600), lc("Kegiatan",4000), mc("Bln 1"), mc("Bln 2"), mc("Bln 3"), mc("Bln 4"), mc("Bln 5"), mc("Bln 6")] });
-  const rows = [["1","Studi literatur dan pengumpulan data","X","X","","","",""],["2","Analisis kebutuhan dan perancangan","","X","X","","","","3","Implementasi","","","X","X","X",""],["4","Pengujian dan evaluasi","","","","X","X",""],["5","Penyusunan laporan dan artikel ilmiah","","","","","X","X"]].map(r => new TableRow({ cantSplit: true, children: [lc(r[0],600), lc(r[1],4000), mc(r[2]), mc(r[3]), mc(r[4]), mc(r[5]), mc(r[6]), mc(r[7])] }));
+  function mc(text) { return new TableCell({ margins: { top: 60, bottom: 60, left: 40, right: 40 }, verticalAlign: VerticalAlign.CENTER, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { line: 240 }, children: [new TextRun({ text, size: 18, color: P.body, font: { ascii: "Times New Roman", eastAsia: "SimSun" } })] })] }); }
+  function lc(text, w) { return new TableCell({ width: { size: w || 3000, type: WidthType.DXA }, margins: { top: 60, bottom: 60, left: 80, right: 80 }, verticalAlign: VerticalAlign.CENTER, children: [new Paragraph({ alignment: AlignmentType.LEFT, spacing: { line: 240 }, children: [new TextRun({ text, size: 18, color: P.body, font: { ascii: "Times New Roman", eastAsia: "SimSun" } })] })] }); }
+  const hdr = new TableRow({ tableHeader: true, cantSplit: true, children: [lc("No",500), lc("Kegiatan",3500), mc("SP 1"), mc("SP 2"), mc("SP 3"), mc("SP 4"), mc("SP 5"), mc("SP 6"), mc("SP 7"), mc("SP 8")] });
+  const rows = [
+    ["1","Studi literatur dan pengumpulan data","X","X","","","","","",""],
+    ["2","Analisis kebutuhan dan perancangan","X","X","","","","","",""],
+    ["3","Implementasi: Auth + UI Dasar","X","","","","","","",""],
+    ["4","Implementasi: Produk + Cart + Checkout","","X","","","","","",""],
+    ["5","Implementasi: QRIS + Verifikasi","","","X","","","","",""],
+    ["6","Implementasi: Notifikasi + Tracking","","","","X","","","",""],
+    ["7","Implementasi: Reporting + Analytics","","","","","X","","",""],
+    ["8","Implementasi: Feature Expansion","","","","","X","","",""],
+    ["9","PWA + Polish + Bug Fix","","","","","","","X",""],
+    ["10","Pengujian (Black Box + UAT)","","","","","","","X","X"],
+    ["11","Penyusunan laporan dan artikel ilmiah","","","","","","","X","X"]
+  ].map(r => new TableRow({ cantSplit: true, children: [lc(r[0],500), lc(r[1],3500), mc(r[2]), mc(r[3]), mc(r[4]), mc(r[5]), mc(r[6]), mc(r[7]), mc(r[8]), mc(r[9])] }));
   c.push(new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, layout: TableLayoutType.FIXED, borders: { top: { style: BorderStyle.SINGLE, size: 4, color: P.body }, bottom: { style: BorderStyle.SINGLE, size: 4, color: P.body }, left: { style: BorderStyle.SINGLE, size: 4, color: P.body }, right: { style: BorderStyle.SINGLE, size: 4, color: P.body }, insideHorizontal: { style: BorderStyle.SINGLE, size: 2, color: "808080" }, insideVertical: { style: BorderStyle.SINGLE, size: 2, color: "808080" } }, rows: [hdr, ...rows] }));
   return c;
 }

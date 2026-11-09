@@ -88,7 +88,7 @@ Pertanyaan: Apakah sistem harus mengintegrasikan payment gateway berbayar (Midtr
 **Cons**:
 - ❌ Development time 2x (2 implementasi)
 - ❌ Maintenance kompleks
-- ❌ Tidak feasible untuk timeline TA 8 minggu
+- ❌ Tidak feasible untuk timeline TA 16 minggu
 
 ## Decision
 

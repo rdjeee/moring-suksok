@@ -27,7 +27,7 @@ Sistem dibangun dengan **arsitektur decoupled** (Frontend-Backend terpisah): Fro
 | Jalur Pemasaran Existing | (1) Reseller, (2) E-commerce (platform belanja online), (3) Sekolah-sekolah, (4) Penjualan online via media sosial, (5) Retail modern (Alfamart & Indomart di Kab. Subang), (6) Toko oleh-oleh di Kab. Subang |
 | Skala Bisnis | Lokal kecil (<100 customer aktif, <50 order/bulan) |
 | Impian Owner | Moring Suksok dikenal dan dinikmati oleh masyarakat di seluruh Indonesia |
-| Timeline TA | 8 minggu development + 1 minggu buffer |
+| Timeline TA | 16 minggu implementation (8 sprint × 2 minggu) + pre-implementation phase |
 
 ## 3. Highlight Fitur Utama
 

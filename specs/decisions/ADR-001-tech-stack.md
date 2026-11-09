@@ -13,7 +13,7 @@ Untuk Tugas Akhir "Sistem Distribusi & Pencatatan Transaksi Produk Moring Suksok
 2. **Modern & profesional**: Untuk demo sidang TA
 3. **Akademik impresive**: Menunjukkan skill yang relevan
 4. **Real-world applicable**: Owner Moring Suksok bisa pakai setelah lulus
-5. **Timeline 8 minggu**: Harus achievable dengan effort reasonable
+5. **Timeline 16 minggu (8 sprint × 2 minggu)**: Harus achievable dengan effort reasonable
 6. **Free / low-cost**: Budget mahasiswa terbatas
 
 ## Options Considered

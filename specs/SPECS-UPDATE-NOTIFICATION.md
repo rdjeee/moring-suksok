@@ -35,6 +35,75 @@ Setiap kali specs di-update, tulis notifikasi baru di section "Pending Notificat
 
 > Urut dari TERBARU di atas ke TERLAMAU di bawah. Agent B harus baca dari atas.
 
+### [NOTIF-008] — 2026-11-09 — 📅 Timeline Update: 8 Minggu → 16 Minggu (8 Sprint × 2 Minggu) + Pre-Implementation Plan
+
+**Spec files changed**: `specs/00-vision.md`, `specs/CHANGELOG.md`, `specs/decisions/ADR-001/002/003.md`, `README.md`, `Proposal_TA_Moring_Suksok.docx`, `specs/VERSION.txt`
+**Change type**: MINOR — Timeline expansion
+**Author**: Agent A — atas informasi timeline TA dari dosen
+**Priority**: 🟡 MEDIUM — baca & understand, apply saat resume
+
+#### 📅 Timeline TA Final (dari dosen)
+
+```
+FASE 1: PROPOSAL FINALIZATION & SUBMISSION
+├─ NOW → 15 Nov 2026  : Update Proposal (scope + timeline baru)
+├─ 16-20 Nov 2026     : Pengumpulan Dokumen (submit Proposal)
+├─ 23-27 Nov 2026     : Review Proposal (Reviewer)
+└─ 30 Nov 2026        : Pengumuman Hasil Review
+
+FASE 2: PRE-IMPLEMENTATION (10 hari buffer)
+├─ 1-9 Des 2026       : Finalisasi specs + Agent B resume
+└─ 9 Des 2026         : NOTIF-009 (RESUME development)
+
+FASE 3: IMPLEMENTATION (16 minggu = 8 sprint × 2 minggu)
+├─ Sprint 1: 10-23 Des 2026    : Setup + Auth Module + Basic UI
+├─ Sprint 2: 24 Des-6 Jan 2027 : Product Module + Cart & Checkout
+├─ Sprint 3: 7-20 Jan 2027     : Payment QRIS + Verifikasi
+├─ Sprint 4: 21 Jan-3 Feb 2027 : Notifikasi + Tracking Status
+├─ Sprint 5: 4-17 Feb 2027     : Reporting + Analytics + Settings
+├─ Sprint 6: 18 Feb-3 Mar 2027 : [Reserved for feature expansion]
+├─ Sprint 7: 4-17 Mar 2027     : PWA + Polish + Bug Fix
+└─ Sprint 8: 18-31 Mar 2027    : Testing (Black Box + UAT) + Deploy
+                            ↓
+                      3 April 2027: SELESAI (termasuk uji coba)
+```
+
+#### Yang Sudah Agent A Update
+
+**Timeline references diupdate di 5 files:**
+- `specs/00-vision.md` — Timeline: 8 minggu → 16 minggu (8 sprint × 2 minggu)
+- `specs/CHANGELOG.md` — Timeline reference updated
+- `specs/decisions/ADR-001-tech-stack.md` — Timeline 8 minggu → 16 minggu
+- `specs/decisions/ADR-002-qris-self-generated.md` — Timeline reference updated
+- `specs/decisions/ADR-003-decoupled-architecture.md` — Timeline reference updated
+- `README.md` — Roadmap diupdate ke 8 sprint
+- `Proposal_TA_Moring_Suksok.docx` — Regenerated dengan:
+  - Abstrak: 8 sprint × 2 minggu = 16 minggu
+  - Bab II §2.2.5: Agile (Scrum) dengan 8 sprint
+  - Bab III §3.2: Prosedur penelitian 8 sprint
+  - Bab IV §4.1: Tabel jadwal diupdate ke 8 sprint (11 baris kegiatan)
+
+**Version**: v1.0.7 → v1.1.0 (MINOR — timeline expansion)
+
+#### Apa yang Berubah untuk Agent B?
+
+**Sprint 6 (18 Feb-3 Mar 2027) di-reserve untuk "Feature Expansion"** — Agent A sedang dalam proses matangkan penambahan fitur "Mitra Kerjasama" (Partnership Management). Detail stories akan dikirim via NOTIF-009 sebelum Sprint 6 dimulai.
+
+**Untuk saat ini, Agent B TETAP PAUSED** (NOTIF-006 still active). Resume hanya setelah:
+1. ✅ Pengumuman hasil review proposal (30 Nov 2026)
+2. ✅ NOTIF-009 (resume development) dikirim oleh Agent A
+
+#### Impact
+
+- **Specs version**: v1.0.7 → v1.1.0 (MINOR, backward compatible)
+- **Breaking changes**: NONE
+- **Timeline**: 8 minggu → 16 minggu (8 sprint × 2 minggu)
+- **Development status**: Still PAUSED, resume ~9 Des 2026
+
+**Acknowledge by**: Bersamaan dengan NOTIF-009 (resume) nanti
+
+---
+
 ### [NOTIF-007] — 2026-11-09 — Update Specs: Story Owner + Masalah 6 + Field `acquisition_channel` (v1.0.7)
 
 **Spec files changed**: `specs/00-vision.md`, `specs/01-requirements.md`, `specs/05-data-model.md`, `specs/06-api-contracts.md`

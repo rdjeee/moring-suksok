@@ -438,22 +438,22 @@ Untuk Agent B atau siapapun yang ingin memahami sistem:
 
 ---
 
-## 📋 Development Roadmap (8 Minggu)
+## 📋 Development Roadmap (16 Minggu / 8 Sprint)
 
-Timeline detail lihat di `specs/00-vision.md` § 7 dan `Dokumen_Perencanaan_Moring_Suksok.md` Bab 12.
+Timeline detail lihat di `specs/00-vision.md` § 7.
 
 ```
-Minggu 1-2: FASE 1 — Setup & Foundation
-  └─ Project structure, DB schema, auth module
-Minggu 3-4: FASE 2 — Core Features
-  └─ Catalog produk + cart + checkout
-Minggu 5-6: FASE 3 — Payment & Notification
-  └─ QRIS + verifikasi + push notif
-Minggu 7-8: FASE 4 — Polish & Deploy
-  └─ Laporan + PWA + deploy production
+Sprint 1 (10-23 Des 2026): Setup + Auth Module + Basic UI
+Sprint 2 (24 Des-6 Jan 2027): Product Module + Cart & Checkout
+Sprint 3 (7-20 Jan 2027): Payment QRIS + Verifikasi
+Sprint 4 (21 Jan-3 Feb 2027): Notifikasi + Tracking Status
+Sprint 5 (4-17 Feb 2027): Reporting + Analytics + Settings
+Sprint 6 (18 Feb-3 Mar 2027): [Reserved for feature expansion]
+Sprint 7 (4-17 Mar 2027): PWA + Polish + Bug Fix
+Sprint 8 (18-31 Mar 2027): Testing (Black Box + UAT) + Deploy
 ```
 
-Agent B tracking progress di `PROGRESS.md` (update mingguan).
+Agent B tracking progress di `PROGRESS.md` (update per sprint).
 
 ---
 

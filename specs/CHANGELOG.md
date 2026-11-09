@@ -20,6 +20,62 @@ Semua perubahan signifikan pada files di `specs/` akan didokumentasikan di sini.
 
 ---
 
+## [1.1.0] — 2026-11-09
+
+### Timeline Expansion: 8 Minggu → 16 Minggu (8 Sprint × 2 Minggu)
+
+#### Background
+
+Dosen memberikan informasi timeline TA yang lebih rinci:
+- **16-20 Nov 2026**: Pengumpulan Dokumen Proposal
+- **23-27 Nov 2026**: Review Proposal (Reviewer)
+- **30 Nov 2026**: Pengumuman Hasil Review
+- **10 Des 2026 → 3 April 2027**: Implementasi (16 minggu, termasuk uji coba)
+
+Timeline implementasi 16 minggu = **DOBEL** dari rencana awal (8 minggu).
+
+#### Changes Applied
+
+Timeline references diupdate di 5 files:
+- `specs/00-vision.md` — Timeline: 8 minggu → 16 minggu (8 sprint × 2 minggu)
+- `specs/CHANGELOG.md` — Timeline reference updated
+- `specs/decisions/ADR-001-tech-stack.md` — Timeline 8 minggu → 16 minggu
+- `specs/decisions/ADR-002-qris-self-generated.md` — Timeline reference updated
+- `specs/decisions/ADR-003-decoupled-architecture.md` — Timeline reference updated
+- `README.md` — Roadmap diupdate ke 8 sprint
+- `Proposal_TA_Moring_Suksok.docx` — Regenerated dengan:
+  - Abstrak: 8 sprint × 2 minggu = 16 minggu (10 Des 2026 - 3 April 2027)
+  - Bab II §2.2.5: Agile (Scrum) dengan 8 sprint
+  - Bab III §3.2: Prosedur penelitian 8 sprint
+  - Bab IV §4.1: Tabel jadwal diupdate ke 8 sprint (11 baris kegiatan)
+
+#### Sprint Allocation (8 Sprint × 2 Minggu)
+
+```
+Sprint 1 (10-23 Des 2026): Setup + Auth Module + Basic UI
+Sprint 2 (24 Des-6 Jan 2027): Product Module + Cart & Checkout
+Sprint 3 (7-20 Jan 2027): Payment QRIS + Verifikasi
+Sprint 4 (21 Jan-3 Feb 2027): Notifikasi + Tracking Status
+Sprint 5 (4-17 Feb 2027): Reporting + Analytics + Settings
+Sprint 6 (18 Feb-3 Mar 2027): [Reserved for feature expansion]
+Sprint 7 (4-17 Mar 2027): PWA + Polish + Bug Fix
+Sprint 8 (18-31 Mar 2027): Testing (Black Box + UAT) + Deploy
+```
+
+#### Mailbox Updates
+
+- Added NOTIF-008: Timeline update + pre-implementation plan for Agent B
+- Agent B masih PAUSED (NOTIF-006), resume ~9 Des 2026 via NOTIF-009
+
+#### Impact
+
+- **Specs version**: v1.0.7 → v1.1.0 (MINOR — timeline expansion)
+- **Breaking changes**: NONE
+- **Timeline**: 8 minggu → 16 minggu (8 sprint × 2 minggu)
+- **Development status**: Still PAUSED, resume ~9 Des 2026
+
+---
+
 ## [1.0.7] — 2026-11-09
 
 ### Story Owner + Masalah 6 + Field `acquisition_channel`
@@ -524,7 +580,7 @@ Agent B yang sudah baca v1.0.0:
 4. **Customer Auth**: Wajib registrasi (no guest checkout)
 5. **Customer Segmen**: Label Ritel/Masyarakat untuk analisis (no price difference)
 6. **Architecture**: Decoupled (frontend-backend terpisah)
-7. **Timeline**: 8 minggu development + 1 minggu buffer
+7. **Timeline**: 16 minggu implementation (8 sprint × 2 minggu) + pre-implementation phase
 
 ### Out-of-Scope Explicitly Documented
 - Native Android/iOS app (cukup PWA)
