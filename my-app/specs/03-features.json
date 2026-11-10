@@ -1,0 +1,749 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "last_updated": "2026-10-29",
+  "project": "Moring Suksok Distribution & Transaction System",
+  "description": "Machine-readable feature breakdown. Source of truth for development scope. Each story has unique ID, priority, acceptance criteria reference, and owning module.",
+  "priority_levels": {
+    "must": "Wajib untuk MVP TA - harus selesai",
+    "should": "Nice-to-have - dikerjakan jika waktu cukup",
+    "could": "Opsional - hanya jika MVP selesai lebih cepat",
+    "wont": "Out-of-scope TA - lihat 01-requirements.md § 4.2"
+  },
+  "epics": [
+    {
+      "id": "E1",
+      "name": "Authentication & Authorization",
+      "description": "Registrasi, login, JWT, role-based access",
+      "effort_estimate": "medium",
+      "stories": [
+        {
+          "id": "E1-S1",
+          "title": "Registrasi customer baru",
+          "user_story": "Sebagai customer, saya ingin mendaftar akun dengan email & password",
+          "priority": "must",
+          "module": "backend:auth + frontend:register",
+          "acceptance_criteria_ref": "AC-E1-S1",
+          "endpoints": ["POST /api/v1/auth/register"],
+          "frontend_routes": ["/register"],
+          "estimated_hours": 6
+        },
+        {
+          "id": "E1-S2",
+          "title": "Pilih segmen customer saat registrasi",
+          "user_story": "Sebagai customer, saya ingin memilih segmen (Ritel/Masyarakat) saat registrasi",
+          "priority": "must",
+          "module": "frontend:register",
+          "acceptance_criteria_ref": "AC-E1-S2",
+          "depends_on": ["E1-S1"],
+          "estimated_hours": 1
+        },
+        {
+          "id": "E1-S3",
+          "title": "Login customer",
+          "user_story": "Sebagai customer, saya ingin login dengan email & password",
+          "priority": "must",
+          "module": "backend:auth + frontend:login",
+          "acceptance_criteria_ref": "AC-E1-S3",
+          "endpoints": ["POST /api/v1/auth/login"],
+          "frontend_routes": ["/login"],
+          "estimated_hours": 4
+        },
+        {
+          "id": "E1-S4",
+          "title": "Login admin terpisah dari customer",
+          "user_story": "Sebagai admin, saya ingin login terpisah dari customer",
+          "priority": "must",
+          "module": "backend:auth + frontend:admin-login",
+          "acceptance_criteria_ref": "AC-E1-S4",
+          "endpoints": ["POST /api/v1/auth/admin/login"],
+          "frontend_routes": ["/admin/login"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E1-S5",
+          "title": "Logout",
+          "user_story": "Sebagai user, saya ingin logout",
+          "priority": "must",
+          "module": "frontend:auth",
+          "acceptance_criteria_ref": "AC-E1-S5",
+          "endpoints": ["POST /api/v1/auth/logout"],
+          "estimated_hours": 1
+        },
+        {
+          "id": "E1-S6",
+          "title": "Update profil pribadi",
+          "user_story": "Sebagai customer, saya ingin update profil pribadi",
+          "priority": "should",
+          "module": "backend:auth + frontend:profile",
+          "acceptance_criteria_ref": "AC-E1-S6",
+          "endpoints": ["PATCH /api/v1/auth/me"],
+          "frontend_routes": ["/profile"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E1-S7",
+          "title": "JWT verification di semua endpoint terproteksi",
+          "user_story": "Sebagai backend, semua endpoint terproteksi wajib JWT",
+          "priority": "must",
+          "module": "backend:core",
+          "acceptance_criteria_ref": "AC-E1-S7",
+          "estimated_hours": 4
+        },
+        {
+          "id": "E1-S8",
+          "title": "Password hashing bcrypt",
+          "user_story": "Sebagai developer, saya ingin password di-hash dengan bcrypt",
+          "priority": "must",
+          "module": "backend:core",
+          "acceptance_criteria_ref": "AC-E1-S8",
+          "estimated_hours": 2
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "name": "Product Management",
+      "description": "CRUD produk + varian, katalog, search",
+      "effort_estimate": "medium",
+      "stories": [
+        {
+          "id": "E2-S1",
+          "title": "Tambah produk baru",
+          "user_story": "Sebagai admin, saya ingin menambah produk baru",
+          "priority": "must",
+          "module": "backend:products + frontend:admin-products",
+          "acceptance_criteria_ref": "AC-E2-S1",
+          "endpoints": ["POST /api/v1/admin/products"],
+          "frontend_routes": ["/admin/products/new"],
+          "estimated_hours": 6
+        },
+        {
+          "id": "E2-S2",
+          "title": "Tambah varian produk",
+          "user_story": "Sebagai admin, saya ingin menambah varian produk",
+          "priority": "must",
+          "module": "backend:products + frontend:admin-products",
+          "acceptance_criteria_ref": "AC-E2-S2",
+          "endpoints": ["POST /api/v1/admin/products/{id}/variants"],
+          "depends_on": ["E2-S1"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E2-S3",
+          "title": "Edit produk",
+          "user_story": "Sebagai admin, saya ingin edit produk",
+          "priority": "must",
+          "module": "backend:products + frontend:admin-products",
+          "acceptance_criteria_ref": "AC-E2-S3",
+          "endpoints": ["PATCH /api/v1/admin/products/{id}"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E2-S4",
+          "title": "Hapus produk (soft delete)",
+          "user_story": "Sebagai admin, saya ingin hapus produk (soft delete)",
+          "priority": "must",
+          "module": "backend:products + frontend:admin-products",
+          "acceptance_criteria_ref": "AC-E2-S4",
+          "endpoints": ["DELETE /api/v1/admin/products/{id}"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E2-S5",
+          "title": "Lihat katalog produk (customer)",
+          "user_story": "Sebagai customer, saya ingin melihat katalog produk",
+          "priority": "must",
+          "module": "backend:products + frontend:catalog",
+          "acceptance_criteria_ref": "AC-E2-S5",
+          "endpoints": ["GET /api/v1/products"],
+          "frontend_routes": ["/"],
+          "estimated_hours": 5
+        },
+        {
+          "id": "E2-S6",
+          "title": "Lihat detail produk",
+          "user_story": "Sebagai customer, saya ingin melihat detail produk",
+          "priority": "must",
+          "module": "backend:products + frontend:catalog",
+          "acceptance_criteria_ref": "AC-E2-S6",
+          "endpoints": ["GET /api/v1/products/{slug}"],
+          "frontend_routes": ["/produk/[slug]"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E2-S7",
+          "title": "Search produk by nama",
+          "user_story": "Sebagai customer, saya ingin search produk by nama",
+          "priority": "should",
+          "module": "frontend:catalog",
+          "acceptance_criteria_ref": "AC-E2-S7",
+          "depends_on": ["E2-S5"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E2-S8",
+          "title": "Filter produk by kategori",
+          "user_story": "Sebagai customer, saya ingin filter produk by kategori",
+          "priority": "should",
+          "module": "frontend:catalog",
+          "acceptance_criteria_ref": "AC-E2-S8",
+          "depends_on": ["E2-S5"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E2-S9",
+          "title": "Kelola stok varian",
+          "user_story": "Sebagai admin, saya ingin kelola stok varian",
+          "priority": "should",
+          "module": "backend:products + frontend:admin-products",
+          "acceptance_criteria_ref": "AC-E2-S9",
+          "depends_on": ["E2-S2"],
+          "estimated_hours": 2
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "name": "Cart & Checkout",
+      "description": "Cart management, checkout, order creation",
+      "effort_estimate": "large",
+      "stories": [
+        {
+          "id": "E3-S1",
+          "title": "Tambah produk ke cart",
+          "user_story": "Sebagai customer, saya ingin tambah produk ke cart",
+          "priority": "must",
+          "module": "backend:cart + frontend:cart",
+          "acceptance_criteria_ref": "AC-E3-S1",
+          "endpoints": ["POST /api/v1/cart/items"],
+          "depends_on": ["E1-S3", "E2-S5"],
+          "estimated_hours": 4
+        },
+        {
+          "id": "E3-S2",
+          "title": "Lihat isi cart",
+          "user_story": "Sebagai customer, saya ingin lihat isi cart",
+          "priority": "must",
+          "module": "frontend:cart",
+          "acceptance_criteria_ref": "AC-E3-S2",
+          "endpoints": ["GET /api/v1/cart"],
+          "frontend_routes": ["/cart"],
+          "depends_on": ["E3-S1"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E3-S3",
+          "title": "Edit qty item di cart",
+          "user_story": "Sebagai customer, saya ingin edit qty item di cart",
+          "priority": "must",
+          "module": "backend:cart + frontend:cart",
+          "acceptance_criteria_ref": "AC-E3-S3",
+          "endpoints": ["PATCH /api/v1/cart/items/{id}"],
+          "depends_on": ["E3-S2"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E3-S4",
+          "title": "Hapus item dari cart",
+          "user_story": "Sebagai customer, saya ingin hapus item dari cart",
+          "priority": "must",
+          "module": "backend:cart + frontend:cart",
+          "acceptance_criteria_ref": "AC-E3-S4",
+          "endpoints": ["DELETE /api/v1/cart/items/{id}"],
+          "depends_on": ["E3-S2"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E3-S5",
+          "title": "Checkout",
+          "user_story": "Sebagai customer, saya ingin checkout",
+          "priority": "must",
+          "module": "backend:orders + frontend:checkout",
+          "acceptance_criteria_ref": "AC-E3-S5",
+          "endpoints": ["POST /api/v1/orders"],
+          "frontend_routes": ["/checkout"],
+          "depends_on": ["E3-S2"],
+          "estimated_hours": 6
+        },
+        {
+          "id": "E3-S6",
+          "title": "Generate order_code unik",
+          "user_story": "Sebagai backend, saya ingin generate order_code unik (ORD-YYYYMMDD-XXX)",
+          "priority": "must",
+          "module": "backend:orders",
+          "acceptance_criteria_ref": "AC-E3-S6",
+          "depends_on": ["E3-S5"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E3-S7",
+          "title": "Snapshot produk+harga saat checkout",
+          "user_story": "Sebagai backend, saya ingin snapshot produk+harga di order_items",
+          "priority": "must",
+          "module": "backend:orders",
+          "acceptance_criteria_ref": "AC-E3-S7",
+          "depends_on": ["E3-S5"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E3-S8",
+          "title": "Cart persistent di backend",
+          "user_story": "Sebagai customer, saya ingin cart persistent di backend",
+          "priority": "should",
+          "module": "backend:cart",
+          "acceptance_criteria_ref": "AC-E3-S8",
+          "depends_on": ["E3-S1"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E3-S9",
+          "title": "Kalkulasi ongkir flat",
+          "user_story": "Sebagai customer, saya ingin kalkulasi ongkir flat (dari settings)",
+          "priority": "must",
+          "module": "backend:orders",
+          "acceptance_criteria_ref": "AC-E3-S9",
+          "depends_on": ["E3-S5"],
+          "estimated_hours": 1
+        }
+      ]
+    },
+    {
+      "id": "E4",
+      "name": "Payment & Verification",
+      "description": "QRIS generation, upload bukti, verifikasi",
+      "effort_estimate": "large",
+      "stories": [
+        {
+          "id": "E4-S1",
+          "title": "Generate QRIS dinamis dengan nominal embedded",
+          "user_story": "Sebagai customer, saya ingin melihat QRIS dinamis dengan nominal embedded",
+          "priority": "must",
+          "module": "backend:payments + frontend:payment",
+          "acceptance_criteria_ref": "AC-E4-S1",
+          "endpoints": ["POST /api/v1/payments/{order_id}/qris"],
+          "frontend_routes": ["/payment/[orderId]"],
+          "depends_on": ["E3-S5"],
+          "estimated_hours": 8
+        },
+        {
+          "id": "E4-S2",
+          "title": "Download QR code",
+          "user_story": "Sebagai customer, saya ingin download QR code (PNG)",
+          "priority": "must",
+          "module": "frontend:payment",
+          "acceptance_criteria_ref": "AC-E4-S2",
+          "depends_on": ["E4-S1"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E4-S3",
+          "title": "Upload bukti pembayaran",
+          "user_story": "Sebagai customer, saya ingin upload bukti pembayaran",
+          "priority": "must",
+          "module": "backend:payments + frontend:payment",
+          "acceptance_criteria_ref": "AC-E4-S3",
+          "endpoints": ["POST /api/v1/payments/{order_id}/upload"],
+          "depends_on": ["E4-S1"],
+          "estimated_hours": 5
+        },
+        {
+          "id": "E4-S4",
+          "title": "Lihat status verifikasi",
+          "user_story": "Sebagai customer, saya ingin lihat status verifikasi (Menunggu Verifikasi)",
+          "priority": "must",
+          "module": "frontend:order-status",
+          "acceptance_criteria_ref": "AC-E4-S4",
+          "depends_on": ["E4-S3"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E4-S5",
+          "title": "List pesanan pending (admin)",
+          "user_story": "Sebagai admin, saya ingin lihat daftar pesanan pending",
+          "priority": "must",
+          "module": "backend:orders + frontend:admin-orders",
+          "acceptance_criteria_ref": "AC-E4-S5",
+          "endpoints": ["GET /api/v1/admin/orders?status=pending"],
+          "frontend_routes": ["/admin/orders"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E4-S6",
+          "title": "Detail pesanan + bukti pembayaran (admin)",
+          "user_story": "Sebagai admin, saya ingin lihat detail pesanan + bukti pembayaran",
+          "priority": "must",
+          "module": "backend:orders + frontend:admin-orders",
+          "acceptance_criteria_ref": "AC-E4-S6",
+          "endpoints": ["GET /api/v1/admin/orders/{id}"],
+          "frontend_routes": ["/admin/orders/[id]"],
+          "depends_on": ["E4-S5"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E4-S7",
+          "title": "Konfirmasi pembayaran lunas",
+          "user_story": "Sebagai admin, saya ingin konfirmasi pembayaran lunas",
+          "priority": "must",
+          "module": "backend:orders + frontend:admin-orders",
+          "acceptance_criteria_ref": "AC-E4-S7",
+          "endpoints": ["PATCH /api/v1/admin/orders/{id}/verify"],
+          "depends_on": ["E4-S6"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E4-S8",
+          "title": "Tolak pembayaran dengan alasan",
+          "user_story": "Sebagai admin, saya ingin tolak pembayaran dengan alasan",
+          "priority": "must",
+          "module": "backend:orders + frontend:admin-orders",
+          "acceptance_criteria_ref": "AC-E4-S8",
+          "endpoints": ["PATCH /api/v1/admin/orders/{id}/reject"],
+          "depends_on": ["E4-S6"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E4-S9",
+          "title": "Setup QRIS statis owner di settings",
+          "user_story": "Sebagai admin, saya ingin setup QRIS statis owner di settings",
+          "priority": "must",
+          "module": "backend:settings + frontend:admin-settings",
+          "acceptance_criteria_ref": "AC-E4-S9",
+          "endpoints": ["PATCH /api/v1/admin/settings", "POST /api/v1/admin/settings/qris/validate"],
+          "frontend_routes": ["/admin/settings"],
+          "estimated_hours": 4
+        },
+        {
+          "id": "E4-S10",
+          "title": "Generate QRIS dinamis sesuai EMVCo",
+          "user_story": "Sebagai backend, saya ingin generate QRIS dinamis sesuai standar EMVCo",
+          "priority": "must",
+          "module": "backend:qris-service",
+          "acceptance_criteria_ref": "AC-E4-S10",
+          "depends_on": ["E4-S1"],
+          "estimated_hours": 6
+        },
+        {
+          "id": "E4-S11",
+          "title": "Pilih metode pembayaran alternatif (transfer manual)",
+          "user_story": "Sebagai customer, saya ingin pilih metode pembayaran alternatif (transfer manual ke DANA)",
+          "priority": "should",
+          "module": "frontend:payment",
+          "acceptance_criteria_ref": "AC-E4-S11",
+          "depends_on": ["E4-S1"],
+          "estimated_hours": 2
+        }
+      ]
+    },
+    {
+      "id": "E5",
+      "name": "Order Tracking & Notification",
+      "description": "Status update, push notif, WA link",
+      "effort_estimate": "medium",
+      "stories": [
+        {
+          "id": "E5-S1",
+          "title": "Lihat riwayat pesanan",
+          "user_story": "Sebagai customer, saya ingin lihat riwayat pesanan",
+          "priority": "must",
+          "module": "backend:orders + frontend:customer-orders",
+          "acceptance_criteria_ref": "AC-E5-S1",
+          "endpoints": ["GET /api/v1/orders"],
+          "frontend_routes": ["/pesanan"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E5-S2",
+          "title": "Detail pesanan + timeline status",
+          "user_story": "Sebagai customer, saya ingin lihat detail pesanan + timeline status (Pending → Diproses → Dikirim → Selesai)",
+          "priority": "must",
+          "module": "frontend:customer-orders",
+          "acceptance_criteria_ref": "AC-E5-S2",
+          "endpoints": ["GET /api/v1/orders/{id}"],
+          "frontend_routes": ["/pesanan/[id]"],
+          "depends_on": ["E5-S1"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E5-S3",
+          "title": "Update status pesanan jadi Dikirim",
+          "user_story": "Sebagai admin, saya ingin update status pesanan menjadi Dikirim (input no resi)",
+          "priority": "must",
+          "module": "backend:orders + frontend:admin-orders",
+          "acceptance_criteria_ref": "AC-E5-S3",
+          "endpoints": ["PATCH /api/v1/admin/orders/{id}/ship"],
+          "depends_on": ["E4-S7"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E5-S4",
+          "title": "Update status pesanan jadi Selesai",
+          "user_story": "Sebagai admin, saya ingin update status pesanan menjadi Selesai",
+          "priority": "must",
+          "module": "backend:orders + frontend:admin-orders",
+          "acceptance_criteria_ref": "AC-E5-S4",
+          "endpoints": ["PATCH /api/v1/admin/orders/{id}/complete"],
+          "depends_on": ["E5-S3"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E5-S5",
+          "title": "Terima push notification saat status berubah (customer)",
+          "user_story": "Sebagai customer, saya ingin terima push notification saat status berubah",
+          "priority": "must",
+          "module": "backend:fcm-service + frontend:sw",
+          "acceptance_criteria_ref": "AC-E5-S5",
+          "depends_on": ["E7-S3"],
+          "estimated_hours": 6
+        },
+        {
+          "id": "E5-S6",
+          "title": "Terima push notification saat order baru masuk (admin)",
+          "user_story": "Sebagai admin, saya ingin terima push notification saat order baru masuk",
+          "priority": "must",
+          "module": "backend:fcm-service + frontend:sw",
+          "acceptance_criteria_ref": "AC-E5-S6",
+          "depends_on": ["E4-S3", "E7-S3"],
+          "estimated_hours": 4
+        },
+        {
+          "id": "E5-S7",
+          "title": "Tombol Notifikasi Owner via WhatsApp (customer)",
+          "user_story": "Sebagai customer, saya ingin punya tombol Notifikasi Owner via WhatsApp",
+          "priority": "should",
+          "module": "backend:wa-service + frontend:order-status",
+          "acceptance_criteria_ref": "AC-E5-S7",
+          "endpoints": ["POST /api/v1/notifications/{id}/wa-link"],
+          "depends_on": ["E4-S3"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E5-S8",
+          "title": "Tombol Kirim WhatsApp ke Customer (admin)",
+          "user_story": "Sebagai admin, saya ingin punya tombol Kirim WhatsApp ke Customer",
+          "priority": "should",
+          "module": "backend:wa-service + frontend:admin-orders",
+          "acceptance_criteria_ref": "AC-E5-S8",
+          "endpoints": ["POST /api/v1/notifications/{id}/wa-link"],
+          "depends_on": ["E4-S6"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E5-S9",
+          "title": "Log semua notifikasi di tabel notifications",
+          "user_story": "Sebagai backend, saya ingin log semua notifikasi di tabel notifications",
+          "priority": "must",
+          "module": "backend:notifications",
+          "acceptance_criteria_ref": "AC-E5-S9",
+          "estimated_hours": 2
+        },
+        {
+          "id": "E5-S10",
+          "title": "Install PWA di Android",
+          "user_story": "Sebagai customer, saya ingin install PWA di Android (Add to Home Screen)",
+          "priority": "must",
+          "module": "frontend:pwa",
+          "acceptance_criteria_ref": "AC-E5-S10",
+          "depends_on": ["E7-S1"],
+          "estimated_hours": 3
+        }
+      ]
+    },
+    {
+      "id": "E6",
+      "name": "Reporting & Analytics",
+      "description": "Laporan transaksi, export, analitik",
+      "effort_estimate": "medium",
+      "stories": [
+        {
+          "id": "E6-S1",
+          "title": "Lihat laporan transaksi harian/mingguan/bulanan",
+          "user_story": "Sebagai admin, saya ingin lihat laporan transaksi harian/mingguan/bulanan",
+          "priority": "must",
+          "module": "backend:reports + frontend:admin-reports",
+          "acceptance_criteria_ref": "AC-E6-S1",
+          "endpoints": ["GET /api/v1/admin/reports"],
+          "frontend_routes": ["/admin/laporan"],
+          "depends_on": ["E4-S7"],
+          "estimated_hours": 6
+        },
+        {
+          "id": "E6-S2",
+          "title": "Filter laporan by segmen customer",
+          "user_story": "Sebagai admin, saya ingin filter laporan by segmen customer (Ritel/Masyarakat)",
+          "priority": "must",
+          "module": "backend:reports + frontend:admin-reports",
+          "acceptance_criteria_ref": "AC-E6-S2",
+          "depends_on": ["E6-S1"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E6-S3",
+          "title": "Export laporan ke PDF",
+          "user_story": "Sebagai admin, saya ingin export laporan ke PDF (ReportLab)",
+          "priority": "must",
+          "module": "backend:pdf-service",
+          "acceptance_criteria_ref": "AC-E6-S3",
+          "endpoints": ["GET /api/v1/admin/reports/export?format=pdf"],
+          "depends_on": ["E6-S1"],
+          "estimated_hours": 5
+        },
+        {
+          "id": "E6-S4",
+          "title": "Export laporan ke Excel",
+          "user_story": "Sebagai admin, saya ingin export laporan ke Excel (openpyxl)",
+          "priority": "should",
+          "module": "backend:excel-service",
+          "acceptance_criteria_ref": "AC-E6-S4",
+          "endpoints": ["GET /api/v1/admin/reports/export?format=excel"],
+          "depends_on": ["E6-S1"],
+          "estimated_hours": 4
+        },
+        {
+          "id": "E6-S5",
+          "title": "Download nota PDF per order",
+          "user_story": "Sebagai admin, saya ingin download nota PDF per pesanan",
+          "priority": "must",
+          "module": "backend:pdf-service + frontend:admin-orders",
+          "acceptance_criteria_ref": "AC-E6-S5",
+          "endpoints": ["GET /api/v1/admin/orders/{id}/nota.pdf"],
+          "depends_on": ["E4-S6"],
+          "estimated_hours": 4
+        },
+        {
+          "id": "E6-S6",
+          "title": "Dashboard analitik (summary cards)",
+          "user_story": "Sebagai admin, saya ingin lihat dashboard analitik (total customer, total order, total revenue, repeat order rate)",
+          "priority": "should",
+          "module": "backend:reports + frontend:admin-dashboard",
+          "acceptance_criteria_ref": "AC-E6-S6",
+          "endpoints": ["GET /api/v1/admin/reports/summary"],
+          "frontend_routes": ["/admin"],
+          "estimated_hours": 4
+        },
+        {
+          "id": "E6-S7",
+          "title": "Lihat produk terlaris",
+          "user_story": "Sebagai admin, saya ingin lihat produk terlaris (top 5)",
+          "priority": "should",
+          "module": "backend:reports + frontend:admin-dashboard",
+          "acceptance_criteria_ref": "AC-E6-S7",
+          "endpoints": ["GET /api/v1/admin/reports/top-products"],
+          "depends_on": ["E6-S6"],
+          "estimated_hours": 3
+        },
+        {
+          "id": "E6-S8",
+          "title": "Lihat persentase penjualan Ritel vs Masyarakat",
+          "user_story": "Sebagai admin, saya ingin lihat persentase penjualan Ritel vs Masyarakat (pie chart)",
+          "priority": "should",
+          "module": "backend:reports + frontend:admin-dashboard",
+          "acceptance_criteria_ref": "AC-E6-S8",
+          "endpoints": ["GET /api/v1/admin/reports/segment-breakdown"],
+          "depends_on": ["E6-S6"],
+          "estimated_hours": 3
+        }
+      ]
+    },
+    {
+      "id": "E7",
+      "name": "PWA Configuration & Deployment",
+      "description": "PWA setup, service worker, deployment",
+      "effort_estimate": "medium",
+      "stories": [
+        {
+          "id": "E7-S1",
+          "title": "Setup next-pwa (manifest.json + service worker)",
+          "user_story": "Sebagai developer, saya ingin setup next-pwa",
+          "priority": "must",
+          "module": "frontend:pwa",
+          "acceptance_criteria_ref": "AC-E7-S1",
+          "estimated_hours": 4
+        },
+        {
+          "id": "E7-S2",
+          "title": "Implement service worker (offline caching strategy)",
+          "user_story": "Sebagai developer, saya ingin implement service worker (pre-cache statis, runtime-cache images, offline fallback)",
+          "priority": "must",
+          "module": "frontend:pwa",
+          "acceptance_criteria_ref": "AC-E7-S2",
+          "depends_on": ["E7-S1"],
+          "estimated_hours": 4
+        },
+        {
+          "id": "E7-S3",
+          "title": "Setup Firebase Cloud Messaging",
+          "user_story": "Sebagai developer, saya ingin setup Firebase project + VAPID keys + service worker push handler",
+          "priority": "must",
+          "module": "frontend:pwa + backend:fcm-service",
+          "acceptance_criteria_ref": "AC-E7-S3",
+          "estimated_hours": 6
+        },
+        {
+          "id": "E7-S4",
+          "title": "Deploy frontend ke Vercel",
+          "user_story": "Sebagai developer, saya ingin deploy frontend ke Vercel",
+          "priority": "must",
+          "module": "frontend:deploy",
+          "acceptance_criteria_ref": "AC-E7-S4",
+          "depends_on": ["E7-S1"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E7-S5",
+          "title": "Deploy backend ke Railway/Render",
+          "user_story": "Sebagai developer, saya ingin deploy backend ke Railway/Render",
+          "priority": "must",
+          "module": "backend:deploy",
+          "acceptance_criteria_ref": "AC-E7-S5",
+          "estimated_hours": 3
+        },
+        {
+          "id": "E7-S6",
+          "title": "Setup MySQL production (PlanetScale atau Railway MySQL)",
+          "user_story": "Sebagai developer, saya ingin setup MySQL production",
+          "priority": "must",
+          "module": "backend:deploy",
+          "acceptance_criteria_ref": "AC-E7-S6",
+          "depends_on": ["E7-S5"],
+          "estimated_hours": 2
+        },
+        {
+          "id": "E7-S7",
+          "title": "Dokumentasi user untuk owner",
+          "user_story": "Sebagai developer, saya ingin dokumentasi user untuk owner (README + User Manual + screenshot)",
+          "priority": "should",
+          "module": "docs",
+          "acceptance_criteria_ref": "AC-E7-S7",
+          "estimated_hours": 4
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_epics": 7,
+    "total_stories": 50,
+    "by_priority": {
+      "must": 39,
+      "should": 11,
+      "could": 0,
+      "wont": 0
+    },
+    "by_epic": {
+      "E1": 8,
+      "E2": 9,
+      "E3": 9,
+      "E4": 11,
+      "E5": 10,
+      "E6": 8,
+      "E7": 7
+    },
+    "total_estimated_hours": 285,
+    "estimated_weeks_at_20hr_per_week": 14.25
+  },
+  "notes": {
+    "priority_strategy": "MVP terdiri dari semua story dengan priority 'must'. Story 'should' dikerjakan setelah MVP selesai, jika timeline mengizinkan.",
+    "dependency_rule": "Respect depends_on field. Jika dependency belum selesai, jangan mulai story tersebut.",
+    "change_management": "Setiap perubahan pada file ini harus dicatat di CHANGELOG.md dengan version bump di VERSION.txt (semantic versioning)."
+  }
+}

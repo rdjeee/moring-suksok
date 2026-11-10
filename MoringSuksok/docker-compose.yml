@@ -1,0 +1,181 @@
+# =============================================================================
+# Moring Suksok — Docker Compose
+# Orchestration: Frontend (Next.js) + Backend (FastAPI) + Database (MySQL)
+# =============================================================================
+#
+# Usage:
+#   docker-compose up -d           # Start all services (detached)
+#   docker-compose up              # Start with logs visible
+#   docker-compose down            # Stop all services
+#   docker-compose logs -f backend # Tail backend logs
+#   docker-compose ps              # List running services
+#
+# =============================================================================
+
+version: "3.9"
+
+services:
+  # ---------------------------------------------------------------------------
+  # MySQL Database (port 3306)
+  # ---------------------------------------------------------------------------
+  db:
+    image: mysql:8.4.3
+    container_name: moringsuksok-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-moring_suksok}
+      MYSQL_USER: ${MYSQL_USER:-moring}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-moring123}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/seed.sql:/docker-entrypoint-initdb.d/seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - moring-network
+
+  # ---------------------------------------------------------------------------
+  # phpMyAdmin (port 8081) — DB GUI
+  # ---------------------------------------------------------------------------
+  phpmyadmin:
+    image: phpmyadmin:6.2.3
+    container_name: moringsuksok-pma
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8081:80"
+    networks:
+      - moring-network
+
+  # ---------------------------------------------------------------------------
+  # Backend — Python FastAPI (port 8000)
+  # ---------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: moringsuksok-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Database
+      DATABASE_URL: mysql+pymysql://root:${MYSQL_ROOT_PASSWORD:-root}@db:3306/${MYSQL_DATABASE:-moring_suksok}
+      # JWT
+      JWT_SECRET: ${JWT_SECRET:-change-this-in-production-min-32-chars}
+      JWT_ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES_CUSTOMER: 10080
+      ACCESS_TOKEN_EXPIRE_MINUTES_ADMIN: 1440
+      # Cloudinary
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+      # Firebase Admin (server-side FCM)
+      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID:-}
+      FIREBASE_PRIVATE_KEY: ${FIREBASE_PRIVATE_KEY:-}
+      FIREBASE_CLIENT_EMAIL: ${FIREBASE_CLIENT_EMAIL:-}
+      # CORS
+      CORS_ORIGINS: http://localhost:3000,http://localhost:8080
+      # Python
+      PYTHONUNBUFFERED: 1
+      PYTHONDONTWRITEBYTECODE: 1
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - backend_venv:/app/venv
+    command: >
+      sh -c "pip install -r requirements.txt &&
+             alembic upgrade head &&
+             python seed.py &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    networks:
+      - moring-network
+
+  # ---------------------------------------------------------------------------
+  # Frontend — Next.js PWA (port 3000)
+  # ---------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: moringsuksok-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api/v1
+      NEXT_PUBLIC_FIREBASE_API_KEY: ${NEXT_PUBLIC_FIREBASE_API_KEY:-}
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN:-}
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${NEXT_PUBLIC_FIREBASE_PROJECT_ID:-}
+      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID:-}
+      NEXT_PUBLIC_FIREBASE_APP_ID: ${NEXT_PUBLIC_FIREBASE_APP_ID:-}
+      NEXT_PUBLIC_VAPID_PUBLIC_KEY: ${NEXT_PUBLIC_VAPID_PUBLIC_KEY:-}
+      NODE_ENV: development
+      WATCHPACK_POLLING: "true"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+      - frontend_next:/app/.next
+    command: sh -c "npm install && npm run dev"
+    networks:
+      - moring-network
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  moring-network:
+    driver: bridge
+    name: moring-network
+
+# =============================================================================
+# Volumes (persistent data)
+# =============================================================================
+volumes:
+  mysql_data:
+    name: moring-mysql-data
+  backend_venv:
+    name: moring-backend-venv
+  frontend_node_modules:
+    name: moring-frontend-node-modules
+  frontend_next:
+    name: moring-frontend-next
+
+# =============================================================================
+# NOTES
+# =============================================================================
+#
+# 1. Untuk production, HAPUS volume mounts (./backend:/app, ./frontend:/app)
+#    dan gunakan image yang sudah di-build (bukan dev mode).
+#
+# 2. Untuk production, jangan expose port MySQL (3306) ke host, biarkan
+#    internal network only.
+#
+# 3. phpMyAdmin sebaiknya di-disable di production (cukup dev/staging).
+#
+# 4. Pertama kali `docker-compose up` akan build images — butuh waktu 5-10 menit.
+#    Setelah itu, restart akan cepat (~10 detik).
+#
+# 5. Jika ada perubahan requirements.txt atau package.json, hapus volume
+#    backend_venv atau frontend_node_modules agar rebuild:
+#    docker-compose down -v
+#    docker-compose up -d
+#
+# =============================================================================

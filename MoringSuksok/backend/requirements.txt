@@ -1,0 +1,98 @@
+# =============================================================================
+# Moring Suksok — Backend Python Dependencies
+# =============================================================================
+# Install via: pip install -r requirements.txt
+# Atau via Makefile: make setup-backend
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Core Framework
+# -----------------------------------------------------------------------------
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20           # Untuk file upload (multipart/form-data)
+
+# -----------------------------------------------------------------------------
+# Database & ORM
+# -----------------------------------------------------------------------------
+SQLAlchemy==2.0.36                # ORM untuk MySQL
+alembic==1.14.0                   # Database migration tool
+PyMySQL==1.1.1                   # Pure-Python MySQL driver
+cryptography==44.0.0             # Dependency untuk PyMySQL auth
+
+# -----------------------------------------------------------------------------
+# Validation & Schemas
+# -----------------------------------------------------------------------------
+pydantic==2.10.4
+pydantic-settings==2.7.0          # Untuk load .env file otomatis
+email-validator==2.2.0            # Validasi format email di Pydantic
+
+# -----------------------------------------------------------------------------
+# Authentication & Security
+# -----------------------------------------------------------------------------
+python-jose[cryptography]==3.3.0  # JWT (JSON Web Token) signing & verification
+passlib[bcrypt]==1.7.4            # Password hashing dengan bcrypt
+bcrypt==4.2.1                     # Direct bcrypt (fallback jika passlib issue)
+
+# -----------------------------------------------------------------------------
+# File Storage & Image Processing
+# -----------------------------------------------------------------------------
+cloudinary==1.41.0                # Cloudinary SDK untuk upload image
+Pillow==11.0.0                   # Image processing (validate, resize)
+
+# -----------------------------------------------------------------------------
+# QRIS Generation
+# -----------------------------------------------------------------------------
+qrcode[pil]==7.4.2               # QR code generator
+# qris-utils==0.1.0               # ⚠️ Cek PyPI untuk versi terbaru (optional)
+
+# -----------------------------------------------------------------------------
+# PDF & Excel Generation
+# -----------------------------------------------------------------------------
+reportlab==4.2.5                  # Generate PDF (nota & laporan)
+openpyxl==3.1.5                   # Generate Excel (.xlsx)
+
+# -----------------------------------------------------------------------------
+# Firebase Admin SDK (Push Notification)
+# -----------------------------------------------------------------------------
+firebase-admin==6.6.0             # Server-side FCM untuk kirim push notif
+
+# -----------------------------------------------------------------------------
+# HTTP Client (untuk external API calls jika perlu)
+# -----------------------------------------------------------------------------
+httpx==0.28.1                    # Async HTTP client (modern alternative to requests)
+
+# -----------------------------------------------------------------------------
+# Logging & Monitoring
+# -----------------------------------------------------------------------------
+loguru==0.7.3                    # Better logging (structured, colored)
+python-json-logger==3.2.1        # JSON format logger untuk production
+
+# -----------------------------------------------------------------------------
+# Rate Limiting
+# -----------------------------------------------------------------------------
+slowapi==0.1.9                   # Rate limiting middleware untuk FastAPI
+
+# -----------------------------------------------------------------------------
+# Development & Testing Tools
+# -----------------------------------------------------------------------------
+pytest==8.3.4
+pytest-asyncio==0.25.0           # Async test support
+pytest-cov==6.0.0                # Coverage report
+httpx==0.28.1                    # Untuk testing API (TestClient)
+
+# -----------------------------------------------------------------------------
+# Code Quality (Development Only)
+# -----------------------------------------------------------------------------
+ruff==0.8.4                      # Fast linter & formatter
+black==24.10.0                   # Code formatter
+mypy==1.13.0                     # Static type checker (optional)
+
+# -----------------------------------------------------------------------------
+# Notes
+# -----------------------------------------------------------------------------
+# Untuk production, pertimbangkan:
+# - gunicorn==23.0.0 (untuk run multiple uvicorn workers)
+# - sentry-sdk[fastapi]==2.19.2 (error tracking)
+# - prometheus-client==0.21.1 (metrics)
+# - uvloop (untuk faster event loop, Linux only)
