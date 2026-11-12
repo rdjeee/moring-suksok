@@ -35,6 +35,46 @@ Setiap kali specs di-update, tulis notifikasi baru di section "Pending Notificat
 
 > Urut dari TERBARU di atas ke TERLAMAU di bawah. Agent B harus baca dari atas.
 
+### [NOTIF-010] — 2026-11-10 — Basic Cashflow Module + Remove BPS/BI refs dari Proposal (v1.3.0)
+
+**Spec files changed**: `Proposal_TA_Moring_Suksok.docx`, `specs/VERSION.txt`
+**Change type**: MINOR — Added cashflow feature to Proposal
+**Author**: Agent A
+**Priority**: 🟡 MEDIUM
+
+#### Yang Sudah Agent A Update di Proposal TA
+
+1. **Basic Cashflow ditambahkan ke Proposal:**
+   - Abstrak: tambah "pencatatan keuangan dasar (cashflow) untuk mendigitalisasi pembukuan manual owner"
+   - Bab I §1.4 Tujuan: tambah poin 9 (modul cashflow)
+   - Bab I §1.5 Manfaat: update poin 1 (data cashflow untuk pembukuan)
+   - Bab III §3.3.1: tambah "modul pencatatan keuangan dasar" ke kebutuhan fungsional
+   - Bab IV §4.1: Sprint 7 update ke "PWA + Polish + Bug Fix + Basic Cashflow"
+
+2. **Hapus refs [1] (BPS) dan [2] (Bank Indonesia) dari Daftar Pustaka:**
+   - 10 referensi tersisa (sebelumnya 12)
+   - Semua in-text citations direnumber: [3]→[1] hingga [12]→[10]
+
+#### Yang Akan Dibangun di Sprint 7 (Basic Cashflow)
+
+| Story | Title | Priority |
+|---|---|---|
+| E9-S1 | Catat Pengeluaran (Expenses) | Must |
+| E9-S2 | Dashboard Cashflow (Pemasukan vs Pengeluaran) | Must |
+| E9-S3 | Laporan Cashflow Export PDF | Should |
+
+#### Yang TIDAK Dibangun (Tetap Out-of-Scope)
+- HPP (Harga Pokok Penjualan)
+- Laba-rugi lengkap
+- Neraca (balance sheet)
+- Pajak (PPN, PPh)
+- Hutang/piutang
+
+**Specs version**: v1.2.0 → v1.3.0 (MINOR — added cashflow to Proposal)
+**Acknowledge by**: Bersamaan dengan resume nanti
+
+---
+
 ### [NOTIF-009] — 2026-11-09 — ⚠️ BREAKING CHANGE: Mitra Kerjasama (E8) + Rename Segmentasi Customer (v1.2.0)
 
 **Spec files changed**: `specs/00-vision.md`, `specs/01-requirements.md`, `specs/03-features.json`, `specs/05-data-model.md`, `specs/06-api-contracts.md`, `specs/08-acceptance-criteria.md`, `README.md`
